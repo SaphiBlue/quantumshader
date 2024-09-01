@@ -1,0 +1,17 @@
+{
+  "name": "com.saphi.quantumshader",
+  "version": "0.0.1",
+  "displayName": "Saphi Quantum Shader",
+  "description": "Quantum Shader",
+  "unity": "2022.3",
+  "unityRelease": "22f1",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "keywords": [],
+  "author": {
+    "name": "Unity",
+    "email": "unity@example.com",
+    "url": "https://www.unity3d.com"
+  }
+}
