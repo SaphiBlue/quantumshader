@@ -185,7 +185,7 @@ public class QuantumShaderUI : ShaderGUI
 
             EditorGUI.indentLevel += 2;
 
-            buildTextureInputs("Gow Map", "Uses RGBA for Directional Glow", "_QGlowMap");
+            buildTextureInputs("Glow Map", "Uses RGBA for Directional Glow", "_QGlowMap");
             buildTextureInputs("Direction", "Direction of the glow band", "_QDirection");
 
             EditorGUI.indentLevel -= 2;
