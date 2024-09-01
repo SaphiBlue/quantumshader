@@ -5,13 +5,15 @@
   "description": "Quantum Shader",
   "unity": "2022.3",
   "unityRelease": "22f1",
-  "documentationUrl": "https://example.com/",
-  "changelogUrl": "https://example.com/changelog.html",
-  "licensesUrl": "https://example.com/licensing.html",
+  "documentationUrl": "https://github.com/SaphiBlue/quantumshader",
+  "changelogUrl": "https://github.com/SaphiBlue/quantumshader",
+  "licensesUrl": "https://github.com/SaphiBlue/quantumshader",
   "keywords": [],
   "author": {
-    "name": "Unity",
-    "email": "unity@example.com",
-    "url": "https://www.unity3d.com"
+    "name": "Saphi",
+    "url": "https://github.com/SaphiBlue/"
+  },
+  "vpmDependencies": {
+    "com.llealloo.audiolink": "1.x.x"
   }
 }
