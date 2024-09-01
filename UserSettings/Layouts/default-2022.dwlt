@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 100
+  controlID: 120
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 38
+  controlID: 46
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 39
+  controlID: 47
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -417,9 +417,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3e410000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 2cfbffff
+      m_ExpandedIDs: f6faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -878,9 +878,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0, y: 0, z: 0}
+    m_Target: {x: -5.3698745, y: -2.686283, z: -17.043861}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0}
+    m_Value: {x: -5.3698745, y: -2.686283, z: -17.043861}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -926,9 +926,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+    m_Target: {x: 0.0102859, y: 0.9894239, z: -0.11359595, w: 0.08958963}
     speed: 2
-    m_Value: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+    m_Value: {x: 0.010285901, y: 0.9894239, z: -0.11359595, w: 0.08958964}
   m_Size:
     m_Target: 10
     speed: 2
@@ -938,8 +938,8 @@ MonoBehaviour:
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 0.30084997
-    m_SpeedNormalized: 0.14999999
+    m_Speed: 0.66067
+    m_SpeedNormalized: 0.32999998
     m_SpeedMin: 0.001
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Packages/com.vrchat.demo-template/Editor
+    - Packages/com.saphi.quantumshader/Editor
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1084,16 +1084,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Packages/com.vrchat.demo-template/Editor
+  - Packages/com.saphi.quantumshader/Editor
   m_LastFoldersGridSize: 16
   m_LastProjectPath: H:\VRChat\SaphiAssets\Shader\quantumshader
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 244a0000
-    m_LastClickedID: 18980
-    m_ExpandedIDs: 00000000fe4900001c4a000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 175}
+    m_SelectedIDs: d4640000
+    m_LastClickedID: 25812
+    m_ExpandedIDs: 0000000018630000ba64000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1121,7 +1121,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fe490000
+    m_ExpandedIDs: 0000000018630000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1148,7 +1148,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000fc6600005c8500003052000010090100d8080100660701001a0901001c090100081e0100ee67000066670000f0fc0000220b010032680000ca7900006a6700009268000036820000388200000c82000046aa0000be780000867300005290000092ab000062ac0000bcc7000004ba0000667800009c520000ba64000088e50100a6e8000094ac0000fcfe0000a21e0100deaa0000647300003c830000bcfd0100aafd0100807e0000c2eb0000eaea0000ec5901002e5a0100ae860000501b0100926c0700a68807000e820000d685000078f60200189600000af802003453000054fc0200a2e8000046460300fce8000076ee0000ae8d0000e2970000b49f00001a930000761c01004ecb00001cf500009cf500001cad0000be9a0200e62e010060a00000929c0000daa00000a8a000006a9f0000349c0000ae9d0000bca400003c9e0000f6aa00004ca30000486e00008cac0000dea20000526e0000c4a3000012a30000a0a4000036b1000084a40000eead00009aac00007eaf0000eab60000e86d0000dcab00003ea3000094b300007cb1000090d500008ece0100a8d0010010de0000be0a0100bc0b0100b6e40000fad40000561d010082a300004e5801009ea200009a5801006ab000003aa30000aad20000a4b00a00b0e40000e4e500002ab100002eb20000242d0200d2c000002a5501005e530000a035020018b1000052ea0000d8c30000ec6a0000ec530000cac3000066410100f8c4000032d0000010540000000000007c020100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
