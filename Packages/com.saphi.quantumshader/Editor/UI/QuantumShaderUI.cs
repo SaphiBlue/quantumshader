@@ -192,8 +192,10 @@ public class QuantumShaderUI : ShaderGUI
 
             GUILayout.EndVertical();
 
+            editor.ShaderProperty(getProperty("_QEnableGlobal"), "Enable Glow", 2);
             editor.ShaderProperty(getProperty("_QSmoothHistory"), "Smooth History", 2);
             editor.ShaderProperty(getProperty("_QuantumGlowColor"), "Glow Color", 2);
+            editor.ShaderProperty(getProperty("_QuantumGlowMultiplyGlobal"), "Multiply", 2);
 
             QuantumBand(1, "Quantum Band 1 (R)");
             QuantumBand(2, "Quantum Band 2 (G)");
@@ -226,7 +228,8 @@ public class QuantumShaderUI : ShaderGUI
         if (element)
         {
             target.SetFloat(toggle, 1);
-
+            editor.ShaderProperty(getProperty("_QBandEnable" + band), "Enable Band", 2);
+            editor.ShaderProperty(getProperty("_QuantumGlowMultiply" + band), "Multiply", 2);
             editor.ShaderProperty(getProperty("_QBand" + band), "Band", 2);
             editor.ShaderProperty(getProperty("_QInvertDirection" + band), "Invert Dircection", 2);
             editor.ShaderProperty(getProperty("_QGlowColorBand" + band), "Color", 2);

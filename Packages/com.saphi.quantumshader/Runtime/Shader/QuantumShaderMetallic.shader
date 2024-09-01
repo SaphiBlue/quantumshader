@@ -18,28 +18,38 @@ Shader "Saphi/QuantumShaderMetallic"
 		[HDR]_QGlowColorBand1("QGlowColorBand1", Color) = (1,1,1,0)
 		[Toggle]_QInvertDirection1("QInvertDirection1", Float) = 0
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand1("QBand1", Int) = 0
-		_QColorOffset1("QColorOffset1", Range( 0 , 1)) = 32
+		_QColorOffset1("QColorOffset1", Range( 0 , 1)) = 0
 		_QHistory1("QHistory1", Range( 0 , 128)) = 0
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand2("QBand2", Int) = 1
 		[HDR]_QGlowColorBand2("QGlowColorBand2", Color) = (1,1,1,0)
+		[Toggle]_QBandEnable3("QBandEnable3", Float) = 0
+		[Toggle]_QBandEnable2("QBandEnable2", Float) = 0
+		[Toggle]_QBandEnable1("QBandEnable1", Float) = 0
+		[Toggle]_QBandEnable4("QBandEnable4", Float) = 0
+		[Toggle]_QEnableGlobal("QEnableGlobal", Float) = 0
 		[Toggle]_QInvertDirection2("QInvertDirection2", Float) = 0
-		_QColorOffset2("QColorOffset2", Range( 0 , 1)) = 1
+		_QColorOffset2("QColorOffset2", Range( 0 , 1)) = 0
 		_QHistory2("QHistory2", Range( 0 , 128)) = 32
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand3("QBand3", Int) = 2
 		[HDR]_QGlowColorBand3("QGlowColorBand3", Color) = (1,1,1,0)
 		[Toggle]_QInvertDirection3("QInvertDirection3", Float) = 0
-		_QColorOffset3("QColorOffset3", Range( 0 , 1)) = 1
+		_QColorOffset3("QColorOffset3", Range( 0 , 1)) = 0
 		_QHistory3("QHistory3", Range( 0 , 128)) = 32
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand4("QBand4", Int) = 3
 		[HDR]_QGlowColorBand4("QGlowColorBand4", Color) = (1,1,1,0)
 		[Toggle]_QInvertDirection4("QInvertDirection4", Float) = 0
-		_QColorOffset4("QColorOffset4", Range( 0 , 1)) = 1
+		_QuantumGlowMultiply3("QuantumGlowMultiply3", Float) = 1
+		_QuantumGlowMultiply4("QuantumGlowMultiply4", Float) = 1
+		_QColorOffset4("QColorOffset4", Range( 0 , 1)) = 0
+		_QuantumGlowMultiply1("QuantumGlowMultiply1", Float) = 1
+		_QuantumGlowMultiply2("QuantumGlowMultiply2", Float) = 1
 		_QHistory4("QHistory4", Range( 0 , 128)) = 32
-		_ShowQuantumBand1("ShowQuantumBand1", Float) = 0
 		_ShowQuantumBand3("ShowQuantumBand3", Float) = 0
 		_ShowQuantumBand4("ShowQuantumBand4", Float) = 0
 		_ShowQuantum("ShowQuantum", Float) = 0
+		_ShowQuantumBand1("ShowQuantumBand1", Float) = 0
 		_ShowQuantumBand2("ShowQuantumBand2", Float) = 0
+		_QuantumGlowMultiplyGlobal("QuantumGlowMultiplyGlobal", Float) = 1
 		_ShowMain("ShowMain", Float) = 0
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 		[HideInInspector] __dirty( "", Int ) = 1
@@ -74,7 +84,9 @@ Shader "Saphi/QuantumShaderMetallic"
 		uniform sampler2D _EmissionMap;
 		uniform float4 _EmissionMap_ST;
 		uniform float4 _EmissionColor;
+		uniform float _QEnableGlobal;
 		uniform float4 _QuantumGlowColor;
+		uniform float _QBandEnable1;
 		uniform float4 _QGlowColorBand1;
 		uniform sampler2D _QGlowMap;
 		uniform float4 _QGlowMap_ST;
@@ -85,74 +97,82 @@ Shader "Saphi/QuantumShaderMetallic"
 		uniform sampler2D _QDirection;
 		uniform float4 _QDirection_ST;
 		uniform float _QColorOffset1;
+		uniform float _QuantumGlowMultiply1;
+		uniform float _QBandEnable2;
 		uniform float4 _QGlowColorBand2;
 		uniform int _QBand2;
 		uniform float _QHistory2;
 		uniform float _QInvertDirection2;
 		uniform float _QColorOffset2;
+		uniform float _QuantumGlowMultiply2;
+		uniform float _QBandEnable3;
 		uniform float4 _QGlowColorBand3;
 		uniform int _QBand3;
 		uniform float _QHistory3;
 		uniform float _QInvertDirection3;
 		uniform float _QColorOffset3;
+		uniform float _QuantumGlowMultiply3;
+		uniform float _QBandEnable4;
 		uniform float4 _QGlowColorBand4;
 		uniform int _QBand4;
 		uniform float _QHistory4;
 		uniform float _QInvertDirection4;
 		uniform float _QColorOffset4;
+		uniform float _QuantumGlowMultiply4;
+		uniform float _QuantumGlowMultiplyGlobal;
 		uniform sampler2D _MetallicGlossMap;
 		uniform float4 _MetallicGlossMap_ST;
 
 
-		inline float AudioLinkLerp3_g121( int Band, float Delay )
+		inline float AudioLinkLerp3_g120( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float4 AudioLinkData1_g119( int Index )
+		inline float4 AudioLinkData1_g118( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float AudioLinkLerp3_g125( int Band, float Delay )
+		inline float AudioLinkLerp3_g124( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float4 AudioLinkData1_g123( int Index )
+		inline float4 AudioLinkData1_g122( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float AudioLinkLerp3_g129( int Band, float Delay )
+		inline float AudioLinkLerp3_g128( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float4 AudioLinkData1_g127( int Index )
+		inline float4 AudioLinkData1_g126( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float AudioLinkLerp3_g133( int Band, float Delay )
+		inline float AudioLinkLerp3_g132( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline float4 AudioLinkData1_g131( int Index )
+		inline float4 AudioLinkData1_g130( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		float IfAudioLinkv2Exists1_g117(  )
+		float IfAudioLinkv2Exists1_g133(  )
 		{
 			int w = 0; 
 			int h; 
@@ -179,55 +199,55 @@ Shader "Saphi/QuantumShaderMetallic"
 			float4 GlowMap7_g116 = tex2D( _QGlowMap, uv_QGlowMap );
 			float4 break12_g116 = GlowMap7_g116;
 			float GlowMap130_g116 = break12_g116.r;
-			int Band3_g121 = _QBand1;
+			int Band3_g120 = _QBand1;
 			float2 uv_QDirection = i.uv_texcoord * _QDirection_ST.xy + _QDirection_ST.zw;
 			float4 DirectionMap5_g116 = tex2D( _QDirection, uv_QDirection );
 			float Direction11_g116 = DirectionMap5_g116.r;
-			float temp_output_5_0_g118 = ( _QHistory1 * (( _QInvertDirection1 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
-			float Delay3_g121 = (( _QSmoothHistory )?( temp_output_5_0_g118 ):( floor( temp_output_5_0_g118 ) ));
-			float localAudioLinkLerp3_g121 = AudioLinkLerp3_g121( Band3_g121 , Delay3_g121 );
-			float4 temp_cast_1 = (localAudioLinkLerp3_g121).xxxx;
-			float4 temp_output_1_0_g120 = temp_cast_1;
-			float4 break5_g120 = temp_output_1_0_g120;
-			int Index1_g119 = (int)floor( ( _QColorOffset1 * 127.0 ) );
-			float4 localAudioLinkData1_g119 = AudioLinkData1_g119( Index1_g119 );
-			float4 temp_output_2_0_g120 = localAudioLinkData1_g119;
+			float temp_output_5_0_g117 = ( _QHistory1 * (( _QInvertDirection1 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
+			float Delay3_g120 = (( _QSmoothHistory )?( temp_output_5_0_g117 ):( floor( temp_output_5_0_g117 ) ));
+			float localAudioLinkLerp3_g120 = AudioLinkLerp3_g120( Band3_g120 , Delay3_g120 );
+			float4 temp_cast_1 = (localAudioLinkLerp3_g120).xxxx;
+			float4 temp_output_1_0_g119 = temp_cast_1;
+			float4 break5_g119 = temp_output_1_0_g119;
+			int Index1_g118 = (int)floor( ( _QColorOffset1 * 127.0 ) );
+			float4 localAudioLinkData1_g118 = AudioLinkData1_g118( Index1_g118 );
+			float4 temp_output_2_0_g119 = localAudioLinkData1_g118;
 			float GlowMap232_g116 = break12_g116.g;
-			int Band3_g125 = _QBand2;
-			float temp_output_5_0_g122 = ( _QHistory2 * (( _QInvertDirection2 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
-			float Delay3_g125 = (( _QSmoothHistory )?( temp_output_5_0_g122 ):( floor( temp_output_5_0_g122 ) ));
-			float localAudioLinkLerp3_g125 = AudioLinkLerp3_g125( Band3_g125 , Delay3_g125 );
-			float4 temp_cast_4 = (localAudioLinkLerp3_g125).xxxx;
-			float4 temp_output_1_0_g124 = temp_cast_4;
-			float4 break5_g124 = temp_output_1_0_g124;
-			int Index1_g123 = (int)floor( ( _QColorOffset2 * 127.0 ) );
-			float4 localAudioLinkData1_g123 = AudioLinkData1_g123( Index1_g123 );
-			float4 temp_output_2_0_g124 = localAudioLinkData1_g123;
+			int Band3_g124 = _QBand2;
+			float temp_output_5_0_g121 = ( _QHistory2 * (( _QInvertDirection2 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
+			float Delay3_g124 = (( _QSmoothHistory )?( temp_output_5_0_g121 ):( floor( temp_output_5_0_g121 ) ));
+			float localAudioLinkLerp3_g124 = AudioLinkLerp3_g124( Band3_g124 , Delay3_g124 );
+			float4 temp_cast_4 = (localAudioLinkLerp3_g124).xxxx;
+			float4 temp_output_1_0_g123 = temp_cast_4;
+			float4 break5_g123 = temp_output_1_0_g123;
+			int Index1_g122 = (int)floor( ( _QColorOffset2 * 127.0 ) );
+			float4 localAudioLinkData1_g122 = AudioLinkData1_g122( Index1_g122 );
+			float4 temp_output_2_0_g123 = localAudioLinkData1_g122;
 			float GlowMap331_g116 = break12_g116.b;
-			int Band3_g129 = _QBand3;
-			float temp_output_5_0_g126 = ( _QHistory3 * (( _QInvertDirection3 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
-			float Delay3_g129 = (( _QSmoothHistory )?( temp_output_5_0_g126 ):( floor( temp_output_5_0_g126 ) ));
-			float localAudioLinkLerp3_g129 = AudioLinkLerp3_g129( Band3_g129 , Delay3_g129 );
-			float4 temp_cast_7 = (localAudioLinkLerp3_g129).xxxx;
-			float4 temp_output_1_0_g128 = temp_cast_7;
-			float4 break5_g128 = temp_output_1_0_g128;
-			int Index1_g127 = (int)floor( ( _QColorOffset3 * 127.0 ) );
-			float4 localAudioLinkData1_g127 = AudioLinkData1_g127( Index1_g127 );
-			float4 temp_output_2_0_g128 = localAudioLinkData1_g127;
+			int Band3_g128 = _QBand3;
+			float temp_output_5_0_g125 = ( _QHistory3 * (( _QInvertDirection3 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
+			float Delay3_g128 = (( _QSmoothHistory )?( temp_output_5_0_g125 ):( floor( temp_output_5_0_g125 ) ));
+			float localAudioLinkLerp3_g128 = AudioLinkLerp3_g128( Band3_g128 , Delay3_g128 );
+			float4 temp_cast_7 = (localAudioLinkLerp3_g128).xxxx;
+			float4 temp_output_1_0_g127 = temp_cast_7;
+			float4 break5_g127 = temp_output_1_0_g127;
+			int Index1_g126 = (int)floor( ( _QColorOffset3 * 127.0 ) );
+			float4 localAudioLinkData1_g126 = AudioLinkData1_g126( Index1_g126 );
+			float4 temp_output_2_0_g127 = localAudioLinkData1_g126;
 			float GlowMap433_g116 = break12_g116.a;
-			int Band3_g133 = _QBand4;
-			float temp_output_5_0_g130 = ( _QHistory4 * (( _QInvertDirection4 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
-			float Delay3_g133 = (( _QSmoothHistory )?( temp_output_5_0_g130 ):( floor( temp_output_5_0_g130 ) ));
-			float localAudioLinkLerp3_g133 = AudioLinkLerp3_g133( Band3_g133 , Delay3_g133 );
-			float4 temp_cast_10 = (localAudioLinkLerp3_g133).xxxx;
-			float4 temp_output_1_0_g132 = temp_cast_10;
-			float4 break5_g132 = temp_output_1_0_g132;
-			int Index1_g131 = (int)floor( ( _QColorOffset4 * 127.0 ) );
-			float4 localAudioLinkData1_g131 = AudioLinkData1_g131( Index1_g131 );
-			float4 temp_output_2_0_g132 = localAudioLinkData1_g131;
-			float localIfAudioLinkv2Exists1_g117 = IfAudioLinkv2Exists1_g117();
-			float4 lerpResult55_g116 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( ( _QGlowColorBand1 * ( GlowMap130_g116 * ( ( ( break5_g120.r * 0.2 ) + ( break5_g120.g * 0.7 ) + ( break5_g120.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g120 * temp_output_2_0_g120 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g120 ) * ( 1.0 - temp_output_2_0_g120 ) ) ) ) ) ) + ( _QGlowColorBand2 * ( GlowMap232_g116 * ( ( ( break5_g124.r * 0.2 ) + ( break5_g124.g * 0.7 ) + ( break5_g124.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g124 * temp_output_2_0_g124 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g124 ) * ( 1.0 - temp_output_2_0_g124 ) ) ) ) ) ) + ( _QGlowColorBand3 * ( GlowMap331_g116 * ( ( ( break5_g128.r * 0.2 ) + ( break5_g128.g * 0.7 ) + ( break5_g128.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g128 * temp_output_2_0_g128 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g128 ) * ( 1.0 - temp_output_2_0_g128 ) ) ) ) ) ) + ( _QGlowColorBand4 * ( GlowMap433_g116 * ( ( ( break5_g132.r * 0.2 ) + ( break5_g132.g * 0.7 ) + ( break5_g132.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g132 * temp_output_2_0_g132 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g132 ) * ( 1.0 - temp_output_2_0_g132 ) ) ) ) ) ) ) ) , localIfAudioLinkv2Exists1_g117);
-			float4 Emission179 = ( MainEmission88 + lerpResult55_g116 );
+			int Band3_g132 = _QBand4;
+			float temp_output_5_0_g129 = ( _QHistory4 * (( _QInvertDirection4 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 )) );
+			float Delay3_g132 = (( _QSmoothHistory )?( temp_output_5_0_g129 ):( floor( temp_output_5_0_g129 ) ));
+			float localAudioLinkLerp3_g132 = AudioLinkLerp3_g132( Band3_g132 , Delay3_g132 );
+			float4 temp_cast_10 = (localAudioLinkLerp3_g132).xxxx;
+			float4 temp_output_1_0_g131 = temp_cast_10;
+			float4 break5_g131 = temp_output_1_0_g131;
+			int Index1_g130 = (int)floor( ( _QColorOffset4 * 127.0 ) );
+			float4 localAudioLinkData1_g130 = AudioLinkData1_g130( Index1_g130 );
+			float4 temp_output_2_0_g131 = localAudioLinkData1_g130;
+			float localIfAudioLinkv2Exists1_g133 = IfAudioLinkv2Exists1_g133();
+			float4 lerpResult55_g116 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g116 * ( ( ( break5_g119.r * 0.2 ) + ( break5_g119.g * 0.7 ) + ( break5_g119.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g119 * temp_output_2_0_g119 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g119 ) * ( 1.0 - temp_output_2_0_g119 ) ) ) ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g116 * ( ( ( break5_g123.r * 0.2 ) + ( break5_g123.g * 0.7 ) + ( break5_g123.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g123 * temp_output_2_0_g123 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g123 ) * ( 1.0 - temp_output_2_0_g123 ) ) ) ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g116 * ( ( ( break5_g127.r * 0.2 ) + ( break5_g127.g * 0.7 ) + ( break5_g127.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g127 * temp_output_2_0_g127 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g127 ) * ( 1.0 - temp_output_2_0_g127 ) ) ) ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( float4( 0,0,0,0 ) ):( ( _QGlowColorBand4 * ( GlowMap433_g116 * ( ( ( break5_g131.r * 0.2 ) + ( break5_g131.g * 0.7 ) + ( break5_g131.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g131 * temp_output_2_0_g131 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g131 ) * ( 1.0 - temp_output_2_0_g131 ) ) ) ) ) * _QuantumGlowMultiply4 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g133);
+			float4 Emission179 = ( MainEmission88 + (( _QEnableGlobal )?( lerpResult55_g116 ):( float4( 0,0,0,0 ) )) );
 			o.Emission = Emission179.rgb;
 			float2 uv_MetallicGlossMap = i.uv_texcoord * _MetallicGlossMap_ST.xy + _MetallicGlossMap_ST.zw;
 			float4 Metallic83 = tex2D( _MetallicGlossMap, uv_MetallicGlossMap );
@@ -271,7 +291,7 @@ Node;AmplifyShaderEditor.RegisterLocalVarNode;64;-848,656;Inherit;False;Normal;-
 Node;AmplifyShaderEditor.BreakToComponentsNode;199;760.534,552.9935;Inherit;False;COLOR;1;0;COLOR;0,0,0,0;False;16;FLOAT;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT;5;FLOAT;6;FLOAT;7;FLOAT;8;FLOAT;9;FLOAT;10;FLOAT;11;FLOAT;12;FLOAT;13;FLOAT;14;FLOAT;15
 Node;AmplifyShaderEditor.GetLocalVarNode;65;992,288;Inherit;False;64;Normal;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode;81;960,384;Inherit;False;179;Emission;1;0;OBJECT;;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;195;-576,1856;Inherit;False;Property;_ShowMain;ShowMain;45;0;Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;195;-576,1856;Inherit;False;Property;_ShowMain;ShowMain;55;0;Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;74;960,208;Inherit;False;63;Albedo;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;1296,336;Float;False;True;-1;4;QuantumShaderUI;0;0;Standard;Saphi/QuantumShaderMetallic;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;;0;False;;False;0;False;;0;False;;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;12;all;True;True;True;True;0;False;;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;2;15;10;25;False;0.5;True;0;0;False;;0;False;;0;0;False;;0;False;;0;False;;0;False;;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;True;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;;-1;0;False;;0;0;0;False;0.1;False;;0;False;;False;17;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;16;FLOAT4;0,0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;53;0;55;0
@@ -298,4 +318,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;199;0
 WireConnection;0;4;199;3
 ASEEND*/
-//CHKSM=4426F3488D7F5B9181E1685E38F668E04E40557A
+//CHKSM=8CC25AE9D62C018CD97BC4D95AE7860210092FB0
