@@ -30,6 +30,7 @@ public class QuantumShaderUI : ShaderGUI
 
         MainProps();
         QuantumGlow();
+        Rendering();
     }
 
     MaterialProperty getProperty(string name)
@@ -104,7 +105,7 @@ public class QuantumShaderUI : ShaderGUI
         if (target.shader == shaderPackedPBR)
         {
             buildTextureInputs("PBR Data", "RGB; R = Metallic, G = Specular, B = Roughness", "_PBRMap");
-        }        
+        }
 
         if (target.shader == shaderSpecular)
         {
@@ -139,12 +140,17 @@ public class QuantumShaderUI : ShaderGUI
             GUILayout.BeginVertical("box");
             EditorGUI.indentLevel += 2;
             buildTextureInputs("Main Texture", "Main Color/Albedo", "_MainTex", "_Color");
+            GUILayout.Space(10);
+            editor.ShaderProperty(getProperty("_EnableEmission"), "Enable Emission", 0);
+            editor.ShaderProperty(getProperty("_Emission"), "Emission multiplier", 0);
             buildTextureInputs("Main Emission", "Emission with Color", "_EmissionMap", "_EmissionColor");
+            GUILayout.Space(10);
             buildNormalInputs("Normal Map", "Normal Map", "_BumpMap", "_BumpScale");
-
+            GUILayout.Space(10);
 
             buildPBRMaps();
 
+            GUILayout.Space(10);
             EditorGUI.indentLevel -= 2;
             GUILayout.EndVertical();
 
@@ -188,6 +194,10 @@ public class QuantumShaderUI : ShaderGUI
             buildTextureInputs("Glow Map", "Uses RGBA for Directional Glow", "_QGlowMap");
             buildTextureInputs("Direction", "Direction of the glow band", "_QDirection");
 
+
+            editor.ShaderProperty(getProperty("_UseUVAsDirection"), "Use UV Map as direction map", 2);
+            editor.ShaderProperty(getProperty("_UseUVAsDirectionUV"), "UV Map as direction U or V", 2);
+
             EditorGUI.indentLevel -= 2;
 
             GUILayout.EndVertical();
@@ -195,7 +205,7 @@ public class QuantumShaderUI : ShaderGUI
             editor.ShaderProperty(getProperty("_QEnableGlobal"), "Enable Glow", 2);
             editor.ShaderProperty(getProperty("_QSmoothHistory"), "Smooth History", 2);
             editor.ShaderProperty(getProperty("_QuantumGlowColor"), "Glow Color", 2);
-            editor.ShaderProperty(getProperty("_QuantumGlowMultiplyGlobal"), "Multiply", 2);
+            editor.ShaderProperty(getProperty("_QuantumGlowMultiplyGlobal"), "Multiplier", 2);
 
             QuantumBand(1, "Quantum Band 1 (R)");
             QuantumBand(2, "Quantum Band 2 (G)");
@@ -229,12 +239,54 @@ public class QuantumShaderUI : ShaderGUI
         {
             target.SetFloat(toggle, 1);
             editor.ShaderProperty(getProperty("_QBandEnable" + band), "Enable Band", 2);
-            editor.ShaderProperty(getProperty("_QuantumGlowMultiply" + band), "Multiply", 2);
-            editor.ShaderProperty(getProperty("_QBand" + band), "Band", 2);
             editor.ShaderProperty(getProperty("_QInvertDirection" + band), "Invert Dircection", 2);
+
+
+            editor.ShaderProperty(getProperty("_QuantumGlowMultiply" + band), "multiplier", 2);
             editor.ShaderProperty(getProperty("_QGlowColorBand" + band), "Color", 2);
-            editor.ShaderProperty(getProperty("_QColorOffset" + band), "Color Offset", 2);
+
+            editor.ShaderProperty(getProperty("_QBand" + band), "Band", 2);
+            editor.ShaderProperty(getProperty("_QType" + band), "Type", 2);
+
             editor.ShaderProperty(getProperty("_QHistory" + band), "History", 2);
+            editor.ShaderProperty(getProperty("_QColorOffset" + band), "Color Offset", 2);
+
+            editor.ShaderProperty(getProperty("_QEffectScale" + band), "Effect Scale", 2);
+
+            editor.ShaderProperty(getProperty("_QUseColorRotation" + band), "Use Color Rotation", 2);
+            editor.ShaderProperty(getProperty("_QColorRotationSpeed" + band), "Color Rotation Speed", 2);
+            editor.ShaderProperty(getProperty("_QColorRotationMode" + band), "Color Rotation Mode", 2);
+
+        }
+        else
+        {
+            target.SetFloat(toggle, 0);
+        }
+    }
+
+    void Rendering()
+    {
+        bool showRendering;
+        string toggle = "_ShowRendering";
+
+        if (target.GetFloat(toggle) == 1)
+        {
+            showRendering = true;
+        }
+        else
+        {
+            showRendering = false;
+        }
+
+        showRendering = EditorGUILayout.Foldout(showRendering, "Rendering", true, EditorStyles.foldoutHeader);
+        if (showRendering)
+        {
+            target.SetFloat(toggle, 1);
+            
+            editor.RenderQueueField();
+            editor.EnableInstancingField();
+            editor.DoubleSidedGIField();
+            editor.LightmapEmissionProperty();
         }
         else
         {

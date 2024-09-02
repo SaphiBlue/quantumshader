@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 119
+  controlID: 115
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -189,8 +189,8 @@ MonoBehaviour:
     y: 0
     width: 446
     height: 933
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -271,8 +271,8 @@ MonoBehaviour:
     y: 0
     width: 683
     height: 1307
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -301,10 +301,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -2114
+    x: 446
     y: 73
     width: 1429
-    height: 916
+    height: 912
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-  m_TargetSize: {x: 1429, y: 895}
+  m_TargetSize: {x: 1429, y: 891}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -338,8 +338,8 @@ MonoBehaviour:
     vZoomLockedByDefault: 0
     m_HBaseRangeMin: -714.5
     m_HBaseRangeMax: 714.5
-    m_VBaseRangeMin: -447.5
-    m_VBaseRangeMax: 447.5
+    m_VBaseRangeMin: -445.5
+    m_VBaseRangeMax: 445.5
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -358,9 +358,9 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 1429
-      height: 895
+      height: 891
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 714.5, y: 447.5}
+    m_Translation: {x: 714.5, y: 445.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
@@ -368,12 +368,12 @@ MonoBehaviour:
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
       x: -714.5
-      y: -447.5
+      y: -445.5
       width: 1429
-      height: 895
+      height: 891
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 1429, y: 916}
+  m_LastWindowPixelSize: {x: 1429, y: 912}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -417,9 +417,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 00040000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: f6faffff9e5c0000
+      m_ExpandedIDs: f6faffffa85c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -878,9 +878,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -6.2620616, y: -1.5100548, z: -17.424313}
+    m_Target: {x: -8.87184, y: 0.8200814, z: -17.770607}
     speed: 2
-    m_Value: {x: -6.2620616, y: -1.5100548, z: -17.424313}
+    m_Value: {x: -8.87184, y: 0.8200814, z: -17.770607}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -926,13 +926,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.0055791703, y: 0.9942563, z: -0.08402463, w: 0.06601699}
+    m_Target: {x: -0.0026685584, y: 0.9845764, z: -0.0150747355, w: -0.17428374}
     speed: 2
-    m_Value: {x: 0.0055791703, y: 0.9942563, z: -0.08402463, w: 0.06601699}
+    m_Value: {x: -0.0026233224, y: 0.9850949, z: -0.015082675, w: -0.17132924}
   m_Size:
-    m_Target: 10
+    m_Target: 10.219566
     speed: 2
-    m_Value: 10
+    m_Value: 10.219566
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Packages/com.saphi.quantumshader/Runtime/Shader
+    - Assets/SaphiAssets/Nardo/QuantumNardo/Materials/Furality
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1084,16 +1084,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Packages/com.saphi.quantumshader/Runtime/Shader
+  - Assets/SaphiAssets/Nardo/QuantumNardo/Materials/Furality
   m_LastFoldersGridSize: 16
   m_LastProjectPath: H:\VRChat\SaphiAssets\Shader\quantumshader
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 175}
-    m_SelectedIDs: 16650000
-    m_LastClickedID: 25878
-    m_ExpandedIDs: 0000000018630000ba640000d6640000da64000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 191}
+    m_SelectedIDs: 7a670000
+    m_LastClickedID: 26490
+    m_ExpandedIDs: 00000000186300001a6300001c6300001e630000be640000c6640000de6400001c65000066650000766700007867000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1121,7 +1121,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000018630000
+    m_ExpandedIDs: 00000000186300001a6300001c6300001e630000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1152,18 +1152,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: c6230000fc6600005c8500003052000010090100d8080100660701001a0901001c090100081e0100ee67000066670000f0fc0000220b010032680000ca7900006a6700009268000036820000388200000c82000046aa0000be780000867300005290000092ab000062ac0000bcc7000004ba0000667800009c520000ba64000088e50100a6e8000094ac0000fcfe0000a21e0100deaa0000647300003c830000bcfd0100aafd0100807e0000c2eb0000eaea0000ec5901002e5a0100ae860000501b0100926c0700a68807000e820000d685000078f60200189600000af802003453000054fc0200a2e8000046460300fce8000076ee0000ae8d0000e2970000b49f00001a930000761c01004ecb00001cf500009cf500001cad0000be9a0200e62e010060a00000929c0000daa00000a8a000006a9f0000349c0000ae9d0000bca400003c9e0000f6aa00004ca30000486e00008cac0000dea20000526e0000c4a3000012a30000a0a4000036b1000084a40000eead00009aac00007eaf0000eab60000e86d0000dcab00003ea3000094b300007cb1000090d500008ece0100a8d0010010de0000be0a0100bc0b0100b6e40000fad40000561d010082a300004e5801009ea200009a5801006ab000003aa30000aad20000a4b00a00b0e40000e4e500002ab100002eb20000242d0200d2c000002a5501005e530000a035020018b1000052ea0000d8c30000ec6a0000ec530000cac3000066410100f8c4000032d0000010540000000000007c020100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: AudioLink
+      m_OriginalName: AudioLink
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 26026
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:
@@ -1199,9 +1199,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 1010
+    y: 1006
     width: 1876
-    height: 349
+    height: 353
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1292,7 +1292,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 0
+  m_LastVerticalScrollValue: 810
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:
