@@ -244,7 +244,7 @@ public class QuantumShaderUI : ShaderGUI
 
             editor.ShaderProperty(getProperty("_QuantumGlowMultiply" + band), "multiplier", 2);
             editor.ShaderProperty(getProperty("_QGlowColorBand" + band), "Color", 2);
-
+            editor.ShaderProperty(getProperty("_QBlendMode" + band), "Blend Mode", 2);
             editor.ShaderProperty(getProperty("_QBand" + band), "Band", 2);
             editor.ShaderProperty(getProperty("_QType" + band), "Type", 2);
 
