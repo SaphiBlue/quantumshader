@@ -150,6 +150,8 @@ namespace Saphi.QuantumShader
                 GUILayout.Space(10);
                 buildNormalInputs("Normal Map", "Normal Map", "_BumpMap", "_BumpScale");
                 GUILayout.Space(10);
+                buildNormalInputs("Detail Normal Map", "Detail Normal Map", "_DetailNormalMap", "_DetailNormalMapScale");
+                GUILayout.Space(10);
 
                 buildPBRMaps();
 
