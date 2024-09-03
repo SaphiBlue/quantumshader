@@ -1,0 +1,175 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Band3
+  m_Shader: {fileID: 4800000, guid: 1ebd05cdb1295224cb6ca27d9dd3253a, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - _QBANDENABLE1_ON
+  - _QENABLEGLOBAL_ON
+  - _USEUVASDIRECTIONUV_ON
+  - _USEUVASDIRECTION_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _QDirection:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _QGlowMap:
+        m_Texture: {fileID: 2800000, guid: 86516a96fce6fff42bc8d36e4130a3f7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _Culling: 2
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _Emission: 1
+    - _EnableEmission: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _QBand1: 2
+    - _QBand2: 1
+    - _QBand3: 2
+    - _QBand4: 3
+    - _QBandEnable1: 1
+    - _QBandEnable2: 0
+    - _QBandEnable3: 0
+    - _QBandEnable4: 0
+    - _QBlendMode1: 1
+    - _QBlendMode2: 0
+    - _QBlendMode3: 0
+    - _QBlendMode4: 0
+    - _QColorOffset1: 0
+    - _QColorOffset2: 0
+    - _QColorOffset3: 0
+    - _QColorOffset4: 0
+    - _QColorRotationMode1: 0
+    - _QColorRotationMode2: 0
+    - _QColorRotationMode3: 0
+    - _QColorRotationMode4: 0
+    - _QColorRotationSpeed1: 0
+    - _QColorRotationSpeed2: 0
+    - _QColorRotationSpeed3: 0
+    - _QColorRotationSpeed4: 0
+    - _QEffectScale1: 1
+    - _QEffectScale2: 1
+    - _QEffectScale3: 1
+    - _QEffectScale4: 1
+    - _QEnableGlobal: 1
+    - _QHistory1: 128
+    - _QHistory2: 32
+    - _QHistory3: 32
+    - _QHistory4: 32
+    - _QInvertDirection1: 0
+    - _QInvertDirection2: 0
+    - _QInvertDirection3: 0
+    - _QInvertDirection4: 0
+    - _QSmoothHistory: 1
+    - _QType1: 0
+    - _QType2: 0
+    - _QType3: 0
+    - _QType4: 0
+    - _QUseColorRotation1: 0
+    - _QUseColorRotation2: 0
+    - _QUseColorRotation3: 0
+    - _QUseColorRotation4: 0
+    - _QuantumGlowMultiply1: 1
+    - _QuantumGlowMultiply2: 1
+    - _QuantumGlowMultiply3: 1
+    - _QuantumGlowMultiply4: 1
+    - _QuantumGlowMultiplyGlobal: 1
+    - _Roughness: 1
+    - _ShowMain: 0
+    - _ShowQuantum: 1
+    - _ShowQuantumBand1: 1
+    - _ShowQuantumBand2: 0
+    - _ShowQuantumBand3: 0
+    - _ShowQuantumBand4: 0
+    - _ShowRendering: 0
+    - _SmoothnessTextureChannel: 0
+    - _Specular: 0
+    - _SpecularCorretive: 0.1
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _UVSec: 0
+    - _UseUVAsDirection: 1
+    - _UseUVAsDirectionUV: 1
+    - _ZWrite: 1
+    - __dirty: 1
+    m_Colors:
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _QGlowColorBand1: {r: 1, g: 1, b: 1, a: 0}
+    - _QGlowColorBand2: {r: 1, g: 1, b: 1, a: 0}
+    - _QGlowColorBand3: {r: 1, g: 1, b: 1, a: 0}
+    - _QGlowColorBand4: {r: 1, g: 1, b: 1, a: 0}
+    - _QuantumGlowColor: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []

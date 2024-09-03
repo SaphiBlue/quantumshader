@@ -16,34 +16,34 @@ Shader "Saphi/QuantumShaderSpecular"
 		[HDR]_QuantumGlowColor("QuantumGlowColor", Color) = (1,1,1,0)
 		[ToggleUI]_QSmoothHistory("Q Smooth History", Float) = 1
 		[HDR]_QGlowColorBand1("QGlowColorBand1", Color) = (1,1,1,0)
-		[Toggle]_QUseColorRotation3("QUseColorRotation3", Float) = 0
 		[Toggle]_QUseColorRotation1("QUseColorRotation1", Float) = 0
-		[Toggle]_QInvertDirection1("QInvertDirection1", Float) = 0
 		[Toggle]_QUseColorRotation2("QUseColorRotation2", Float) = 0
+		[Toggle]_QUseColorRotation3("QUseColorRotation3", Float) = 0
+		[Toggle]_QInvertDirection1("QInvertDirection1", Float) = 0
 		[Toggle]_QUseColorRotation4("QUseColorRotation4", Float) = 0
-		[Enum(whole color,0,whole color direction,1,gradient wave,2,gradient direction,3)]_QType1("QType1", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode1("QBlendMode1", Int) = 0
+		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4)]_QType1("QType1", Int) = 0
 		[Enum(Overlay,0,Multiply,1)]_QBlendMode4("QBlendMode1", Int) = 0
-		[Enum(whole color,0,whole color direction,1,gradient wave,2,gradient direction,3)]_QType4("QType4", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode3("QBlendMode1", Int) = 0
-		[Enum(whole color,0,whole color direction,1,gradient wave,2,gradient direction,3)]_QType3("QType3", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode2("QBlendMode1", Int) = 0
-		[Enum(whole color,0,whole color direction,1,gradient wave,2,gradient direction,3)]_QType2("QType2", Int) = 0
+		[Enum(Overlay,0,Multiply,1)]_QBlendMode1("QBlendMode1", Int) = 0
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand1("QBand1", Int) = 0
+		[Enum(Whole color,0,Whole color direction,1,Gradient wave,2,Gradient direction,3,Static Color,4)]_QType2("QType2", Int) = 0
+		[Enum(Overlay,0,Multiply,1)]_QBlendMode2("QBlendMode1", Int) = 0
+		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4)]_QType4("QType4", Int) = 0
+		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4)]_QType3("QType3", Int) = 0
+		[Enum(Overlay,0,Multiply,1)]_QBlendMode3("QBlendMode1", Int) = 0
 		_QColorOffset1("QColorOffset1", Range( 0 , 1)) = 0
-		_QColorRotationSpeed2("QColorRotationSpeed2", Range( 0 , 1)) = 0
-		_QEffectScale2("QEffectScale2", Range( 0 , 1)) = 1
-		_QHistory1("QHistory1", Range( 0 , 128)) = 32
-		[IntRange]_QColorRotationMode3("QColorRotationMode3", Range( 0 , 3)) = 0
 		_QEffectScale1("QEffectScale1", Range( 0 , 1)) = 1
-		_QColorRotationSpeed3("QColorRotationSpeed3", Range( 0 , 1)) = 0
-		[IntRange]_QColorRotationMode2("QColorRotationMode2", Range( 0 , 3)) = 0
 		[IntRange]_QColorRotationMode4("QColorRotationMode4", Range( 0 , 3)) = 0
-		_QColorRotationSpeed1("QColorRotationSpeed1", Range( 0 , 1)) = 0
 		_QColorRotationSpeed4("QColorRotationSpeed4", Range( 0 , 1)) = 0
+		_QEffectScale2("QEffectScale2", Range( 0 , 1)) = 1
 		_QEffectScale4("QEffectScale4", Range( 0 , 1)) = 1
-		_QEffectScale3("QEffectScale3", Range( 0 , 1)) = 1
 		[IntRange]_QColorRotationMode1("QColorRotationMode1", Range( 0 , 3)) = 0
+		[IntRange]_QColorRotationMode2("QColorRotationMode2", Range( 0 , 3)) = 0
+		_QEffectScale3("QEffectScale3", Range( 0 , 1)) = 1
+		_QColorRotationSpeed3("QColorRotationSpeed3", Range( 0 , 1)) = 0
+		[IntRange]_QColorRotationMode3("QColorRotationMode3", Range( 0 , 3)) = 0
+		_QHistory1("QHistory1", Range( 0 , 128)) = 32
+		_QColorRotationSpeed2("QColorRotationSpeed2", Range( 0 , 1)) = 0
+		_QColorRotationSpeed1("QColorRotationSpeed1", Range( 0 , 1)) = 0
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand2("QBand2", Int) = 1
 		[HDR]_QGlowColorBand2("QGlowColorBand2", Color) = (1,1,1,0)
 		[Toggle]_QBandEnable3("QBandEnable3", Float) = 0
@@ -76,6 +76,7 @@ Shader "Saphi/QuantumShaderSpecular"
 		_QuantumGlowMultiplyGlobal("QuantumGlowMultiplyGlobal", Float) = 1
 		[Toggle]_UseUVAsDirectionUV("UseUVAsDirectionUV", Float) = 0
 		[Toggle]_UseUVAsDirection("UseUVAsDirection", Float) = 0
+		[Enum(UnityEngine.Rendering.CullMode)]_Culling("Culling", Float) = 2
 		_ShowMain("ShowMain", Float) = 0
 		[Toggle]_EnableEmission("EnableEmission", Float) = 0
 		_Emission("Emission", Float) = 1
@@ -87,7 +88,7 @@ Shader "Saphi/QuantumShaderSpecular"
 	SubShader
 	{
 		Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry+0" "IsEmissive" = "true"  }
-		Cull Back
+		Cull [_Culling]
 		CGPROGRAM
 		#include "UnityStandardUtils.cginc"
 		#pragma target 4.0
@@ -106,6 +107,7 @@ Shader "Saphi/QuantumShaderSpecular"
 		uniform int _QBlendMode2;
 		uniform float _ShowRendering;
 		uniform float _ShowMain;
+		uniform float _Culling;
 		uniform sampler2D _BumpMap;
 		uniform float4 _BumpMap_ST;
 		uniform float _BumpScale;
@@ -394,7 +396,11 @@ Shader "Saphi/QuantumShaderSpecular"
 			float4 ifLocalVar51_g178 = 0;
 			if( temp_output_52_0_g178 == 3.0 )
 				ifLocalVar51_g178 = localAudioLinkLerp1_g181;
-			float4 temp_output_53_0_g178 = ( ifLocalVar49_g178 + ifLocalVar79_g178 + ifLocalVar50_g178 + ifLocalVar51_g178 );
+			float4 color111_g178 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g178 = 0;
+			if( temp_output_52_0_g178 == 4.0 )
+				ifLocalVar110_g178 = color111_g178;
+			float4 temp_output_53_0_g178 = ( ifLocalVar49_g178 + ifLocalVar79_g178 + ifLocalVar50_g178 + ifLocalVar51_g178 + ifLocalVar110_g178 );
 			float4 temp_output_2_0_g184 = temp_output_53_0_g178;
 			float4 ifLocalVar107_g178 = 0;
 			if( temp_output_106_0_g178 == 0.0 )
@@ -411,8 +417,8 @@ Shader "Saphi/QuantumShaderSpecular"
 			float Delay3_g177 = (( _QSmoothHistory )?( temp_output_5_0_g170 ):( floor( temp_output_5_0_g170 ) ));
 			float localAudioLinkLerp3_g177 = AudioLinkLerp3_g177( Band3_g177 , Delay3_g177 );
 			float temp_output_8_0_g170 = localAudioLinkLerp3_g177;
-			float4 temp_cast_9 = (temp_output_8_0_g170).xxxx;
-			float4 temp_output_1_0_g176 = temp_cast_9;
+			float4 temp_cast_11 = (temp_output_8_0_g170).xxxx;
+			float4 temp_output_1_0_g176 = temp_cast_11;
 			float4 break5_g176 = temp_output_1_0_g176;
 			int temp_output_52_0_g170 = _QType2;
 			float temp_output_29_0_g170 = _QColorOffset2;
@@ -441,7 +447,11 @@ Shader "Saphi/QuantumShaderSpecular"
 			float4 ifLocalVar51_g170 = 0;
 			if( temp_output_52_0_g170 == 3.0 )
 				ifLocalVar51_g170 = localAudioLinkLerp1_g173;
-			float4 temp_output_53_0_g170 = ( ifLocalVar49_g170 + ifLocalVar79_g170 + ifLocalVar50_g170 + ifLocalVar51_g170 );
+			float4 color111_g170 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g170 = 0;
+			if( temp_output_52_0_g170 == 4.0 )
+				ifLocalVar110_g170 = color111_g170;
+			float4 temp_output_53_0_g170 = ( ifLocalVar49_g170 + ifLocalVar79_g170 + ifLocalVar50_g170 + ifLocalVar51_g170 + ifLocalVar110_g170 );
 			float4 temp_output_2_0_g176 = temp_output_53_0_g170;
 			float4 ifLocalVar107_g170 = 0;
 			if( temp_output_106_0_g170 == 0.0 )
@@ -458,8 +468,8 @@ Shader "Saphi/QuantumShaderSpecular"
 			float Delay3_g169 = (( _QSmoothHistory )?( temp_output_5_0_g162 ):( floor( temp_output_5_0_g162 ) ));
 			float localAudioLinkLerp3_g169 = AudioLinkLerp3_g169( Band3_g169 , Delay3_g169 );
 			float temp_output_8_0_g162 = localAudioLinkLerp3_g169;
-			float4 temp_cast_17 = (temp_output_8_0_g162).xxxx;
-			float4 temp_output_1_0_g168 = temp_cast_17;
+			float4 temp_cast_21 = (temp_output_8_0_g162).xxxx;
+			float4 temp_output_1_0_g168 = temp_cast_21;
 			float4 break5_g168 = temp_output_1_0_g168;
 			int temp_output_52_0_g162 = _QType3;
 			float temp_output_29_0_g162 = _QColorOffset3;
@@ -488,7 +498,11 @@ Shader "Saphi/QuantumShaderSpecular"
 			float4 ifLocalVar51_g162 = 0;
 			if( temp_output_52_0_g162 == 3.0 )
 				ifLocalVar51_g162 = localAudioLinkLerp1_g165;
-			float4 temp_output_53_0_g162 = ( ifLocalVar49_g162 + ifLocalVar79_g162 + ifLocalVar50_g162 + ifLocalVar51_g162 );
+			float4 color111_g162 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g162 = 0;
+			if( temp_output_52_0_g162 == 4.0 )
+				ifLocalVar110_g162 = color111_g162;
+			float4 temp_output_53_0_g162 = ( ifLocalVar49_g162 + ifLocalVar79_g162 + ifLocalVar50_g162 + ifLocalVar51_g162 + ifLocalVar110_g162 );
 			float4 temp_output_2_0_g168 = temp_output_53_0_g162;
 			float4 ifLocalVar107_g162 = 0;
 			if( temp_output_106_0_g162 == 0.0 )
@@ -505,8 +519,8 @@ Shader "Saphi/QuantumShaderSpecular"
 			float Delay3_g161 = (( _QSmoothHistory )?( temp_output_5_0_g154 ):( floor( temp_output_5_0_g154 ) ));
 			float localAudioLinkLerp3_g161 = AudioLinkLerp3_g161( Band3_g161 , Delay3_g161 );
 			float temp_output_8_0_g154 = localAudioLinkLerp3_g161;
-			float4 temp_cast_25 = (temp_output_8_0_g154).xxxx;
-			float4 temp_output_1_0_g160 = temp_cast_25;
+			float4 temp_cast_31 = (temp_output_8_0_g154).xxxx;
+			float4 temp_output_1_0_g160 = temp_cast_31;
 			float4 break5_g160 = temp_output_1_0_g160;
 			int temp_output_52_0_g154 = _QType4;
 			float temp_output_29_0_g154 = _QColorOffset4;
@@ -535,7 +549,11 @@ Shader "Saphi/QuantumShaderSpecular"
 			float4 ifLocalVar51_g154 = 0;
 			if( temp_output_52_0_g154 == 3.0 )
 				ifLocalVar51_g154 = localAudioLinkLerp1_g157;
-			float4 temp_output_53_0_g154 = ( ifLocalVar49_g154 + ifLocalVar79_g154 + ifLocalVar50_g154 + ifLocalVar51_g154 );
+			float4 color111_g154 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g154 = 0;
+			if( temp_output_52_0_g154 == 4.0 )
+				ifLocalVar110_g154 = color111_g154;
+			float4 temp_output_53_0_g154 = ( ifLocalVar49_g154 + ifLocalVar79_g154 + ifLocalVar50_g154 + ifLocalVar51_g154 + ifLocalVar110_g154 );
 			float4 temp_output_2_0_g160 = temp_output_53_0_g154;
 			float4 ifLocalVar107_g154 = 0;
 			if( temp_output_106_0_g154 == 0.0 )
@@ -568,11 +586,11 @@ Node;AmplifyShaderEditor.TexturePropertyNode;55;-1776,1552;Inherit;True;Property
 Node;AmplifyShaderEditor.ColorNode;52;-1232,1760;Inherit;False;Property;_EmissionColor;Emission Color;3;1;[HDR];Create;True;0;0;0;False;0;False;0,0,0,0;4,4,4,1;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
 Node;AmplifyShaderEditor.SamplerNode;53;-1264,1552;Inherit;True;Property;_TextureSample5;Texture Sample 2;5;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;56;-880,1552;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;201;-864,1664;Inherit;False;Property;_Emission;Emission;82;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;201;-864,1664;Inherit;False;Property;_Emission;Emission;83;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;202;-704,1552;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.TexturePropertyNode;4;-1760,208;Inherit;True;Property;_MainTex;Main Tex;0;0;Create;True;0;0;0;False;0;False;None;a16b3161c8c05f54ba87ec06bfdd6b82;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.TexturePropertyNode;29;-1760,1120;Inherit;True;Property;_SpecularTextureChannel;Specular Map;6;0;Create;False;0;0;0;False;0;False;None;95bc897e80af50446bc05c7e8d2649ae;False;black;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
-Node;AmplifyShaderEditor.ToggleSwitchNode;203;-560,1552;Inherit;False;Property;_EnableEmission;EnableEmission;81;0;Create;True;0;0;0;False;0;False;0;True;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.ToggleSwitchNode;203;-560,1552;Inherit;False;Property;_EnableEmission;EnableEmission;82;0;Create;True;0;0;0;False;0;False;0;True;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;5;-1456,208;Inherit;False;MainTexTex;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.SamplerNode;28;-1248,1120;Inherit;True;Property;_TextureSample3;Texture Sample 2;5;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
 Node;AmplifyShaderEditor.RegisterLocalVarNode;88;-288,1552;Inherit;False;MainEmission;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
@@ -595,9 +613,10 @@ Node;AmplifyShaderEditor.GetLocalVarNode;65;992,288;Inherit;False;64;Normal;1;0;
 Node;AmplifyShaderEditor.GetLocalVarNode;81;960,384;Inherit;False;179;Emission;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;74;960,208;Inherit;False;63;Albedo;1;0;OBJECT;;False;1;COLOR;0
 Node;AmplifyShaderEditor.DynamicAppendNode;200;912,464;Inherit;False;FLOAT4;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT4;0
-Node;AmplifyShaderEditor.RangedFloatNode;205;-416,1840;Inherit;False;Property;_ShowRendering;ShowRendering;83;0;Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode;195;-416,1744;Inherit;False;Property;_ShowMain;ShowMain;80;0;Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;1296,336;Float;False;True;-1;4;QuantumShaderUI;0;0;StandardSpecular;Saphi/QuantumShaderSpecular;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;;0;False;;False;0;False;;0;False;;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;12;all;True;True;True;True;0;False;;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;2;15;10;25;False;0.5;True;0;0;False;;0;False;;0;0;False;;0;False;;0;False;;0;False;;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;True;Relative;0;;-1;-1;-1;-1;0;False;0;0;False;;-1;0;False;;1;Include;audio;True;1ec20832dfbb48343b8e0764e0864276;Custom;False;0;0;;0;0;False;0.1;False;;0;False;;False;17;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;16;FLOAT4;0,0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.RangedFloatNode;205;-416,1840;Inherit;False;Property;_ShowRendering;ShowRendering;84;0;Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;195;-416,1744;Inherit;False;Property;_ShowMain;ShowMain;81;0;Create;True;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;206;-576,1840;Inherit;False;Property;_Culling;Culling;80;1;[Enum];Create;False;0;1;Option1;0;1;UnityEngine.Rendering.CullMode;True;0;False;2;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;1296,336;Float;False;True;-1;4;QuantumShaderUI;0;0;StandardSpecular;Saphi/QuantumShaderSpecular;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Back;0;False;;0;False;;False;0;False;;0;False;;False;0;Opaque;0.5;True;True;0;False;Opaque;;Geometry;All;12;all;True;True;True;True;0;False;;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;2;15;10;25;False;0.5;True;0;0;False;;0;False;;0;0;False;;0;False;;0;False;;0;False;;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;True;Relative;0;;-1;-1;-1;-1;0;False;0;0;True;_Culling;-1;0;False;;1;Include;audio;True;1ec20832dfbb48343b8e0764e0864276;Custom;False;0;0;;0;0;False;0.1;False;;0;False;;False;17;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT;0;False;5;FLOAT;0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0;False;9;FLOAT;0;False;10;FLOAT;0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;16;FLOAT4;0,0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;53;0;55;0
 WireConnection;56;0;53;0
 WireConnection;56;1;52;0
@@ -628,4 +647,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;200;0
 WireConnection;0;4;199;3
 ASEEND*/
-//CHKSM=96287A850F576FE719706BCE0EC0A5488F575776
+//CHKSM=791705E8697664A7546E3B1476F9A1BEB32940EB

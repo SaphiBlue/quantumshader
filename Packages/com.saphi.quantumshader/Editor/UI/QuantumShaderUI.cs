@@ -142,7 +142,7 @@ public class QuantumShaderUI : ShaderGUI
             buildTextureInputs("Main Texture", "Main Color/Albedo", "_MainTex", "_Color");
             GUILayout.Space(10);
             editor.ShaderProperty(getProperty("_EnableEmission"), "Enable Emission", 0);
-            editor.ShaderProperty(getProperty("_Emission"), "Emission multiplier", 0);
+            editor.ShaderProperty(getProperty("_Emission"), "Emission Multiplier", 0);
             buildTextureInputs("Main Emission", "Emission with Color", "_EmissionMap", "_EmissionColor");
             GUILayout.Space(10);
             buildNormalInputs("Normal Map", "Normal Map", "_BumpMap", "_BumpScale");
@@ -157,6 +157,7 @@ public class QuantumShaderUI : ShaderGUI
             if (target.shader == shaderBasicPBR || target.shader == shaderPackedPBR)
             {
                 editor.ShaderProperty(getProperty("_SpecularCorretive"), "Specular Corrective", 2);
+                editor.ShaderProperty(getProperty("_Metallic"), "Metallic", 2);
                 editor.ShaderProperty(getProperty("_Specular"), "Specular", 2);
                 editor.ShaderProperty(getProperty("_Roughness"), "Roughness", 2);
             }
@@ -242,7 +243,7 @@ public class QuantumShaderUI : ShaderGUI
             editor.ShaderProperty(getProperty("_QInvertDirection" + band), "Invert Dircection", 2);
 
 
-            editor.ShaderProperty(getProperty("_QuantumGlowMultiply" + band), "multiplier", 2);
+            editor.ShaderProperty(getProperty("_QuantumGlowMultiply" + band), "Multiplier", 2);
             editor.ShaderProperty(getProperty("_QGlowColorBand" + band), "Color", 2);
             editor.ShaderProperty(getProperty("_QBlendMode" + band), "Blend Mode", 2);
             editor.ShaderProperty(getProperty("_QBand" + band), "Band", 2);
@@ -282,11 +283,14 @@ public class QuantumShaderUI : ShaderGUI
         if (showRendering)
         {
             target.SetFloat(toggle, 1);
-            
+
+            EditorGUI.indentLevel += 2;
+            editor.ShaderProperty(getProperty("_Culling"), "Culling", 0);
             editor.RenderQueueField();
             editor.EnableInstancingField();
             editor.DoubleSidedGIField();
             editor.LightmapEmissionProperty();
+            EditorGUI.indentLevel -= 2;
         }
         else
         {
