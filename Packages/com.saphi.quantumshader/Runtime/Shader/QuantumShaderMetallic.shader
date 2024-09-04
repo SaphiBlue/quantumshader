@@ -23,15 +23,15 @@ Shader "Saphi/QuantumShaderMetallic"
 		[Toggle]_QUseColorRotation3("QUseColorRotation3", Float) = 0
 		[Toggle]_QInvertDirection1("QInvertDirection1", Float) = 0
 		[Toggle]_QUseColorRotation4("QUseColorRotation4", Float) = 0
-		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4)]_QType1("QType1", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode4("QBlendMode1", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode1("QBlendMode1", Int) = 0
+		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4,Hue Rotation,5)]_QType1("QType1", Int) = 0
+		[Enum(Overlay,0,Multiply,1,Direct no wave,2)]_QBlendMode4("QBlendMode1", Int) = 0
+		[Enum(Overlay,0,Multiply,1,Direct no wave,2)]_QBlendMode1("QBlendMode1", Int) = 0
 		[Enum(Band 1,0,Band 2,1,Band 3,2,Band 4,3)]_QBand1("QBand1", Int) = 0
-		[Enum(Whole color,0,Whole color direction,1,Gradient wave,2,Gradient direction,3,Static Color,4)]_QType2("QType2", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode2("QBlendMode1", Int) = 0
-		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4)]_QType4("QType4", Int) = 0
-		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4)]_QType3("QType3", Int) = 0
-		[Enum(Overlay,0,Multiply,1)]_QBlendMode3("QBlendMode1", Int) = 0
+		[Enum(Whole color,0,Whole color direction,1,Gradient wave,2,Gradient direction,3,Static Color,4,Hue Rotation,5)]_QType2("QType2", Int) = 0
+		[Enum(Overlay,0,Multiply,1,Direct no wave,2)]_QBlendMode2("QBlendMode1", Int) = 0
+		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4,Hue Rotation,5)]_QType4("QType4", Int) = 0
+		[Enum(Whole Color,0,Whole Color Direction,1,Gradient Wave,2,Gradient Direction,3,Static Color,4,Hue Rotation,5)]_QType3("QType3", Int) = 0
+		[Enum(Overlay,0,Multiply,1,Direct no wave,2)]_QBlendMode3("QBlendMode1", Int) = 0
 		_QColorOffset1("QColorOffset1", Range( 0 , 1)) = 0
 		_QEffectScale1("QEffectScale1", Range( 0 , 1)) = 1
 		[IntRange]_QColorRotationMode4("QColorRotationMode4", Range( 0 , 3)) = 0
@@ -189,145 +189,153 @@ Shader "Saphi/QuantumShaderMetallic"
 		uniform float4 _MetallicGlossMap_ST;
 
 
-		inline float AudioLinkLerp3_g185( int Band, float Delay )
+		inline float AudioLinkLerp3_g217( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g182( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g214( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float4 AudioLinkData1_g179( int Index )
+		inline float4 AudioLinkData1_g211( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkData1_g183( int Index )
+		inline float4 AudioLinkData1_g215( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g180( float Position )
+		inline float4 AudioLinkLerp1_g212( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g181( float Position )
+		inline float4 AudioLinkLerp1_g213( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float AudioLinkLerp3_g177( int Band, float Delay )
+		float3 HSVToRGB( float3 c )
+		{
+			float4 K = float4( 1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0 );
+			float3 p = abs( frac( c.xxx + K.xyz ) * 6.0 - K.www );
+			return c.z * lerp( K.xxx, saturate( p - K.xxx ), c.y );
+		}
+
+
+		inline float AudioLinkLerp3_g209( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g174( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g206( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float4 AudioLinkData1_g171( int Index )
+		inline float4 AudioLinkData1_g203( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkData1_g175( int Index )
+		inline float4 AudioLinkData1_g207( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g172( float Position )
+		inline float4 AudioLinkLerp1_g204( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g173( float Position )
+		inline float4 AudioLinkLerp1_g205( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float AudioLinkLerp3_g169( int Band, float Delay )
+		inline float AudioLinkLerp3_g201( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g166( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g198( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float4 AudioLinkData1_g163( int Index )
+		inline float4 AudioLinkData1_g195( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkData1_g167( int Index )
+		inline float4 AudioLinkData1_g199( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g164( float Position )
+		inline float4 AudioLinkLerp1_g196( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g165( float Position )
+		inline float4 AudioLinkLerp1_g197( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float AudioLinkLerp3_g161( int Band, float Delay )
+		inline float AudioLinkLerp3_g193( int Band, float Delay )
 		{
 			return AudioLinkLerp( ALPASS_AUDIOLINK + float2( Delay, Band ) ).r;
 		}
 
 
-		inline int AudioLinkDecodeDataAsUInt6_g158( int Band, int Mode )
+		inline int AudioLinkDecodeDataAsUInt6_g190( int Band, int Mode )
 		{
 			return AudioLinkDecodeDataAsUInt( ALPASS_CHRONOTENSITY + int2(Mode, Band));
 		}
 
 
-		inline float4 AudioLinkData1_g155( int Index )
+		inline float4 AudioLinkData1_g187( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkData1_g159( int Index )
+		inline float4 AudioLinkData1_g191( int Index )
 		{
 			return AudioLinkData( ALPASS_CCLIGHTS + uint2( Index, 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g156( float Position )
+		inline float4 AudioLinkLerp1_g188( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
 
 
-		inline float4 AudioLinkLerp1_g157( float Position )
+		inline float4 AudioLinkLerp1_g189( float Position )
 		{
 			return AudioLinkLerp( ALPASS_CCSTRIP + float2( Position * 128., 0 ) ).rgba;;
 		}
@@ -361,214 +369,246 @@ Shader "Saphi/QuantumShaderMetallic"
 			float4 GlowMap7_g116 = tex2D( _QGlowMap, uv_QGlowMap );
 			float4 break12_g116 = GlowMap7_g116;
 			float GlowMap130_g116 = break12_g116.r;
-			int temp_output_106_0_g178 = _QBlendMode1;
-			int temp_output_27_0_g178 = _QBand1;
-			int Band3_g185 = temp_output_27_0_g178;
+			int temp_output_106_0_g210 = _QBlendMode1;
+			int temp_output_27_0_g210 = _QBand1;
+			int Band3_g217 = temp_output_27_0_g210;
 			float2 uv_QDirection = i.uv_texcoord * _QDirection_ST.xy + _QDirection_ST.zw;
 			float4 DirectionMap5_g116 = tex2D( _QDirection, uv_QDirection );
 			float Direction11_g116 = (( _UseUVAsDirection )?( (( _UseUVAsDirectionUV )?( i.uv_texcoord.y ):( i.uv_texcoord.x )) ):( DirectionMap5_g116.r ));
-			float temp_output_1_0_g178 = (( _QInvertDirection1 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
-			float temp_output_5_0_g178 = ( _QHistory1 * temp_output_1_0_g178 );
-			float Delay3_g185 = (( _QSmoothHistory )?( temp_output_5_0_g178 ):( floor( temp_output_5_0_g178 ) ));
-			float localAudioLinkLerp3_g185 = AudioLinkLerp3_g185( Band3_g185 , Delay3_g185 );
-			float temp_output_8_0_g178 = localAudioLinkLerp3_g185;
-			float4 temp_cast_1 = (temp_output_8_0_g178).xxxx;
-			float4 temp_output_1_0_g184 = temp_cast_1;
-			float4 break5_g184 = temp_output_1_0_g184;
-			int temp_output_52_0_g178 = _QType1;
-			float temp_output_29_0_g178 = _QColorOffset1;
-			int Band6_g182 = temp_output_27_0_g178;
-			int Mode6_g182 = ( ( (int)_QColorRotationMode1 * 2 ) + (int)_QColorRotationSpeed1 );
-			int localAudioLinkDecodeDataAsUInt6_g182 = AudioLinkDecodeDataAsUInt6_g182( Band6_g182 , Mode6_g182 );
-			float temp_output_95_0_g178 = ( ( ( ( localAudioLinkDecodeDataAsUInt6_g182 % 628319 ) / 100000.0 ) / 6.28318548202515 ) * (int)(( _QUseColorRotation1 )?( 1.0 ):( 0.0 )) );
-			float temp_output_103_0_g178 = _QEffectScale1;
-			int Index1_g179 = (int)floor( ( frac( ( ( temp_output_29_0_g178 + temp_output_95_0_g178 ) * temp_output_103_0_g178 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g179 = AudioLinkData1_g179( Index1_g179 );
-			float4 ifLocalVar49_g178 = 0;
-			if( temp_output_52_0_g178 == 0.0 )
-				ifLocalVar49_g178 = localAudioLinkData1_g179;
-			int Index1_g183 = (int)floor( ( frac( ( ( temp_output_29_0_g178 + temp_output_95_0_g178 + temp_output_1_0_g178 ) * temp_output_103_0_g178 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g183 = AudioLinkData1_g183( Index1_g183 );
-			float4 ifLocalVar79_g178 = 0;
-			if( temp_output_52_0_g178 == 1.0 )
-				ifLocalVar79_g178 = localAudioLinkData1_g183;
-			float Position1_g180 = saturate( frac( ( ( temp_output_8_0_g178 + temp_output_29_0_g178 + temp_output_95_0_g178 ) * temp_output_103_0_g178 ) ) );
-			float4 localAudioLinkLerp1_g180 = AudioLinkLerp1_g180( Position1_g180 );
-			float4 ifLocalVar50_g178 = 0;
-			if( temp_output_52_0_g178 == 2.0 )
-				ifLocalVar50_g178 = localAudioLinkLerp1_g180;
-			float Position1_g181 = saturate( frac( ( ( temp_output_29_0_g178 + temp_output_1_0_g178 + temp_output_95_0_g178 ) * temp_output_103_0_g178 ) ) );
-			float4 localAudioLinkLerp1_g181 = AudioLinkLerp1_g181( Position1_g181 );
-			float4 ifLocalVar51_g178 = 0;
-			if( temp_output_52_0_g178 == 3.0 )
-				ifLocalVar51_g178 = localAudioLinkLerp1_g181;
-			float4 color111_g178 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
-			float4 ifLocalVar110_g178 = 0;
-			if( temp_output_52_0_g178 == 4.0 )
-				ifLocalVar110_g178 = color111_g178;
-			float4 temp_output_53_0_g178 = ( ifLocalVar49_g178 + ifLocalVar79_g178 + ifLocalVar50_g178 + ifLocalVar51_g178 + ifLocalVar110_g178 );
-			float4 temp_output_2_0_g184 = temp_output_53_0_g178;
-			float4 ifLocalVar107_g178 = 0;
-			if( temp_output_106_0_g178 == 0.0 )
-				ifLocalVar107_g178 = ( ( ( break5_g184.r * 0.2 ) + ( break5_g184.g * 0.7 ) + ( break5_g184.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g184 * temp_output_2_0_g184 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g184 ) * ( 1.0 - temp_output_2_0_g184 ) ) ) );
-			float4 ifLocalVar108_g178 = 0;
-			if( temp_output_106_0_g178 == 1.0 )
-				ifLocalVar108_g178 = ( temp_output_8_0_g178 * temp_output_53_0_g178 );
+			float temp_output_1_0_g210 = (( _QInvertDirection1 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
+			float temp_output_5_0_g210 = ( _QHistory1 * temp_output_1_0_g210 );
+			float Delay3_g217 = (( _QSmoothHistory )?( temp_output_5_0_g210 ):( floor( temp_output_5_0_g210 ) ));
+			float localAudioLinkLerp3_g217 = AudioLinkLerp3_g217( Band3_g217 , Delay3_g217 );
+			float temp_output_8_0_g210 = localAudioLinkLerp3_g217;
+			float4 temp_cast_1 = (temp_output_8_0_g210).xxxx;
+			float4 temp_output_1_0_g216 = temp_cast_1;
+			float4 break5_g216 = temp_output_1_0_g216;
+			int temp_output_52_0_g210 = _QType1;
+			float temp_output_29_0_g210 = _QColorOffset1;
+			int Band6_g214 = temp_output_27_0_g210;
+			int Mode6_g214 = ( ( (int)_QColorRotationMode1 * 2 ) + (int)_QColorRotationSpeed1 );
+			int localAudioLinkDecodeDataAsUInt6_g214 = AudioLinkDecodeDataAsUInt6_g214( Band6_g214 , Mode6_g214 );
+			float temp_output_55_0_g210 = ( ( ( localAudioLinkDecodeDataAsUInt6_g214 % 628319 ) / 100000.0 ) / 6.28318548202515 );
+			float temp_output_95_0_g210 = ( temp_output_55_0_g210 * (int)(( _QUseColorRotation1 )?( 1.0 ):( 0.0 )) );
+			float temp_output_103_0_g210 = _QEffectScale1;
+			int Index1_g211 = (int)floor( ( frac( ( ( temp_output_29_0_g210 + temp_output_95_0_g210 ) * temp_output_103_0_g210 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g211 = AudioLinkData1_g211( Index1_g211 );
+			float4 ifLocalVar49_g210 = 0;
+			if( temp_output_52_0_g210 == 0.0 )
+				ifLocalVar49_g210 = localAudioLinkData1_g211;
+			int Index1_g215 = (int)floor( ( frac( ( ( temp_output_29_0_g210 + temp_output_95_0_g210 + temp_output_1_0_g210 ) * temp_output_103_0_g210 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g215 = AudioLinkData1_g215( Index1_g215 );
+			float4 ifLocalVar79_g210 = 0;
+			if( temp_output_52_0_g210 == 1.0 )
+				ifLocalVar79_g210 = localAudioLinkData1_g215;
+			float Position1_g212 = saturate( frac( ( ( temp_output_8_0_g210 + temp_output_29_0_g210 + temp_output_95_0_g210 ) * temp_output_103_0_g210 ) ) );
+			float4 localAudioLinkLerp1_g212 = AudioLinkLerp1_g212( Position1_g212 );
+			float4 ifLocalVar50_g210 = 0;
+			if( temp_output_52_0_g210 == 2.0 )
+				ifLocalVar50_g210 = localAudioLinkLerp1_g212;
+			float Position1_g213 = saturate( frac( ( ( temp_output_29_0_g210 + temp_output_1_0_g210 + temp_output_95_0_g210 ) * temp_output_103_0_g210 ) ) );
+			float4 localAudioLinkLerp1_g213 = AudioLinkLerp1_g213( Position1_g213 );
+			float4 ifLocalVar51_g210 = 0;
+			if( temp_output_52_0_g210 == 3.0 )
+				ifLocalVar51_g210 = localAudioLinkLerp1_g213;
+			float4 color111_g210 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g210 = 0;
+			if( temp_output_52_0_g210 == 4.0 )
+				ifLocalVar110_g210 = color111_g210;
+			float3 hsvTorgb116_g210 = HSVToRGB( float3(temp_output_55_0_g210,1.0,1.0) );
+			float3 ifLocalVar117_g210 = 0;
+			if( temp_output_52_0_g210 == 5.0 )
+				ifLocalVar117_g210 = hsvTorgb116_g210;
+			float4 temp_output_53_0_g210 = ( ifLocalVar49_g210 + ifLocalVar79_g210 + ifLocalVar50_g210 + ifLocalVar51_g210 + ifLocalVar110_g210 + float4( ifLocalVar117_g210 , 0.0 ) );
+			float4 temp_output_2_0_g216 = temp_output_53_0_g210;
+			float4 ifLocalVar107_g210 = 0;
+			if( temp_output_106_0_g210 == 0.0 )
+				ifLocalVar107_g210 = ( ( ( break5_g216.r * 0.2 ) + ( break5_g216.g * 0.7 ) + ( break5_g216.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g216 * temp_output_2_0_g216 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g216 ) * ( 1.0 - temp_output_2_0_g216 ) ) ) );
+			float4 ifLocalVar108_g210 = 0;
+			if( temp_output_106_0_g210 == 1.0 )
+				ifLocalVar108_g210 = ( temp_output_8_0_g210 * temp_output_53_0_g210 );
+			float4 ifLocalVar112_g210 = 0;
+			if( temp_output_106_0_g210 == 2.0 )
+				ifLocalVar112_g210 = temp_output_53_0_g210;
 			float GlowMap232_g116 = break12_g116.g;
-			int temp_output_106_0_g170 = _QBlendMode2;
-			int temp_output_27_0_g170 = _QBand2;
-			int Band3_g177 = temp_output_27_0_g170;
-			float temp_output_1_0_g170 = (( _QInvertDirection2 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
-			float temp_output_5_0_g170 = ( _QHistory2 * temp_output_1_0_g170 );
-			float Delay3_g177 = (( _QSmoothHistory )?( temp_output_5_0_g170 ):( floor( temp_output_5_0_g170 ) ));
-			float localAudioLinkLerp3_g177 = AudioLinkLerp3_g177( Band3_g177 , Delay3_g177 );
-			float temp_output_8_0_g170 = localAudioLinkLerp3_g177;
-			float4 temp_cast_11 = (temp_output_8_0_g170).xxxx;
-			float4 temp_output_1_0_g176 = temp_cast_11;
-			float4 break5_g176 = temp_output_1_0_g176;
-			int temp_output_52_0_g170 = _QType2;
-			float temp_output_29_0_g170 = _QColorOffset2;
-			int Band6_g174 = temp_output_27_0_g170;
-			int Mode6_g174 = ( ( (int)_QColorRotationMode2 * 2 ) + (int)_QColorRotationSpeed2 );
-			int localAudioLinkDecodeDataAsUInt6_g174 = AudioLinkDecodeDataAsUInt6_g174( Band6_g174 , Mode6_g174 );
-			float temp_output_95_0_g170 = ( ( ( ( localAudioLinkDecodeDataAsUInt6_g174 % 628319 ) / 100000.0 ) / 6.28318548202515 ) * (int)(( _QUseColorRotation2 )?( 1.0 ):( 0.0 )) );
-			float temp_output_103_0_g170 = _QEffectScale2;
-			int Index1_g171 = (int)floor( ( frac( ( ( temp_output_29_0_g170 + temp_output_95_0_g170 ) * temp_output_103_0_g170 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g171 = AudioLinkData1_g171( Index1_g171 );
-			float4 ifLocalVar49_g170 = 0;
-			if( temp_output_52_0_g170 == 0.0 )
-				ifLocalVar49_g170 = localAudioLinkData1_g171;
-			int Index1_g175 = (int)floor( ( frac( ( ( temp_output_29_0_g170 + temp_output_95_0_g170 + temp_output_1_0_g170 ) * temp_output_103_0_g170 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g175 = AudioLinkData1_g175( Index1_g175 );
-			float4 ifLocalVar79_g170 = 0;
-			if( temp_output_52_0_g170 == 1.0 )
-				ifLocalVar79_g170 = localAudioLinkData1_g175;
-			float Position1_g172 = saturate( frac( ( ( temp_output_8_0_g170 + temp_output_29_0_g170 + temp_output_95_0_g170 ) * temp_output_103_0_g170 ) ) );
-			float4 localAudioLinkLerp1_g172 = AudioLinkLerp1_g172( Position1_g172 );
-			float4 ifLocalVar50_g170 = 0;
-			if( temp_output_52_0_g170 == 2.0 )
-				ifLocalVar50_g170 = localAudioLinkLerp1_g172;
-			float Position1_g173 = saturate( frac( ( ( temp_output_29_0_g170 + temp_output_1_0_g170 + temp_output_95_0_g170 ) * temp_output_103_0_g170 ) ) );
-			float4 localAudioLinkLerp1_g173 = AudioLinkLerp1_g173( Position1_g173 );
-			float4 ifLocalVar51_g170 = 0;
-			if( temp_output_52_0_g170 == 3.0 )
-				ifLocalVar51_g170 = localAudioLinkLerp1_g173;
-			float4 color111_g170 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
-			float4 ifLocalVar110_g170 = 0;
-			if( temp_output_52_0_g170 == 4.0 )
-				ifLocalVar110_g170 = color111_g170;
-			float4 temp_output_53_0_g170 = ( ifLocalVar49_g170 + ifLocalVar79_g170 + ifLocalVar50_g170 + ifLocalVar51_g170 + ifLocalVar110_g170 );
-			float4 temp_output_2_0_g176 = temp_output_53_0_g170;
-			float4 ifLocalVar107_g170 = 0;
-			if( temp_output_106_0_g170 == 0.0 )
-				ifLocalVar107_g170 = ( ( ( break5_g176.r * 0.2 ) + ( break5_g176.g * 0.7 ) + ( break5_g176.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g176 * temp_output_2_0_g176 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g176 ) * ( 1.0 - temp_output_2_0_g176 ) ) ) );
-			float4 ifLocalVar108_g170 = 0;
-			if( temp_output_106_0_g170 == 1.0 )
-				ifLocalVar108_g170 = ( temp_output_8_0_g170 * temp_output_53_0_g170 );
+			int temp_output_106_0_g202 = _QBlendMode2;
+			int temp_output_27_0_g202 = _QBand2;
+			int Band3_g209 = temp_output_27_0_g202;
+			float temp_output_1_0_g202 = (( _QInvertDirection2 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
+			float temp_output_5_0_g202 = ( _QHistory2 * temp_output_1_0_g202 );
+			float Delay3_g209 = (( _QSmoothHistory )?( temp_output_5_0_g202 ):( floor( temp_output_5_0_g202 ) ));
+			float localAudioLinkLerp3_g209 = AudioLinkLerp3_g209( Band3_g209 , Delay3_g209 );
+			float temp_output_8_0_g202 = localAudioLinkLerp3_g209;
+			float4 temp_cast_16 = (temp_output_8_0_g202).xxxx;
+			float4 temp_output_1_0_g208 = temp_cast_16;
+			float4 break5_g208 = temp_output_1_0_g208;
+			int temp_output_52_0_g202 = _QType2;
+			float temp_output_29_0_g202 = _QColorOffset2;
+			int Band6_g206 = temp_output_27_0_g202;
+			int Mode6_g206 = ( ( (int)_QColorRotationMode2 * 2 ) + (int)_QColorRotationSpeed2 );
+			int localAudioLinkDecodeDataAsUInt6_g206 = AudioLinkDecodeDataAsUInt6_g206( Band6_g206 , Mode6_g206 );
+			float temp_output_55_0_g202 = ( ( ( localAudioLinkDecodeDataAsUInt6_g206 % 628319 ) / 100000.0 ) / 6.28318548202515 );
+			float temp_output_95_0_g202 = ( temp_output_55_0_g202 * (int)(( _QUseColorRotation2 )?( 1.0 ):( 0.0 )) );
+			float temp_output_103_0_g202 = _QEffectScale2;
+			int Index1_g203 = (int)floor( ( frac( ( ( temp_output_29_0_g202 + temp_output_95_0_g202 ) * temp_output_103_0_g202 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g203 = AudioLinkData1_g203( Index1_g203 );
+			float4 ifLocalVar49_g202 = 0;
+			if( temp_output_52_0_g202 == 0.0 )
+				ifLocalVar49_g202 = localAudioLinkData1_g203;
+			int Index1_g207 = (int)floor( ( frac( ( ( temp_output_29_0_g202 + temp_output_95_0_g202 + temp_output_1_0_g202 ) * temp_output_103_0_g202 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g207 = AudioLinkData1_g207( Index1_g207 );
+			float4 ifLocalVar79_g202 = 0;
+			if( temp_output_52_0_g202 == 1.0 )
+				ifLocalVar79_g202 = localAudioLinkData1_g207;
+			float Position1_g204 = saturate( frac( ( ( temp_output_8_0_g202 + temp_output_29_0_g202 + temp_output_95_0_g202 ) * temp_output_103_0_g202 ) ) );
+			float4 localAudioLinkLerp1_g204 = AudioLinkLerp1_g204( Position1_g204 );
+			float4 ifLocalVar50_g202 = 0;
+			if( temp_output_52_0_g202 == 2.0 )
+				ifLocalVar50_g202 = localAudioLinkLerp1_g204;
+			float Position1_g205 = saturate( frac( ( ( temp_output_29_0_g202 + temp_output_1_0_g202 + temp_output_95_0_g202 ) * temp_output_103_0_g202 ) ) );
+			float4 localAudioLinkLerp1_g205 = AudioLinkLerp1_g205( Position1_g205 );
+			float4 ifLocalVar51_g202 = 0;
+			if( temp_output_52_0_g202 == 3.0 )
+				ifLocalVar51_g202 = localAudioLinkLerp1_g205;
+			float4 color111_g202 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g202 = 0;
+			if( temp_output_52_0_g202 == 4.0 )
+				ifLocalVar110_g202 = color111_g202;
+			float3 hsvTorgb116_g202 = HSVToRGB( float3(temp_output_55_0_g202,1.0,1.0) );
+			float3 ifLocalVar117_g202 = 0;
+			if( temp_output_52_0_g202 == 5.0 )
+				ifLocalVar117_g202 = hsvTorgb116_g202;
+			float4 temp_output_53_0_g202 = ( ifLocalVar49_g202 + ifLocalVar79_g202 + ifLocalVar50_g202 + ifLocalVar51_g202 + ifLocalVar110_g202 + float4( ifLocalVar117_g202 , 0.0 ) );
+			float4 temp_output_2_0_g208 = temp_output_53_0_g202;
+			float4 ifLocalVar107_g202 = 0;
+			if( temp_output_106_0_g202 == 0.0 )
+				ifLocalVar107_g202 = ( ( ( break5_g208.r * 0.2 ) + ( break5_g208.g * 0.7 ) + ( break5_g208.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g208 * temp_output_2_0_g208 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g208 ) * ( 1.0 - temp_output_2_0_g208 ) ) ) );
+			float4 ifLocalVar108_g202 = 0;
+			if( temp_output_106_0_g202 == 1.0 )
+				ifLocalVar108_g202 = ( temp_output_8_0_g202 * temp_output_53_0_g202 );
+			float4 ifLocalVar112_g202 = 0;
+			if( temp_output_106_0_g202 == 2.0 )
+				ifLocalVar112_g202 = temp_output_53_0_g202;
 			float GlowMap331_g116 = break12_g116.b;
-			int temp_output_106_0_g162 = _QBlendMode3;
-			int temp_output_27_0_g162 = _QBand3;
-			int Band3_g169 = temp_output_27_0_g162;
-			float temp_output_1_0_g162 = (( _QInvertDirection3 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
-			float temp_output_5_0_g162 = ( _QHistory3 * temp_output_1_0_g162 );
-			float Delay3_g169 = (( _QSmoothHistory )?( temp_output_5_0_g162 ):( floor( temp_output_5_0_g162 ) ));
-			float localAudioLinkLerp3_g169 = AudioLinkLerp3_g169( Band3_g169 , Delay3_g169 );
-			float temp_output_8_0_g162 = localAudioLinkLerp3_g169;
-			float4 temp_cast_21 = (temp_output_8_0_g162).xxxx;
-			float4 temp_output_1_0_g168 = temp_cast_21;
-			float4 break5_g168 = temp_output_1_0_g168;
-			int temp_output_52_0_g162 = _QType3;
-			float temp_output_29_0_g162 = _QColorOffset3;
-			int Band6_g166 = temp_output_27_0_g162;
-			int Mode6_g166 = ( ( (int)_QColorRotationMode3 * 2 ) + (int)_QColorRotationSpeed3 );
-			int localAudioLinkDecodeDataAsUInt6_g166 = AudioLinkDecodeDataAsUInt6_g166( Band6_g166 , Mode6_g166 );
-			float temp_output_95_0_g162 = ( ( ( ( localAudioLinkDecodeDataAsUInt6_g166 % 628319 ) / 100000.0 ) / 6.28318548202515 ) * (int)(( _QUseColorRotation3 )?( 1.0 ):( 0.0 )) );
-			float temp_output_103_0_g162 = _QEffectScale3;
-			int Index1_g163 = (int)floor( ( frac( ( ( temp_output_29_0_g162 + temp_output_95_0_g162 ) * temp_output_103_0_g162 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g163 = AudioLinkData1_g163( Index1_g163 );
-			float4 ifLocalVar49_g162 = 0;
-			if( temp_output_52_0_g162 == 0.0 )
-				ifLocalVar49_g162 = localAudioLinkData1_g163;
-			int Index1_g167 = (int)floor( ( frac( ( ( temp_output_29_0_g162 + temp_output_95_0_g162 + temp_output_1_0_g162 ) * temp_output_103_0_g162 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g167 = AudioLinkData1_g167( Index1_g167 );
-			float4 ifLocalVar79_g162 = 0;
-			if( temp_output_52_0_g162 == 1.0 )
-				ifLocalVar79_g162 = localAudioLinkData1_g167;
-			float Position1_g164 = saturate( frac( ( ( temp_output_8_0_g162 + temp_output_29_0_g162 + temp_output_95_0_g162 ) * temp_output_103_0_g162 ) ) );
-			float4 localAudioLinkLerp1_g164 = AudioLinkLerp1_g164( Position1_g164 );
-			float4 ifLocalVar50_g162 = 0;
-			if( temp_output_52_0_g162 == 2.0 )
-				ifLocalVar50_g162 = localAudioLinkLerp1_g164;
-			float Position1_g165 = saturate( frac( ( ( temp_output_29_0_g162 + temp_output_1_0_g162 + temp_output_95_0_g162 ) * temp_output_103_0_g162 ) ) );
-			float4 localAudioLinkLerp1_g165 = AudioLinkLerp1_g165( Position1_g165 );
-			float4 ifLocalVar51_g162 = 0;
-			if( temp_output_52_0_g162 == 3.0 )
-				ifLocalVar51_g162 = localAudioLinkLerp1_g165;
-			float4 color111_g162 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
-			float4 ifLocalVar110_g162 = 0;
-			if( temp_output_52_0_g162 == 4.0 )
-				ifLocalVar110_g162 = color111_g162;
-			float4 temp_output_53_0_g162 = ( ifLocalVar49_g162 + ifLocalVar79_g162 + ifLocalVar50_g162 + ifLocalVar51_g162 + ifLocalVar110_g162 );
-			float4 temp_output_2_0_g168 = temp_output_53_0_g162;
-			float4 ifLocalVar107_g162 = 0;
-			if( temp_output_106_0_g162 == 0.0 )
-				ifLocalVar107_g162 = ( ( ( break5_g168.r * 0.2 ) + ( break5_g168.g * 0.7 ) + ( break5_g168.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g168 * temp_output_2_0_g168 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g168 ) * ( 1.0 - temp_output_2_0_g168 ) ) ) );
-			float4 ifLocalVar108_g162 = 0;
-			if( temp_output_106_0_g162 == 1.0 )
-				ifLocalVar108_g162 = ( temp_output_8_0_g162 * temp_output_53_0_g162 );
+			int temp_output_106_0_g194 = _QBlendMode3;
+			int temp_output_27_0_g194 = _QBand3;
+			int Band3_g201 = temp_output_27_0_g194;
+			float temp_output_1_0_g194 = (( _QInvertDirection3 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
+			float temp_output_5_0_g194 = ( _QHistory3 * temp_output_1_0_g194 );
+			float Delay3_g201 = (( _QSmoothHistory )?( temp_output_5_0_g194 ):( floor( temp_output_5_0_g194 ) ));
+			float localAudioLinkLerp3_g201 = AudioLinkLerp3_g201( Band3_g201 , Delay3_g201 );
+			float temp_output_8_0_g194 = localAudioLinkLerp3_g201;
+			float4 temp_cast_31 = (temp_output_8_0_g194).xxxx;
+			float4 temp_output_1_0_g200 = temp_cast_31;
+			float4 break5_g200 = temp_output_1_0_g200;
+			int temp_output_52_0_g194 = _QType3;
+			float temp_output_29_0_g194 = _QColorOffset3;
+			int Band6_g198 = temp_output_27_0_g194;
+			int Mode6_g198 = ( ( (int)_QColorRotationMode3 * 2 ) + (int)_QColorRotationSpeed3 );
+			int localAudioLinkDecodeDataAsUInt6_g198 = AudioLinkDecodeDataAsUInt6_g198( Band6_g198 , Mode6_g198 );
+			float temp_output_55_0_g194 = ( ( ( localAudioLinkDecodeDataAsUInt6_g198 % 628319 ) / 100000.0 ) / 6.28318548202515 );
+			float temp_output_95_0_g194 = ( temp_output_55_0_g194 * (int)(( _QUseColorRotation3 )?( 1.0 ):( 0.0 )) );
+			float temp_output_103_0_g194 = _QEffectScale3;
+			int Index1_g195 = (int)floor( ( frac( ( ( temp_output_29_0_g194 + temp_output_95_0_g194 ) * temp_output_103_0_g194 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g195 = AudioLinkData1_g195( Index1_g195 );
+			float4 ifLocalVar49_g194 = 0;
+			if( temp_output_52_0_g194 == 0.0 )
+				ifLocalVar49_g194 = localAudioLinkData1_g195;
+			int Index1_g199 = (int)floor( ( frac( ( ( temp_output_29_0_g194 + temp_output_95_0_g194 + temp_output_1_0_g194 ) * temp_output_103_0_g194 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g199 = AudioLinkData1_g199( Index1_g199 );
+			float4 ifLocalVar79_g194 = 0;
+			if( temp_output_52_0_g194 == 1.0 )
+				ifLocalVar79_g194 = localAudioLinkData1_g199;
+			float Position1_g196 = saturate( frac( ( ( temp_output_8_0_g194 + temp_output_29_0_g194 + temp_output_95_0_g194 ) * temp_output_103_0_g194 ) ) );
+			float4 localAudioLinkLerp1_g196 = AudioLinkLerp1_g196( Position1_g196 );
+			float4 ifLocalVar50_g194 = 0;
+			if( temp_output_52_0_g194 == 2.0 )
+				ifLocalVar50_g194 = localAudioLinkLerp1_g196;
+			float Position1_g197 = saturate( frac( ( ( temp_output_29_0_g194 + temp_output_1_0_g194 + temp_output_95_0_g194 ) * temp_output_103_0_g194 ) ) );
+			float4 localAudioLinkLerp1_g197 = AudioLinkLerp1_g197( Position1_g197 );
+			float4 ifLocalVar51_g194 = 0;
+			if( temp_output_52_0_g194 == 3.0 )
+				ifLocalVar51_g194 = localAudioLinkLerp1_g197;
+			float4 color111_g194 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g194 = 0;
+			if( temp_output_52_0_g194 == 4.0 )
+				ifLocalVar110_g194 = color111_g194;
+			float3 hsvTorgb116_g194 = HSVToRGB( float3(temp_output_55_0_g194,1.0,1.0) );
+			float3 ifLocalVar117_g194 = 0;
+			if( temp_output_52_0_g194 == 5.0 )
+				ifLocalVar117_g194 = hsvTorgb116_g194;
+			float4 temp_output_53_0_g194 = ( ifLocalVar49_g194 + ifLocalVar79_g194 + ifLocalVar50_g194 + ifLocalVar51_g194 + ifLocalVar110_g194 + float4( ifLocalVar117_g194 , 0.0 ) );
+			float4 temp_output_2_0_g200 = temp_output_53_0_g194;
+			float4 ifLocalVar107_g194 = 0;
+			if( temp_output_106_0_g194 == 0.0 )
+				ifLocalVar107_g194 = ( ( ( break5_g200.r * 0.2 ) + ( break5_g200.g * 0.7 ) + ( break5_g200.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g200 * temp_output_2_0_g200 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g200 ) * ( 1.0 - temp_output_2_0_g200 ) ) ) );
+			float4 ifLocalVar108_g194 = 0;
+			if( temp_output_106_0_g194 == 1.0 )
+				ifLocalVar108_g194 = ( temp_output_8_0_g194 * temp_output_53_0_g194 );
+			float4 ifLocalVar112_g194 = 0;
+			if( temp_output_106_0_g194 == 2.0 )
+				ifLocalVar112_g194 = temp_output_53_0_g194;
 			float GlowMap433_g116 = break12_g116.a;
-			int temp_output_106_0_g154 = _QBlendMode4;
-			int temp_output_27_0_g154 = _QBand4;
-			int Band3_g161 = temp_output_27_0_g154;
-			float temp_output_1_0_g154 = (( _QInvertDirection4 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
-			float temp_output_5_0_g154 = ( _QHistory4 * temp_output_1_0_g154 );
-			float Delay3_g161 = (( _QSmoothHistory )?( temp_output_5_0_g154 ):( floor( temp_output_5_0_g154 ) ));
-			float localAudioLinkLerp3_g161 = AudioLinkLerp3_g161( Band3_g161 , Delay3_g161 );
-			float temp_output_8_0_g154 = localAudioLinkLerp3_g161;
-			float4 temp_cast_31 = (temp_output_8_0_g154).xxxx;
-			float4 temp_output_1_0_g160 = temp_cast_31;
-			float4 break5_g160 = temp_output_1_0_g160;
-			int temp_output_52_0_g154 = _QType4;
-			float temp_output_29_0_g154 = _QColorOffset4;
-			int Band6_g158 = temp_output_27_0_g154;
-			int Mode6_g158 = ( ( (int)_QColorRotationMode4 * 2 ) + (int)_QColorRotationSpeed4 );
-			int localAudioLinkDecodeDataAsUInt6_g158 = AudioLinkDecodeDataAsUInt6_g158( Band6_g158 , Mode6_g158 );
-			float temp_output_95_0_g154 = ( ( ( ( localAudioLinkDecodeDataAsUInt6_g158 % 628319 ) / 100000.0 ) / 6.28318548202515 ) * (int)(( _QUseColorRotation4 )?( 1.0 ):( 0.0 )) );
-			float temp_output_103_0_g154 = _QEffectScale4;
-			int Index1_g155 = (int)floor( ( frac( ( ( temp_output_29_0_g154 + temp_output_95_0_g154 ) * temp_output_103_0_g154 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g155 = AudioLinkData1_g155( Index1_g155 );
-			float4 ifLocalVar49_g154 = 0;
-			if( temp_output_52_0_g154 == 0.0 )
-				ifLocalVar49_g154 = localAudioLinkData1_g155;
-			int Index1_g159 = (int)floor( ( frac( ( ( temp_output_29_0_g154 + temp_output_95_0_g154 + temp_output_1_0_g154 ) * temp_output_103_0_g154 ) ) * 127.0 ) );
-			float4 localAudioLinkData1_g159 = AudioLinkData1_g159( Index1_g159 );
-			float4 ifLocalVar79_g154 = 0;
-			if( temp_output_52_0_g154 == 1.0 )
-				ifLocalVar79_g154 = localAudioLinkData1_g159;
-			float Position1_g156 = saturate( frac( ( ( temp_output_8_0_g154 + temp_output_29_0_g154 + temp_output_95_0_g154 ) * temp_output_103_0_g154 ) ) );
-			float4 localAudioLinkLerp1_g156 = AudioLinkLerp1_g156( Position1_g156 );
-			float4 ifLocalVar50_g154 = 0;
-			if( temp_output_52_0_g154 == 2.0 )
-				ifLocalVar50_g154 = localAudioLinkLerp1_g156;
-			float Position1_g157 = saturate( frac( ( ( temp_output_29_0_g154 + temp_output_1_0_g154 + temp_output_95_0_g154 ) * temp_output_103_0_g154 ) ) );
-			float4 localAudioLinkLerp1_g157 = AudioLinkLerp1_g157( Position1_g157 );
-			float4 ifLocalVar51_g154 = 0;
-			if( temp_output_52_0_g154 == 3.0 )
-				ifLocalVar51_g154 = localAudioLinkLerp1_g157;
-			float4 color111_g154 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
-			float4 ifLocalVar110_g154 = 0;
-			if( temp_output_52_0_g154 == 4.0 )
-				ifLocalVar110_g154 = color111_g154;
-			float4 temp_output_53_0_g154 = ( ifLocalVar49_g154 + ifLocalVar79_g154 + ifLocalVar50_g154 + ifLocalVar51_g154 + ifLocalVar110_g154 );
-			float4 temp_output_2_0_g160 = temp_output_53_0_g154;
-			float4 ifLocalVar107_g154 = 0;
-			if( temp_output_106_0_g154 == 0.0 )
-				ifLocalVar107_g154 = ( ( ( break5_g160.r * 0.2 ) + ( break5_g160.g * 0.7 ) + ( break5_g160.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g160 * temp_output_2_0_g160 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g160 ) * ( 1.0 - temp_output_2_0_g160 ) ) ) );
-			float4 ifLocalVar108_g154 = 0;
-			if( temp_output_106_0_g154 == 1.0 )
-				ifLocalVar108_g154 = ( temp_output_8_0_g154 * temp_output_53_0_g154 );
+			int temp_output_106_0_g186 = _QBlendMode4;
+			int temp_output_27_0_g186 = _QBand4;
+			int Band3_g193 = temp_output_27_0_g186;
+			float temp_output_1_0_g186 = (( _QInvertDirection4 )?( ( 1.0 - Direction11_g116 ) ):( Direction11_g116 ));
+			float temp_output_5_0_g186 = ( _QHistory4 * temp_output_1_0_g186 );
+			float Delay3_g193 = (( _QSmoothHistory )?( temp_output_5_0_g186 ):( floor( temp_output_5_0_g186 ) ));
+			float localAudioLinkLerp3_g193 = AudioLinkLerp3_g193( Band3_g193 , Delay3_g193 );
+			float temp_output_8_0_g186 = localAudioLinkLerp3_g193;
+			float4 temp_cast_46 = (temp_output_8_0_g186).xxxx;
+			float4 temp_output_1_0_g192 = temp_cast_46;
+			float4 break5_g192 = temp_output_1_0_g192;
+			int temp_output_52_0_g186 = _QType4;
+			float temp_output_29_0_g186 = _QColorOffset4;
+			int Band6_g190 = temp_output_27_0_g186;
+			int Mode6_g190 = ( ( (int)_QColorRotationMode4 * 2 ) + (int)_QColorRotationSpeed4 );
+			int localAudioLinkDecodeDataAsUInt6_g190 = AudioLinkDecodeDataAsUInt6_g190( Band6_g190 , Mode6_g190 );
+			float temp_output_55_0_g186 = ( ( ( localAudioLinkDecodeDataAsUInt6_g190 % 628319 ) / 100000.0 ) / 6.28318548202515 );
+			float temp_output_95_0_g186 = ( temp_output_55_0_g186 * (int)(( _QUseColorRotation4 )?( 1.0 ):( 0.0 )) );
+			float temp_output_103_0_g186 = _QEffectScale4;
+			int Index1_g187 = (int)floor( ( frac( ( ( temp_output_29_0_g186 + temp_output_95_0_g186 ) * temp_output_103_0_g186 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g187 = AudioLinkData1_g187( Index1_g187 );
+			float4 ifLocalVar49_g186 = 0;
+			if( temp_output_52_0_g186 == 0.0 )
+				ifLocalVar49_g186 = localAudioLinkData1_g187;
+			int Index1_g191 = (int)floor( ( frac( ( ( temp_output_29_0_g186 + temp_output_95_0_g186 + temp_output_1_0_g186 ) * temp_output_103_0_g186 ) ) * 127.0 ) );
+			float4 localAudioLinkData1_g191 = AudioLinkData1_g191( Index1_g191 );
+			float4 ifLocalVar79_g186 = 0;
+			if( temp_output_52_0_g186 == 1.0 )
+				ifLocalVar79_g186 = localAudioLinkData1_g191;
+			float Position1_g188 = saturate( frac( ( ( temp_output_8_0_g186 + temp_output_29_0_g186 + temp_output_95_0_g186 ) * temp_output_103_0_g186 ) ) );
+			float4 localAudioLinkLerp1_g188 = AudioLinkLerp1_g188( Position1_g188 );
+			float4 ifLocalVar50_g186 = 0;
+			if( temp_output_52_0_g186 == 2.0 )
+				ifLocalVar50_g186 = localAudioLinkLerp1_g188;
+			float Position1_g189 = saturate( frac( ( ( temp_output_29_0_g186 + temp_output_1_0_g186 + temp_output_95_0_g186 ) * temp_output_103_0_g186 ) ) );
+			float4 localAudioLinkLerp1_g189 = AudioLinkLerp1_g189( Position1_g189 );
+			float4 ifLocalVar51_g186 = 0;
+			if( temp_output_52_0_g186 == 3.0 )
+				ifLocalVar51_g186 = localAudioLinkLerp1_g189;
+			float4 color111_g186 = IsGammaSpace() ? float4(1,1,1,0) : float4(1,1,1,0);
+			float4 ifLocalVar110_g186 = 0;
+			if( temp_output_52_0_g186 == 4.0 )
+				ifLocalVar110_g186 = color111_g186;
+			float3 hsvTorgb116_g186 = HSVToRGB( float3(temp_output_55_0_g186,1.0,1.0) );
+			float3 ifLocalVar117_g186 = 0;
+			if( temp_output_52_0_g186 == 5.0 )
+				ifLocalVar117_g186 = hsvTorgb116_g186;
+			float4 temp_output_53_0_g186 = ( ifLocalVar49_g186 + ifLocalVar79_g186 + ifLocalVar50_g186 + ifLocalVar51_g186 + ifLocalVar110_g186 + float4( ifLocalVar117_g186 , 0.0 ) );
+			float4 temp_output_2_0_g192 = temp_output_53_0_g186;
+			float4 ifLocalVar107_g186 = 0;
+			if( temp_output_106_0_g186 == 0.0 )
+				ifLocalVar107_g186 = ( ( ( break5_g192.r * 0.2 ) + ( break5_g192.g * 0.7 ) + ( break5_g192.b * 0.1 ) ) < 0.5 ? ( 2.0 * temp_output_1_0_g192 * temp_output_2_0_g192 ) : ( 1.0 - ( 2.0 * ( 1.0 - temp_output_1_0_g192 ) * ( 1.0 - temp_output_2_0_g192 ) ) ) );
+			float4 ifLocalVar108_g186 = 0;
+			if( temp_output_106_0_g186 == 1.0 )
+				ifLocalVar108_g186 = ( temp_output_8_0_g186 * temp_output_53_0_g186 );
+			float4 ifLocalVar112_g186 = 0;
+			if( temp_output_106_0_g186 == 2.0 )
+				ifLocalVar112_g186 = temp_output_53_0_g186;
 			float localIfAudioLinkv2Exists1_g117 = IfAudioLinkv2Exists1_g117();
-			float4 lerpResult55_g116 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g116 * ( ifLocalVar107_g178 + ifLocalVar108_g178 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g116 * ( ifLocalVar107_g170 + ifLocalVar108_g170 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g116 * ( ifLocalVar107_g162 + ifLocalVar108_g162 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g116 * ( ifLocalVar107_g154 + ifLocalVar108_g154 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g117);
+			float4 lerpResult55_g116 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g116 * ( ifLocalVar107_g210 + ifLocalVar108_g210 + ifLocalVar112_g210 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g116 * ( ifLocalVar107_g202 + ifLocalVar108_g202 + ifLocalVar112_g202 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g116 * ( ifLocalVar107_g194 + ifLocalVar108_g194 + ifLocalVar112_g194 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g116 * ( ifLocalVar107_g186 + ifLocalVar108_g186 + ifLocalVar112_g186 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g117);
 			float4 Emission179 = ( MainEmission88 + (( _QEnableGlobal )?( lerpResult55_g116 ):( float4( 0,0,0,0 ) )) );
 			o.Emission = Emission179.rgb;
 			float2 uv_MetallicGlossMap = i.uv_texcoord * _MetallicGlossMap_ST.xy + _MetallicGlossMap_ST.zw;
@@ -656,4 +696,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;199;0
 WireConnection;0;4;199;3
 ASEEND*/
-//CHKSM=ED656CEB00D11E3FACC62A3ACCD431FF48C56F21
+//CHKSM=692B987BFFC78E97139AD146EFF71BFB542E0FA9
