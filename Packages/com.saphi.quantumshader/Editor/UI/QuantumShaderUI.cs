@@ -304,6 +304,6 @@ namespace Saphi.QuantumShader
         }
     }
 
-#endif
-
 }
+
+#endif
