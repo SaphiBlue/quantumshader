@@ -16,9 +16,13 @@ namespace Saphi.QuantumShader
         MaterialProperty[] properties;
 
         Shader shaderBasicPBR = Shader.Find("Saphi/QuantumShaderBasicPBR");
+        Shader shaderBasicPBRCutout = Shader.Find("Saphi/QuantumShaderBasicPBRCutout");
         Shader shaderPackedPBR = Shader.Find("Saphi/QuantumShaderPackedPBR");
+        Shader shaderPackedPBRCutout = Shader.Find("Saphi/QuantumShaderPackedPBRCutout");
         Shader shaderSpecular = Shader.Find("Saphi/QuantumShaderSpecular");
+        Shader shaderSpecularCutout = Shader.Find("Saphi/QuantumShaderSpecularCutout");
         Shader shaderMetallic = Shader.Find("Saphi/QuantumShaderMetallic");
+        Shader shaderMetallicCutout = Shader.Find("Saphi/QuantumShaderMetallicCutout");
 
         public override void OnGUI(MaterialEditor editor, MaterialProperty[] properties)
         {
@@ -98,24 +102,24 @@ namespace Saphi.QuantumShader
 
         void buildPBRMaps()
         {
-            if (target.shader == shaderBasicPBR)
+            if (target.shader == shaderBasicPBR || target.shader == shaderBasicPBRCutout)
             {
                 buildTextureInputs("Metallic Map", "Metallic", "_MetallicMap");
                 buildTextureInputs("Specular Map", "Reflectivity of the Material", "_SpecularMap");
                 buildTextureInputs("Roughness Map", "Roughness of the Material", "_RoughnessMap");
             }
 
-            if (target.shader == shaderPackedPBR)
+            if (target.shader == shaderPackedPBR || target.shader == shaderPackedPBRCutout)
             {
                 buildTextureInputs("PBR Data", "RGB; R = Metallic, G = Specular, B = Roughness", "_PBRMap");
             }
 
-            if (target.shader == shaderSpecular)
+            if (target.shader == shaderSpecular || target.shader == shaderSpecularCutout)
             {
                 buildTextureInputs("Specular", "Specular (RGBA) RGB = Specular, A = Smoothness", "_SpecularTextureChannel");
             }
 
-            if (target.shader == shaderMetallic)
+            if (target.shader == shaderMetallic || target.shader == shaderMetallicCutout)
             {
                 buildTextureInputs("Metallic", "Metallic (RGBA) R = Metallic, A = Smoothness", "_MetallicGlossMap");
             }
@@ -159,12 +163,23 @@ namespace Saphi.QuantumShader
                 EditorGUI.indentLevel -= 2;
                 GUILayout.EndVertical();
 
-                if (target.shader == shaderBasicPBR || target.shader == shaderPackedPBR)
+                if (target.shader == shaderBasicPBR || target.shader == shaderPackedPBR || target.shader == shaderBasicPBRCutout || target.shader == shaderPackedPBRCutout)
                 {
                     editor.ShaderProperty(getProperty("_SpecularCorretive"), "Specular Corrective", 2);
                     editor.ShaderProperty(getProperty("_Metallic"), "Metallic", 2);
                     editor.ShaderProperty(getProperty("_Specular"), "Specular", 2);
                     editor.ShaderProperty(getProperty("_Roughness"), "Roughness", 2);
+                }
+
+                if (target.shader == shaderBasicPBRCutout || target.shader == shaderPackedPBRCutout  || target.shader == shaderMetallicCutout || target.shader == shaderSpecularCutout)
+                {
+                    GUILayout.Space(10);
+                    GUILayout.BeginVertical("box");
+                    EditorGUI.indentLevel += 2;
+                    buildTextureInputs("Alpha Map", "Alpha Map", "_AlphaMap");
+                    editor.ShaderProperty(getProperty("_Cutoff"), "Cutoff", 0);
+                    EditorGUI.indentLevel -= 2;
+                    GUILayout.EndVertical();
                 }
 
             }
