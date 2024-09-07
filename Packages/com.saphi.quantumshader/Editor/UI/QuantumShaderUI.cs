@@ -17,12 +17,42 @@ namespace Saphi.QuantumShader
 
         Shader shaderBasicPBR = Shader.Find("Saphi/QuantumShaderBasicPBR");
         Shader shaderBasicPBRCutout = Shader.Find("Saphi/QuantumShaderBasicPBRCutout");
+        Shader shaderBasicPBRTransparent = Shader.Find("Saphi/QuantumShaderBasicPBRTransparent");
         Shader shaderPackedPBR = Shader.Find("Saphi/QuantumShaderPackedPBR");
         Shader shaderPackedPBRCutout = Shader.Find("Saphi/QuantumShaderPackedPBRCutout");
+        Shader shaderPackedPBRTransparent = Shader.Find("Saphi/QuantumShaderPackedPBRTransparent");
         Shader shaderSpecular = Shader.Find("Saphi/QuantumShaderSpecular");
         Shader shaderSpecularCutout = Shader.Find("Saphi/QuantumShaderSpecularCutout");
+        Shader shaderSpecularTransparent = Shader.Find("Saphi/QuantumShaderSpecularTransparent");
         Shader shaderMetallic = Shader.Find("Saphi/QuantumShaderMetallic");
         Shader shaderMetallicCutout = Shader.Find("Saphi/QuantumShaderMetallicCutout");
+        Shader shaderMetallicTransparent = Shader.Find("Saphi/QuantumShaderMetallicTransparent");
+
+        enum TransparencyBlendMode
+        {
+            AlphaBlend,
+            Premultiplied,
+            Additive,
+            SoftAdditive,
+            Multiplicative,
+            DoubleMultiplicative,
+            ParticleAdditive,
+        }
+
+        enum RenderType
+        {
+            Opaque,
+            Cutout,
+            Transparent
+        }
+
+        enum ShaderType
+        {
+            StandardSpecular,
+            Standard,
+            Packed,
+            Basic
+        }
 
         public override void OnGUI(MaterialEditor editor, MaterialProperty[] properties)
         {
@@ -102,24 +132,24 @@ namespace Saphi.QuantumShader
 
         void buildPBRMaps()
         {
-            if (target.shader == shaderBasicPBR || target.shader == shaderBasicPBRCutout)
+            if (target.shader == shaderBasicPBR || target.shader == shaderBasicPBRCutout || target.shader == shaderBasicPBRTransparent)
             {
                 buildTextureInputs("Metallic Map", "Metallic", "_MetallicMap");
                 buildTextureInputs("Specular Map", "Reflectivity of the Material", "_SpecularMap");
                 buildTextureInputs("Roughness Map", "Roughness of the Material", "_RoughnessMap");
             }
 
-            if (target.shader == shaderPackedPBR || target.shader == shaderPackedPBRCutout)
+            if (target.shader == shaderPackedPBR || target.shader == shaderPackedPBRCutout || target.shader == shaderPackedPBRTransparent)
             {
                 buildTextureInputs("PBR Data", "RGB; R = Metallic, G = Specular, B = Roughness", "_PBRMap");
             }
 
-            if (target.shader == shaderSpecular || target.shader == shaderSpecularCutout)
+            if (target.shader == shaderSpecular || target.shader == shaderSpecularCutout || target.shader == shaderSpecularTransparent)
             {
                 buildTextureInputs("Specular", "Specular (RGBA) RGB = Specular, A = Smoothness", "_SpecularTextureChannel");
             }
 
-            if (target.shader == shaderMetallic || target.shader == shaderMetallicCutout)
+            if (target.shader == shaderMetallic || target.shader == shaderMetallicCutout || target.shader == shaderMetallicTransparent)
             {
                 buildTextureInputs("Metallic", "Metallic (RGBA) R = Metallic, A = Smoothness", "_MetallicGlossMap");
             }
@@ -167,7 +197,7 @@ namespace Saphi.QuantumShader
                 EditorGUI.indentLevel -= 2;
                 GUILayout.EndVertical();
 
-                if (target.shader == shaderBasicPBR || target.shader == shaderPackedPBR || target.shader == shaderBasicPBRCutout || target.shader == shaderPackedPBRCutout)
+                if (target.shader == shaderBasicPBR || target.shader == shaderPackedPBR || target.shader == shaderBasicPBRCutout || target.shader == shaderPackedPBRCutout || target.shader == shaderBasicPBRTransparent || target.shader == shaderPackedPBRTransparent)
                 {
                     editor.ShaderProperty(getProperty("_SpecularCorretive"), "Specular Corrective", 2);
                     editor.ShaderProperty(getProperty("_Metallic"), "Metallic", 2);
@@ -175,21 +205,210 @@ namespace Saphi.QuantumShader
                     editor.ShaderProperty(getProperty("_Roughness"), "Roughness", 2);
                 }
 
-                if (target.shader == shaderBasicPBRCutout || target.shader == shaderPackedPBRCutout  || target.shader == shaderMetallicCutout || target.shader == shaderSpecularCutout)
+                if (target.shader == shaderBasicPBRCutout || target.shader == shaderPackedPBRCutout || target.shader == shaderMetallicCutout || target.shader == shaderSpecularCutout || target.shader == shaderBasicPBRTransparent || target.shader == shaderPackedPBRTransparent || target.shader == shaderMetallicTransparent || target.shader == shaderSpecularTransparent)
                 {
                     GUILayout.Space(10);
                     GUILayout.BeginVertical("box");
                     EditorGUI.indentLevel += 2;
                     buildTextureInputs("Alpha Map", "Alpha Map", "_AlphaMap");
                     editor.ShaderProperty(getProperty("_Cutoff"), "Cutoff", 0);
+
+                    if (target.shader == shaderBasicPBRTransparent || target.shader == shaderPackedPBRTransparent || target.shader == shaderMetallicTransparent || target.shader == shaderSpecularTransparent)
+                    {
+                        editor.ShaderProperty(getProperty("_Opacity"), "Opacity", 0);
+                        TransparencyMode();
+                    }
+
+
                     EditorGUI.indentLevel -= 2;
                     GUILayout.EndVertical();
                 }
+
+
 
             }
             else
             {
                 target.SetFloat(toggle, 0);
+            }
+        }
+
+        void shaderMode()
+        {
+
+            if(target.shader == shaderMetallic){
+                target.SetFloat("_ShaderType", (float)ShaderType.Standard);
+                target.SetFloat("_RenderType", (float)RenderType.Opaque);
+            }
+            if(target.shader == shaderMetallicCutout){
+                target.SetFloat("_ShaderType", (float)ShaderType.Standard);
+                target.SetFloat("_RenderType", (float)RenderType.Cutout);
+            }
+            if(target.shader == shaderMetallicTransparent){
+                target.SetFloat("_ShaderType", (float)ShaderType.Standard);
+                target.SetFloat("_RenderType", (float)RenderType.Transparent);
+            }
+            
+
+            if(target.shader == shaderSpecular){
+                target.SetFloat("_ShaderType", (float)ShaderType.StandardSpecular);
+                target.SetFloat("_RenderType", (float)RenderType.Opaque);
+            }
+            if(target.shader == shaderSpecularCutout){
+                target.SetFloat("_ShaderType", (float)ShaderType.StandardSpecular);
+                target.SetFloat("_RenderType", (float)RenderType.Cutout);
+            }
+            if(target.shader == shaderSpecularTransparent){
+                target.SetFloat("_ShaderType", (float)ShaderType.StandardSpecular);
+                target.SetFloat("_RenderType", (float)RenderType.Transparent);
+            }
+
+            if(target.shader == shaderPackedPBR){
+                target.SetFloat("_ShaderType", (float)ShaderType.Packed);
+                target.SetFloat("_RenderType", (float)RenderType.Opaque);
+            }
+            if(target.shader == shaderPackedPBRCutout){
+                target.SetFloat("_ShaderType", (float)ShaderType.Packed);
+                target.SetFloat("_RenderType", (float)RenderType.Cutout);
+            }
+            if(target.shader == shaderPackedPBRTransparent){
+                target.SetFloat("_ShaderType", (float)ShaderType.Packed);
+                target.SetFloat("_RenderType", (float)RenderType.Transparent);
+            }
+
+            if(target.shader == shaderBasicPBR){
+                target.SetFloat("_ShaderType", (float)ShaderType.Basic);
+                target.SetFloat("_RenderType", (float)RenderType.Opaque);
+            }
+            if(target.shader == shaderBasicPBRCutout){
+                target.SetFloat("_ShaderType", (float)ShaderType.Basic);
+                target.SetFloat("_RenderType", (float)RenderType.Cutout);
+            }
+            if(target.shader == shaderBasicPBRTransparent){
+                target.SetFloat("_ShaderType", (float)ShaderType.Basic);
+                target.SetFloat("_RenderType", (float)RenderType.Transparent);
+            }
+
+            
+
+            ShaderType shaderType = (ShaderType)target.GetFloat("_ShaderType");
+            RenderType renderType = (RenderType)target.GetFloat("_RenderType");
+
+            EditorGUI.BeginChangeCheck();
+
+            shaderType = (ShaderType)EditorGUILayout.EnumPopup(new GUIContent("Shader Type"), shaderType);
+            renderType = (RenderType)EditorGUILayout.EnumPopup(new GUIContent("Render Type"), renderType);
+
+            if (EditorGUI.EndChangeCheck()){
+                editor.RegisterPropertyChangeUndo("Update Shader Type");
+                target.SetFloat("_ShaderType", (float)shaderType);
+                target.SetFloat("_RenderType", (float)renderType);
+
+                if((ShaderType)target.GetFloat("_ShaderType") == ShaderType.Standard){
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Opaque){
+                        editor.SetShader(shaderMetallic);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Cutout){
+                        editor.SetShader(shaderMetallicCutout);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Transparent){
+                        editor.SetShader(shaderMetallicTransparent);
+                    }
+                }
+
+                if((ShaderType)target.GetFloat("_ShaderType") == ShaderType.StandardSpecular){
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Opaque){
+                        editor.SetShader(shaderSpecular);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Cutout){
+                        editor.SetShader(shaderSpecularCutout);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Transparent){
+                        editor.SetShader(shaderSpecularTransparent);
+                    }
+                }
+
+                if((ShaderType)target.GetFloat("_ShaderType") == ShaderType.Basic){
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Opaque){
+                        editor.SetShader(shaderBasicPBR);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Cutout){
+                        editor.SetShader(shaderBasicPBRCutout);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Transparent){
+                        editor.SetShader(shaderBasicPBRTransparent);
+                    }
+                }
+
+                if((ShaderType)target.GetFloat("_ShaderType") == ShaderType.Packed){
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Opaque){
+                        editor.SetShader(shaderPackedPBR);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Cutout){
+                        editor.SetShader(shaderPackedPBRCutout);
+                    }
+                    if((RenderType)target.GetFloat("_RenderType") == RenderType.Transparent){
+                        editor.SetShader(shaderPackedPBRTransparent);
+                    }
+                }
+            }
+        }
+
+        void TransparencyMode()
+        {
+            TransparencyBlendMode mode = (TransparencyBlendMode)target.GetFloat("_BlendMode");
+
+            EditorGUI.BeginChangeCheck();
+
+            mode = (TransparencyBlendMode)EditorGUILayout.EnumPopup(new GUIContent("Transparency Blend Mode"), mode);
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                editor.RegisterPropertyChangeUndo("Transparency Blend Mode");
+                target.SetFloat("_BlendMode", (float)mode);
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.AlphaBlend)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                }
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.Premultiplied)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.One);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                }
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.Additive)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.One);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.One);
+                }
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.SoftAdditive)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.OneMinusDstColor);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.One);
+                }
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.SoftAdditive)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.DstColor);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.Zero);
+                }
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.DoubleMultiplicative)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.DstColor);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.SrcColor);
+                }     
+
+                if ((TransparencyBlendMode)target.GetFloat("_BlendMode") == TransparencyBlendMode.ParticleAdditive)
+                {
+                    target.SetFloat("_BlendModeSrc", (float)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                    target.SetFloat("_BlendModeDst", (float)UnityEngine.Rendering.BlendMode.One);
+                }             
+
             }
         }
 
@@ -308,7 +527,11 @@ namespace Saphi.QuantumShader
             {
                 target.SetFloat(toggle, 1);
 
+                
+
                 EditorGUI.indentLevel += 2;
+                shaderMode();
+                GUILayout.Space(10);
                 editor.ShaderProperty(getProperty("_Culling"), "Culling", 0);
                 editor.RenderQueueField();
                 editor.EnableInstancingField();
