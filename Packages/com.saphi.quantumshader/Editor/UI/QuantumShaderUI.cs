@@ -148,9 +148,13 @@ namespace Saphi.QuantumShader
                 EditorGUI.indentLevel += 2;
                 buildTextureInputs("Main Texture", "Main Color/Albedo", "_MainTex", "_Color");
                 GUILayout.Space(10);
-                editor.ShaderProperty(getProperty("_EnableEmission"), "Enable Emission", 0);
-                editor.ShaderProperty(getProperty("_Emission"), "Emission Multiplier", 0);
+                editor.ShaderProperty(getProperty("_EnableEmission"), "Enable Main Emission", 0);
+                editor.ShaderProperty(getProperty("_Emission"), "Emission Main Multiplier", 0);
                 buildTextureInputs("Main Emission", "Emission with Color", "_EmissionMap", "_EmissionColor");
+                GUILayout.Space(10);
+                editor.ShaderProperty(getProperty("_EnableEmission2"), "Enable Secondary Emission", 0);
+                editor.ShaderProperty(getProperty("_Emission2"), "Emission Secondary Multiplier", 0);
+                buildTextureInputs("Secondary Emission", "Emission with Color", "_EmissionMap2", "_EmissionColor2");
                 GUILayout.Space(10);
                 buildNormalInputs("Normal Map", "Normal Map", "_BumpMap", "_BumpScale");
                 GUILayout.Space(10);
