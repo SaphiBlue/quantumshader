@@ -67,6 +67,7 @@ namespace Saphi.QuantumShader
 
             MainProps();
             QuantumGlow();
+            Parallax();
             Rendering();
         }
 
@@ -101,7 +102,7 @@ namespace Saphi.QuantumShader
             return label;
         }
 
-        void buildTextureInputs(string name, string tooltip, string nameTex, string nameProp2 = "")
+        void buildTextureInputs(string name, string tooltip, string nameTex, string nameProp2 = "", bool textureScaleOffset = false)
         {
             MaterialProperty texture = getProperty(nameTex);
             if (nameProp2 != string.Empty)
@@ -114,20 +115,24 @@ namespace Saphi.QuantumShader
                 editor.TexturePropertySingleLine(buildLabel(name, tooltip), texture);
             }
 
-            EditorGUI.indentLevel += 2;
-            editor.TextureScaleOffsetProperty(texture);
-            EditorGUI.indentLevel -= 2;
+            if(textureScaleOffset){
+                EditorGUI.indentLevel += 2;
+                editor.TextureScaleOffsetProperty(texture);
+                EditorGUI.indentLevel -= 2;
+            }
         }
 
-        void buildNormalInputs(string name, string tooltip, string nameTex, string nameScale)
+        void buildNormalInputs(string name, string tooltip, string nameTex, string nameScale, bool textureScaleOffset = false)
         {
             MaterialProperty texture = getProperty(nameTex);
             MaterialProperty scale = getProperty(nameScale);
             editor.TexturePropertySingleLine(buildLabel(name, tooltip), texture, scale);
 
-            EditorGUI.indentLevel += 2;
-            editor.TextureScaleOffsetProperty(texture);
-            EditorGUI.indentLevel -= 2;
+            if(textureScaleOffset){
+                EditorGUI.indentLevel += 2;
+                editor.TextureScaleOffsetProperty(texture);
+                EditorGUI.indentLevel -= 2;
+            }
         }
 
         void buildPBRMaps()
@@ -147,11 +152,16 @@ namespace Saphi.QuantumShader
             if (target.shader == shaderSpecular || target.shader == shaderSpecularCutout || target.shader == shaderSpecularTransparent)
             {
                 buildTextureInputs("Specular", "Specular (RGBA) RGB = Specular, A = Smoothness", "_SpecularTextureChannel");
+                editor.ShaderProperty(getProperty("_Glossiness"), "Smoothness", 0);
             }
 
             if (target.shader == shaderMetallic || target.shader == shaderMetallicCutout || target.shader == shaderMetallicTransparent)
             {
+                editor.ShaderProperty(getProperty("_AlbedoAlpha"), "Use Albedo Alpha as Smoothness", 0);
                 buildTextureInputs("Metallic", "Metallic (RGBA) R = Metallic, A = Smoothness", "_MetallicGlossMap");
+                editor.ShaderProperty(getProperty("_Metallic"), "Metallic", 0);
+                editor.ShaderProperty(getProperty("_Glossiness"), "Smoothness", 0);
+                
             }
         }
 
@@ -176,7 +186,7 @@ namespace Saphi.QuantumShader
 
                 GUILayout.BeginVertical("box");
                 EditorGUI.indentLevel += 2;
-                buildTextureInputs("Main Texture", "Main Color/Albedo", "_MainTex", "_Color");
+                buildTextureInputs("Main Texture", "Main Color/Albedo", "_MainTex", "_Color", true);
                 GUILayout.Space(10);
                 editor.ShaderProperty(getProperty("_EnableEmission"), "Enable Main Emission", 0);
                 editor.ShaderProperty(getProperty("_Emission"), "Emission Main Multiplier", 0);
@@ -188,11 +198,9 @@ namespace Saphi.QuantumShader
                 GUILayout.Space(10);
                 buildNormalInputs("Normal Map", "Normal Map", "_BumpMap", "_BumpScale");
                 GUILayout.Space(10);
-                buildNormalInputs("Detail Normal Map", "Detail Normal Map", "_DetailNormalMap", "_DetailNormalMapScale");
-                GUILayout.Space(10);
-
                 buildPBRMaps();
-
+                GUILayout.Space(10);
+                buildNormalInputs("Detail Normal Map", "Detail Normal Map", "_DetailNormalMap", "_DetailNormalMapScale", true);
                 GUILayout.Space(10);
                 EditorGUI.indentLevel -= 2;
                 GUILayout.EndVertical();
@@ -451,11 +459,12 @@ namespace Saphi.QuantumShader
                 editor.ShaderProperty(getProperty("_QuantumGlowColor"), "Glow Color", 2);
                 editor.ShaderProperty(getProperty("_QuantumGlowMultiplyGlobal"), "Multiplier", 2);
 
+                EditorGUI.indentLevel += 2;
                 QuantumBand(1, "Quantum Band 1 (R)");
                 QuantumBand(2, "Quantum Band 2 (G)");
                 QuantumBand(3, "Quantum Band 3 (B)");
                 QuantumBand(4, "Quantum Band 4 (A)");
-
+                EditorGUI.indentLevel -= 2;
             }
             else
             {
@@ -500,6 +509,47 @@ namespace Saphi.QuantumShader
                 editor.ShaderProperty(getProperty("_QUseColorRotation" + band), "Use Color Rotation", 2);
                 editor.ShaderProperty(getProperty("_QColorRotationSpeed" + band), "Color Rotation Speed", 2);
                 editor.ShaderProperty(getProperty("_QColorRotationMode" + band), "Color Rotation Mode", 2);
+
+            }
+            else
+            {
+                target.SetFloat(toggle, 0);
+            }
+        }
+
+        void Parallax()
+        {
+            bool showParallax;
+            string toggle = "_ShowParallax";
+
+            if (target.GetFloat(toggle) == 1)
+            {
+                showParallax = true;
+            }
+            else
+            {
+                showParallax = false;
+            }
+
+            showParallax = EditorGUILayout.Foldout(showParallax, "Parallax", true, EditorStyles.foldoutHeader);
+            if (showParallax)
+            {
+                target.SetFloat(toggle, 1);
+
+                GUILayout.BeginVertical("box");
+                EditorGUI.indentLevel += 2;
+                editor.ShaderProperty(getProperty("_ParallaxEnable"), "Enable Parallax");
+                buildTextureInputs("Height Map", "Height Map", "_ParallaxMap", "", false);
+                editor.ShaderProperty(getProperty("_Parallax"), "Height Scale");
+                editor.ShaderProperty(getProperty("_ParallaxMinSamples"), "Min Samples");
+                editor.ShaderProperty(getProperty("_ParallaxMaxSamples"), "Max Samples");
+                editor.ShaderProperty(getProperty("_ParallaxSideWallSteps"), "Side Wall Steps");
+                editor.ShaderProperty(getProperty("_ParallaxRefPlane"), "Reference Plane");
+                
+                
+                EditorGUI.indentLevel -= 2;
+                GUILayout.EndVertical();
+
 
             }
             else
