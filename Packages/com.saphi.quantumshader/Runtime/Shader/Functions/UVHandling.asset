@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
   m_Name: UVHandling
   m_EditorClassIdentifier: 
-  m_functionInfo: "// Made with Amplify Shader Editor v1.9.6.3\n// Available at the
-    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19603\nNode;AmplifyShaderEditor.FunctionInput;1;-800,0;Inherit;False;UV;2;0;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionNode;15;192,0;Inherit;False;Parallax;0;;1;05eea01bf21f54042b3c7671db9b8de9;0;1;1;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionOutput;0;512,0;Inherit;True;True;-1;UV;0;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nWireConnection;15;1;1;0\nWireConnection;0;0;15;0\nASEEND*/\n//CHKSM=4500B815B9594FAE780FDFF11A8112F2F4ADCB5E"
+  m_functionInfo: "// Made with Amplify Shader Editor v1.9.7.1\n// Available at the
+    Unity Asset Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=19701\nNode;AmplifyShaderEditor.FunctionInput;1;-800,0;Inherit;False;UV;2;0;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionNode;16;192,0;Inherit;False;Parallax;0;;2;05eea01bf21f54042b3c7671db9b8de9;0;1;1;FLOAT2;0,0;False;1;FLOAT2;0\nNode;AmplifyShaderEditor.FunctionOutput;0;512,0;Inherit;True;True;-1;UV;0;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0\nWireConnection;16;1;1;0\nWireConnection;0;0;16;0\nASEEND*/\n//CHKSM=89DCAC3E74813D50E0B578AB0070D2DF478284C6"
   m_functionName: 
   m_description: Use only one in a given Shader
   m_additionalIncludes:

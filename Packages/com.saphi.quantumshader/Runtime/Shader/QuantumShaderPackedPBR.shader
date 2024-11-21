@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.6.3
+// Made with Amplify Shader Editor v1.9.7.1
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderPackedPBR"
 {
@@ -111,10 +111,12 @@ Shader "Saphi/QuantumShaderPackedPBR"
 		Cull [_Culling]
 		CGINCLUDE
 		#include "UnityStandardUtils.cginc"
+		#include "UnityStandardBRDF.cginc"
 		#include "UnityPBSLighting.cginc"
 		#include "Lighting.cginc"
 		#pragma target 4.0
 		#pragma shader_feature_local _PARALLAXENABLE_ON
+		#define ASE_VERSION 19701
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -127,8 +129,9 @@ Shader "Saphi/QuantumShaderPackedPBR"
 		struct Input
 		{
 			float2 uv_texcoord;
-			float3 worldNormal;
+			float3 viewDir;
 			INTERNAL_DATA
+			float3 worldNormal;
 			float3 worldPos;
 		};
 
@@ -236,8 +239,8 @@ Shader "Saphi/QuantumShaderPackedPBR"
 inline float2 POM( sampler2D heightMap, float2 uvs, float2 dx, float2 dy, float3 normalWorld, float3 viewWorld, float3 viewDirTan, int minSamples, int maxSamples, int sidewallSteps, float parallax, float refPlane, float2 tilling, float2 curv, int index )
 {
 	float3 result = 0;
-	int stepIndex = 0;
-	int numSteps = ( int )lerp( (float)maxSamples, (float)minSamples, saturate( dot( normalWorld, viewWorld ) ) );
+	float stepIndex = 0;
+	float numSteps = floor( lerp( (float)maxSamples, (float)minSamples, saturate( dot( normalWorld, viewWorld ) ) ) );
 	float layerHeight = 1.0 / numSteps;
 	float2 plane = parallax * ( viewDirTan.xy / viewDirTan.z );
 	uvs.xy += refPlane * plane;
@@ -267,8 +270,8 @@ inline float2 POM( sampler2D heightMap, float2 uvs, float2 dx, float2 dy, float3
 	 	 	currRayZ -= layerHeight;
 	 	}
 	}
-	int sectionSteps = sidewallSteps;
-	int sectionIndex = 0;
+	float sectionSteps = sidewallSteps;
+	float sectionIndex = 0;
 	float newZ = 0;
 	float newHeight = 0;
 	while ( sectionIndex < sectionSteps )
@@ -469,14 +472,11 @@ inline float2 POM( sampler2D heightMap, float2 uvs, float2 dx, float2 dy, float3
 			float2 uv_MainTex = i.uv_texcoord * _MainTex_ST.xy + _MainTex_ST.zw;
 			float2 MainUV222 = uv_MainTex;
 			float2 temp_output_1_0_g253 = MainUV222;
-			float3 ase_worldPos = i.worldPos;
-			float3 ase_worldViewDir = Unity_SafeNormalize( UnityWorldSpaceViewDir( ase_worldPos ) );
 			float3 ase_worldNormal = WorldNormalVector( i, float3( 0, 0, 1 ) );
-			float3 ase_worldTangent = WorldNormalVector( i, float3( 1, 0, 0 ) );
-			float3 ase_worldBitangent = WorldNormalVector( i, float3( 0, 1, 0 ) );
-			float3x3 ase_worldToTangent = float3x3( ase_worldTangent, ase_worldBitangent, ase_worldNormal );
-			float3 ase_tanViewDir = mul( ase_worldToTangent, ase_worldViewDir );
-			float2 OffsetPOM7_g253 = POM( _ParallaxMap, temp_output_1_0_g253, ddx(temp_output_1_0_g253), ddy(temp_output_1_0_g253), ase_worldNormal, ase_worldViewDir, ase_tanViewDir, (int)_ParallaxMinSamples, (int)_ParallaxMaxSamples, (int)_ParallaxSideWallSteps, _Parallax, _ParallaxRefPlane, _ParallaxMap_ST.xy, float2(0,0), 0 );
+			float3 ase_worldPos = i.worldPos;
+			float3 ase_viewVectorWS = ( _WorldSpaceCameraPos.xyz - ase_worldPos );
+			float3 ase_viewDirWS = normalize( ase_viewVectorWS );
+			float2 OffsetPOM7_g253 = POM( _ParallaxMap, temp_output_1_0_g253, ddx(temp_output_1_0_g253), ddy(temp_output_1_0_g253), ase_worldNormal, ase_viewDirWS, Unity_SafeNormalize( i.viewDir ), (int)_ParallaxMinSamples, (int)_ParallaxMaxSamples, (int)_ParallaxSideWallSteps, _Parallax, _ParallaxRefPlane, _ParallaxMap_ST.xy, float2(0,0), 0 );
 			#ifdef _PARALLAXENABLE_ON
 				float2 staticSwitch10_g253 = OffsetPOM7_g253;
 			#else
@@ -820,6 +820,7 @@ inline float2 POM( sampler2D heightMap, float2 uvs, float2 dx, float2 dy, float3
 				surfIN.uv_texcoord = IN.customPack1.xy;
 				float3 worldPos = float3( IN.tSpace0.w, IN.tSpace1.w, IN.tSpace2.w );
 				half3 worldViewDir = normalize( UnityWorldSpaceViewDir( worldPos ) );
+				surfIN.viewDir = IN.tSpace0.xyz * worldViewDir.x + IN.tSpace1.xyz * worldViewDir.y + IN.tSpace2.xyz * worldViewDir.z;
 				surfIN.worldPos = worldPos;
 				surfIN.worldNormal = float3( IN.tSpace0.z, IN.tSpace1.z, IN.tSpace2.z );
 				surfIN.internalSurfaceTtoW0 = IN.tSpace0.xyz;
@@ -840,7 +841,7 @@ inline float2 POM( sampler2D heightMap, float2 uvs, float2 dx, float2 dy, float3
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19603
+Version=19701
 Node;AmplifyShaderEditor.CommentaryNode;202;-2852.557,158;Inherit;False;2647.524;2444.887;Base Textures;50;204;195;203;64;208;207;14;15;205;206;12;88;63;201;84;10;200;9;11;82;83;199;56;5;18;53;52;4;16;55;210;211;212;213;214;215;216;217;219;220;225;226;227;228;221;222;223;224;230;231;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.TextureCoordinatesNode;221;-1856,384;Inherit;False;0;4;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RegisterLocalVarNode;222;-1600,384;Inherit;False;MainUV;-1;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0
@@ -999,4 +1000,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 ASEEND*/
-//CHKSM=B2C77E5AAEDAC0919883271EBD995A86D32CFB8A
+//CHKSM=3110D625DF04E9E8D8FCCD96900D9B14CD26034E
