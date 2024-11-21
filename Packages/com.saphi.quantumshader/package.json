@@ -1,6 +1,6 @@
 {
   "name": "com.saphi.quantumshader",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "displayName": "Saphi Quantum Shader",
   "description": "Quantum Shader",
   "unity": "2022.3",
@@ -14,6 +14,6 @@
     "url": "https://github.com/SaphiBlue/"
   },
   "vpmDependencies": {
-    "com.llealloo.audiolink": "1.x.x"
+    "com.llealloo.audiolink": "2.x.x"
   }
 }
