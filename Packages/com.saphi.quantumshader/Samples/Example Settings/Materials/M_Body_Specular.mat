@@ -51,6 +51,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: ca03f8fef69c8de4f92740b9cb32df50, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EmissionMap2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 101b5e7496e5e4a41a901bd0d0a398c7, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -95,7 +99,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Emission: 5
+    - _Emission2: 1
     - _EnableEmission: 1
+    - _EnableEmission2: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -103,6 +109,11 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _ParallaxEnable: 0
+    - _ParallaxMaxSamples: 16
+    - _ParallaxMinSamples: 8
+    - _ParallaxRefPlane: 0
+    - _ParallaxSideWallSteps: 2
     - _QBand1: 0
     - _QBand2: 1
     - _QBand3: 2
@@ -154,8 +165,11 @@ Material:
     - _QuantumGlowMultiply3: 1
     - _QuantumGlowMultiply4: 1
     - _QuantumGlowMultiplyGlobal: 5
+    - _RenderType: 0
     - _Roughness: 1
+    - _ShaderType: 0
     - _ShowMain: 1
+    - _ShowParallax: 0
     - _ShowQuantum: 1
     - _ShowQuantumBand1: 1
     - _ShowQuantumBand2: 1
@@ -175,6 +189,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor2: {r: 0, g: 0, b: 0, a: 0}
     - _QGlowColorBand1: {r: 1, g: 1, b: 1, a: 0}
     - _QGlowColorBand2: {r: 1, g: 1, b: 1, a: 0}
     - _QGlowColorBand3: {r: 1, g: 1, b: 1, a: 0}

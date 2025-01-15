@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 2560
     height: 1357
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -417,9 +417,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 9ae1ffff
-      m_LastClickedID: -7782
-      m_ExpandedIDs: f6faffff
+      m_SelectedIDs: 5a4b0000
+      m_LastClickedID: 0
+      m_ExpandedIDs: f6faffff905d0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -878,9 +878,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 21.858013, y: 7.82263, z: 1.2339449}
+    m_Target: {x: -8.692438, y: -0.60253596, z: -10.029702}
     speed: 2
-    m_Value: {x: 21.858013, y: 7.82263, z: 1.2339449}
+    m_Value: {x: -8.692438, y: -0.60253596, z: -10.029702}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -926,9 +926,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.008790202, y: -0.8680603, z: 0.016065635, w: -0.49625194}
+    m_Target: {x: 0.014078079, y: -0.9829168, z: 0.08151497, w: 0.16481946}
     speed: 2
-    m_Value: {x: -0.02091903, y: -0.8739265, z: 0.038478363, w: -0.4840809}
+    m_Value: {x: 0.014199385, y: -0.9826028, z: 0.08148831, w: 0.16628253}
   m_Size:
     m_Target: 7.388698
     speed: 2
@@ -1076,7 +1076,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Test/ShaderTest
+    - Packages/com.saphi.quantumshader/Editor/UI
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1084,16 +1084,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Test/ShaderTest
+  - Packages/com.saphi.quantumshader/Editor/UI
   m_LastFoldersGridSize: 16
   m_LastProjectPath: H:\VRChat\SaphiAssets\Shader\quantumshader
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 780}
-    m_SelectedIDs: 06660000
-    m_LastClickedID: 26118
-    m_ExpandedIDs: 0000000006640000086400000a6400000c6400000e64000010640000126400001464000016640000186400001a6400001c6400001e64000020640000226400002464000026640000286400002a6400002c6400002e64000030640000326400003464000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 295}
+    m_SelectedIDs: 0a660000
+    m_LastClickedID: 26122
+    m_ExpandedIDs: 000000000c6400000e64000010640000126400001464000016640000186400001a6400001c6400001e64000020640000226400002464000026640000286400002a6400002e640000306400003264000034640000366400003864000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1121,7 +1121,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000006640000086400000a6400000c6400000e64000010640000126400001464000016640000186400001a6400001c6400001e64000020640000226400002464000026640000286400002a6400002c6400002e640000306400003264000034640000
+    m_ExpandedIDs: 000000000a6400000c6400000e64000010640000126400001464000016640000186400001a6400001c6400001e64000020640000226400002464000026640000286400002a6400002c6400002e6400003064000032640000346400003664000038640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

@@ -27,7 +27,7 @@ Shader "Saphi/QuantumShaderBasicPBRCutout"
 		_Metallic("Metallic", Range( 0 , 1)) = 0
 		_SpecularMap("Specular Map", 2D) = "white" {}
 		[Enum(UnityEngine.Rendering.CullMode)]_Culling("Culling", Float) = 2
-		_RoughnessMap("Roghness Map", 2D) = "white" {}
+		_RoughnessMap("Roughness Map", 2D) = "white" {}
 		_SpecularCorretive("Specular Corretive", Float) = 0.1
 		_Specular("Specular", Range( 0 , 1)) = 0.5
 		_Roughness("Roughness", Range( 0 , 1)) = 0.5
@@ -754,8 +754,8 @@ inline float2 POM( sampler2D heightMap, float2 uvs, float2 dx, float2 dy, float3
 			float4 lerpResult20 = lerp( temp_cast_65 , Albedo63 , MetallicResult68);
 			float4 SpecularMap73 = lerpResult20;
 			o.Specular = SpecularMap73.rgb;
-			float RoghnessValue84 = tex2D( _RoughnessMap, MainUVFinal262 ).r;
-			float Smoothness76 = ( 1.0 - ( RoghnessValue84 * _Roughness ) );
+			float RoughnessValue84 = tex2D( _RoughnessMap, MainUVFinal262 ).r;
+			float Smoothness76 = ( 1.0 - ( RoughnessValue84 * _Roughness ) );
 			o.Smoothness = Smoothness76;
 			o.Alpha = 1;
 			float AlphaMap245 = tex2D( _AlphaMap, MainUVFinal262 ).r;
@@ -877,12 +877,12 @@ Node;AmplifyShaderEditor.CommentaryNode;93;-160,960;Inherit;False;820;243;Metall
 Node;AmplifyShaderEditor.RegisterLocalVarNode;5;-1728,208;Inherit;False;MainTexTex;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;82;-1088,1376;Inherit;False;MetallicValue;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;83;-1168,1632;Inherit;False;SpecularValue;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TexturePropertyNode;32;-2032,1808;Inherit;True;Property;_RoughnessMap;Roghness Map;25;0;Create;False;0;0;0;False;0;False;None;9ef4e7141633e7448abdfe031993c9c8;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;56;-1232,2016;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;226;-1232,2128;Inherit;False;Property;_Emission;Emission;106;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;251;-1248,2480;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;252;-1248,2592;Inherit;False;Property;_Emission2;Emission2;108;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;268;-1760,1856;Inherit;False;262;MainUVFinal;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TexturePropertyNode;32;-2032,1808;Inherit;True;Property;_RoughnessMap;Roughness Map;25;0;Create;False;0;0;0;False;0;False;None;9ef4e7141633e7448abdfe031993c9c8;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.GetLocalVarNode;86;-96,1328;Inherit;False;83;SpecularValue;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;85;-112,1008;Inherit;False;82;MetallicValue;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;35;-112,1088;Inherit;False;Property;_Metallic;Metallic;22;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
@@ -897,14 +897,14 @@ Node;AmplifyShaderEditor.CommentaryNode;95;-144,1712;Inherit;False;1044;259;Roug
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;38;240,1328;Inherit;False;3;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;34;192,1008;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;-1040,208;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;84;-1168,1840;Inherit;False;RoghnessValue;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.ToggleSwitchNode;228;-928,2016;Inherit;False;Property;_EnableEmission;EnableEmission;104;0;Create;True;0;0;0;False;0;False;0;True;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.ToggleSwitchNode;254;-944,2480;Inherit;False;Property;_EnableEmission2;EnableEmission2;105;0;Create;True;0;0;0;False;0;False;0;True;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;84;-1168,1840;Inherit;False;RoughnessValue;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CommentaryNode;92;-160,496;Inherit;False;788;323;Specular Map (dielectric = grayscale | metallic = albedo);5;70;67;79;20;73;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.CommentaryNode;91;-160,160;Inherit;False;820;243;Specular albedo (metallic = black);4;66;69;19;72;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;68;416,1008;Inherit;False;MetallicResult;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;78;464,1328;Inherit;False;SpecularResult;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;87;-96,1760;Inherit;False;84;RoghnessValue;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;87;-96,1760;Inherit;False;84;RoughnessValue;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;37;-96,1856;Inherit;False;Property;_Roughness;Roughness;28;0;Create;True;0;0;0;False;0;False;0.5;1;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;63;-848,208;Inherit;False;Albedo;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;88;-672,2016;Inherit;False;MainEmission;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
@@ -987,9 +987,9 @@ WireConnection;34;0;85;0
 WireConnection;34;1;35;0
 WireConnection;10;0;9;0
 WireConnection;10;1;11;0
-WireConnection;84;0;31;1
 WireConnection;228;1;227;0
 WireConnection;254;1;253;0
+WireConnection;84;0;31;1
 WireConnection;68;0;34;0
 WireConnection;78;0;38;0
 WireConnection;63;0;10;0
@@ -1029,4 +1029,4 @@ WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 WireConnection;0;10;246;0
 ASEEND*/
-//CHKSM=EBDAFF73A054088D15CBF8E1307C1473C6628EAC
+//CHKSM=95A4B14AC9C808D245148B018FAC22E93C096579

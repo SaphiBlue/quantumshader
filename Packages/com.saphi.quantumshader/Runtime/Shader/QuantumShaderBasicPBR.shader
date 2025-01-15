@@ -25,7 +25,7 @@ Shader "Saphi/QuantumShaderBasicPBR"
 		_Metallic("Metallic", Range( 0 , 1)) = 0
 		_SpecularMap("Specular Map", 2D) = "white" {}
 		[Enum(UnityEngine.Rendering.CullMode)]_Culling("Culling", Float) = 2
-		_RoughnessMap("Roghness Map", 2D) = "white" {}
+		_RoughnessMap("Roughness Map", 2D) = "white" {}
 		_SpecularCorretive("Specular Corretive", Float) = 0.1
 		_Specular("Specular", Range( 0 , 1)) = 0.5
 		_Roughness("Roughness", Range( 0 , 1)) = 0.5
@@ -871,12 +871,12 @@ Node;AmplifyShaderEditor.CommentaryNode;93;-160,960;Inherit;False;820;243;Metall
 Node;AmplifyShaderEditor.RegisterLocalVarNode;5;-1552,208;Inherit;False;MainTexTex;-1;True;1;0;SAMPLER2D;;False;1;SAMPLER2D;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;82;-912,1376;Inherit;False;MetallicValue;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;83;-992,1632;Inherit;False;SpecularValue;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.TexturePropertyNode;32;-1856,1808;Inherit;True;Property;_RoughnessMap;Roghness Map;23;0;Create;False;0;0;0;False;0;False;None;9ef4e7141633e7448abdfe031993c9c8;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.RangedFloatNode;226;-1056,2128;Inherit;False;Property;_Emission;Emission;104;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;56;-1056,2016;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;247;-1040,2448;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;245;-1040,2560;Inherit;False;Property;_Emission2;Emission2;105;0;Create;True;0;0;0;False;0;False;1;0;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;265;-1536,1872;Inherit;False;259;MainUVFinal;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.TexturePropertyNode;32;-1856,1808;Inherit;True;Property;_RoughnessMap;Roughness Map;23;0;Create;False;0;0;0;False;0;False;None;9ef4e7141633e7448abdfe031993c9c8;False;white;Auto;Texture2D;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.GetLocalVarNode;86;-96,1328;Inherit;False;83;SpecularValue;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;85;-112,1008;Inherit;False;82;MetallicValue;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;35;-112,1088;Inherit;False;Property;_Metallic;Metallic;20;0;Create;True;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
@@ -1013,4 +1013,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 ASEEND*/
-//CHKSM=0ECBA98FEB8C774E13CF97189BE324DD58BF3D0C
+//CHKSM=D9B1201F4F4D21C42919251702C3A611588B667B
