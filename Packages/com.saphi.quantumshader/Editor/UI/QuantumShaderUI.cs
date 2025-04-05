@@ -187,6 +187,7 @@ namespace Saphi.QuantumShader
                 GUILayout.BeginVertical("box");
                 EditorGUI.indentLevel += 2;
                 buildTextureInputs("Main Texture", "Main Color/Albedo", "_MainTex", "_Color", true);
+                editor.ShaderProperty(getProperty("_MainUVIndex"), "Main UV", 2);
                 GUILayout.Space(10);
                 editor.ShaderProperty(getProperty("_EnableEmission"), "Enable Main Emission", 0);
                 editor.ShaderProperty(getProperty("_Emission"), "Emission Main Multiplier", 0);
@@ -201,6 +202,7 @@ namespace Saphi.QuantumShader
                 buildPBRMaps();
                 GUILayout.Space(10);
                 buildNormalInputs("Detail Normal Map", "Detail Normal Map", "_DetailNormalMap", "_DetailNormalMapScale", true);
+                editor.ShaderProperty(getProperty("_DetailUVIndex"), "Detail UV", 2);
                 GUILayout.Space(10);
                 EditorGUI.indentLevel -= 2;
                 GUILayout.EndVertical();
@@ -218,7 +220,8 @@ namespace Saphi.QuantumShader
                     GUILayout.Space(10);
                     GUILayout.BeginVertical("box");
                     EditorGUI.indentLevel += 2;
-                    buildTextureInputs("Alpha Map", "Alpha Map", "_AlphaMap");
+                    buildTextureInputs("Alpha Map", "Alpha Map", "_AlphaMap", "", true);
+                    editor.ShaderProperty(getProperty("_AlphaUVIndex"), "Alpha UV", 2);
                     editor.ShaderProperty(getProperty("_Cutoff"), "Cutoff", 0);
 
                     if (target.shader == shaderBasicPBRTransparent || target.shader == shaderPackedPBRTransparent || target.shader == shaderMetallicTransparent || target.shader == shaderSpecularTransparent)
@@ -443,8 +446,11 @@ namespace Saphi.QuantumShader
 
                 EditorGUI.indentLevel += 2;
 
-                buildTextureInputs("Glow Map", "Uses RGBA for Directional Glow", "_QGlowMap");
-                buildTextureInputs("Direction", "Direction of the glow band", "_QDirection");
+                buildTextureInputs("Glow Map", "Uses RGBA for Directional Glow", "_QGlowMap", "", true);
+                editor.ShaderProperty(getProperty("_QDirectionUVIndex"), "Direction UV", 2);
+
+                buildTextureInputs("Direction", "Direction of the glow band", "_QDirection", "", true);
+                editor.ShaderProperty(getProperty("_QGlowMapUVIndex"), "GlowMap UV", 2);
 
 
                 editor.ShaderProperty(getProperty("_UseUVAsDirection"), "Use UV Map as direction map", 2);
