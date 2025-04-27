@@ -447,11 +447,10 @@ namespace Saphi.QuantumShader
                 EditorGUI.indentLevel += 2;
 
                 buildTextureInputs("Glow Map", "Uses RGBA for Directional Glow", "_QGlowMap", "", true);
-                editor.ShaderProperty(getProperty("_QDirectionUVIndex"), "Direction UV", 2);
-
-                buildTextureInputs("Direction", "Direction of the glow band", "_QDirection", "", true);
                 editor.ShaderProperty(getProperty("_QGlowMapUVIndex"), "GlowMap UV", 2);
-
+                
+                buildTextureInputs("Direction", "Direction of the glow band", "_QDirection", "", true);
+                editor.ShaderProperty(getProperty("_QDirectionUVIndex"), "Direction UV", 2);
 
                 editor.ShaderProperty(getProperty("_UseUVAsDirection"), "Use UV Map as direction map", 2);
                 editor.ShaderProperty(getProperty("_UseUVAsDirectionUV"), "UV Map as direction U or V", 2);
