@@ -67,6 +67,7 @@ namespace Saphi.QuantumShader
 
             MainProps();
             QuantumGlow();
+            LightVolumes();
             Parallax();
             Rendering();
         }
@@ -552,6 +553,48 @@ namespace Saphi.QuantumShader
                 editor.ShaderProperty(getProperty("_ParallaxRefPlane"), "Reference Plane");
                 
                 
+                EditorGUI.indentLevel -= 2;
+                GUILayout.EndVertical();
+
+
+            }
+            else
+            {
+                target.SetFloat(toggle, 0);
+            }
+        }
+
+        void LightVolumes()
+        {
+            bool showLightVolumes;
+            string toggle = "_ShowLightVolumes";
+
+            if (target.GetFloat(toggle) == 1)
+            {
+                showLightVolumes = true;
+            }
+            else
+            {
+                showLightVolumes = false;
+            }
+
+            showLightVolumes = EditorGUILayout.Foldout(showLightVolumes, "Light Volumes", true, EditorStyles.foldoutHeader);
+            if (showLightVolumes)
+            {
+                target.SetFloat(toggle, 1);
+
+                GUILayout.BeginVertical("box");
+                EditorGUI.indentLevel += 2;
+
+                editor.ShaderProperty(getProperty("_Q_LightVolumes"), "Enable Light Volumes");
+                editor.ShaderProperty(getProperty("_LightVolumes"), "Use Light Volumes");
+                editor.ShaderProperty(getProperty("_Speculars"), "Speculars");
+                editor.ShaderProperty(getProperty("_DominantDirSpeculars"), "Dominant Dir Speculars");
+                editor.ShaderProperty(getProperty("_LightVolumesBias"), "Light Volumes Bias");
+                
+
+
+
                 EditorGUI.indentLevel -= 2;
                 GUILayout.EndVertical();
 

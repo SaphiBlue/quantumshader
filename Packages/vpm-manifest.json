@@ -3,11 +3,23 @@
     "com.vrchat.core.vpm-resolver": {
       "version": "0.1.29"
     },
-    "com.vrchat.avatars": {
-      "version": "3.7.0"
-    },
     "com.llealloo.audiolink": {
       "version": "2.1.0"
+    },
+    "com.vrchat.base": {
+      "version": "3.8.0"
+    },
+    "com.vrchat.avatars": {
+      "version": "3.8.0"
+    },
+    "com.vrcfury.vrcfury": {
+      "version": "1.1227.0"
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.4"
+    },
+    "red.sim.lightvolumes": {
+      "version": "2.0.0"
     }
   },
   "locked": {
@@ -15,18 +27,32 @@
       "version": "0.1.29",
       "dependencies": {}
     },
-    "com.vrchat.avatars": {
-      "version": "3.7.0",
-      "dependencies": {
-        "com.vrchat.base": "3.7.0"
-      }
-    },
-    "com.vrchat.base": {
-      "version": "3.7.0",
-      "dependencies": {}
-    },
     "com.llealloo.audiolink": {
       "version": "2.1.0",
+      "dependencies": {}
+    },
+    "com.vrchat.base": {
+      "version": "3.8.0",
+      "dependencies": {}
+    },
+    "com.vrchat.avatars": {
+      "version": "3.8.0",
+      "dependencies": {
+        "com.vrchat.base": "3.8.0"
+      }
+    },
+    "com.vrcfury.vrcfury": {
+      "version": "1.1227.0",
+      "dependencies": {}
+    },
+    "vrchat.blackstartx.gesture-manager": {
+      "version": "3.9.4",
+      "dependencies": {
+        "com.vrchat.avatars": ">=3.5.2 < 3.9.X"
+      }
+    },
+    "red.sim.lightvolumes": {
+      "version": "2.0.0",
       "dependencies": {}
     }
   }
