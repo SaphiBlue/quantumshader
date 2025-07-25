@@ -631,6 +631,7 @@ namespace Saphi.QuantumShader
 
                 editor.ShaderProperty(getProperty("_Q_LightVolumes"), "Enable Light Volumes");
                 editor.ShaderProperty(getProperty("_LightVolumesMultiplier"), "Multiplier");
+                editor.ShaderProperty(getProperty("_LightVolumesSubstractLightProbes"), "Substract Light Probes for Light Volumes");
                 editor.ShaderProperty(getProperty("_LightVolumes"), "Use Light Volumes");
                 editor.ShaderProperty(getProperty("_Speculars"), "Speculars");
                 editor.ShaderProperty(getProperty("_DominantDirSpeculars"), "Dominant Dir Speculars");

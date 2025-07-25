@@ -5,6 +5,7 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 	Properties
 	{
 		[Toggle( _LIGHTVOLUMES_ON )] _LightVolumes( "Enable Light Volumes", Float ) = 1
+		[Toggle( _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON )] _LightVolumesSubstractLightProbes( "LightVolumesSubstractLightProbes", Float ) = 1
 		_LightVolumesBias( "Light Volumes Bias", Float ) = 0
 		[Toggle( _SPECULARS_ON )] _Speculars( "Speculars", Float ) = 1
 		[Toggle( _DOMINANTDIRSPECULARS_ON )] _DominantDirSpeculars( "Dominant Dir Speculars", Float ) = 0
@@ -40,6 +41,7 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 		#pragma shader_feature_local _Q_LIGHTVOLUMES_ON
 		#pragma shader_feature_local _SPECULARS_ON
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
+		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
 		#define ASE_VERSION 19901
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
@@ -77,7 +79,7 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 			ase_normalOS = normalize( ase_normalOS );
 			float3 normalizeResult3_g506 = normalize( (WorldNormalVector( i , ase_normalOS )) );
 			float3 World_Normal53_g506 = normalizeResult3_g506;
-			float3 worldNormal2_g509 = World_Normal53_g506;
+			float3 worldNormal2_g511 = World_Normal53_g506;
 			float3 appendResult13_g506 = (float3(unity_SHAr.w , unity_SHAg.w , unity_SHAb.w));
 			float localLightVolumeSH1_g508 = ( 0.0 );
 			float3 ase_positionWS = i.worldPos;
@@ -106,96 +108,119 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 			#else
 				float3 staticSwitch17_g506 = L01_g508;
 			#endif
+			#ifdef _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
+				float3 staticSwitch129_g506 = ( staticSwitch17_g506 - appendResult13_g506 );
+			#else
+				float3 staticSwitch129_g506 = staticSwitch17_g506;
+			#endif
 			#ifdef _LIGHTVOLUMES_ON
-				float3 staticSwitch21_g506 = staticSwitch17_g506;
+				float3 staticSwitch21_g506 = staticSwitch129_g506;
 			#else
 				float3 staticSwitch21_g506 = appendResult13_g506;
 			#endif
 			float3 L025_g506 = staticSwitch21_g506;
-			float3 L02_g509 = L025_g506;
+			float3 L02_g511 = L025_g506;
+			float3 temp_output_10_0_g506 = (unity_SHAr).xyz;
 			#ifdef LIGHTMAP_ON
 				float3 staticSwitch14_g506 = L1r1_g507;
 			#else
 				float3 staticSwitch14_g506 = L1r1_g508;
 			#endif
-			#ifdef _LIGHTVOLUMES_ON
-				float3 staticSwitch18_g506 = staticSwitch14_g506;
+			#ifdef _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
+				float3 staticSwitch128_g506 = ( staticSwitch14_g506 - temp_output_10_0_g506 );
 			#else
-				float3 staticSwitch18_g506 = (unity_SHAr).xyz;
+				float3 staticSwitch128_g506 = staticSwitch14_g506;
+			#endif
+			#ifdef _LIGHTVOLUMES_ON
+				float3 staticSwitch18_g506 = staticSwitch128_g506;
+			#else
+				float3 staticSwitch18_g506 = temp_output_10_0_g506;
 			#endif
 			float3 L1r22_g506 = staticSwitch18_g506;
-			float3 L1r2_g509 = L1r22_g506;
+			float3 L1r2_g511 = L1r22_g506;
+			float3 temp_output_11_0_g506 = (unity_SHAg).xyz;
 			#ifdef LIGHTMAP_ON
 				float3 staticSwitch15_g506 = L1g1_g507;
 			#else
 				float3 staticSwitch15_g506 = L1g1_g508;
 			#endif
-			#ifdef _LIGHTVOLUMES_ON
-				float3 staticSwitch19_g506 = staticSwitch15_g506;
+			#ifdef _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
+				float3 staticSwitch123_g506 = ( staticSwitch15_g506 - temp_output_11_0_g506 );
 			#else
-				float3 staticSwitch19_g506 = (unity_SHAg).xyz;
+				float3 staticSwitch123_g506 = staticSwitch15_g506;
+			#endif
+			#ifdef _LIGHTVOLUMES_ON
+				float3 staticSwitch19_g506 = staticSwitch123_g506;
+			#else
+				float3 staticSwitch19_g506 = temp_output_11_0_g506;
 			#endif
 			float3 L1g23_g506 = staticSwitch19_g506;
-			float3 L1g2_g509 = L1g23_g506;
+			float3 L1g2_g511 = L1g23_g506;
+			float3 temp_output_12_0_g506 = (unity_SHAb).xyz;
 			#ifdef LIGHTMAP_ON
 				float3 staticSwitch16_g506 = L1b1_g507;
 			#else
 				float3 staticSwitch16_g506 = L1b1_g508;
 			#endif
-			#ifdef _LIGHTVOLUMES_ON
-				float3 staticSwitch20_g506 = staticSwitch16_g506;
+			#ifdef _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
+				float3 staticSwitch122_g506 = ( staticSwitch16_g506 - temp_output_12_0_g506 );
 			#else
-				float3 staticSwitch20_g506 = (unity_SHAb).xyz;
+				float3 staticSwitch122_g506 = staticSwitch16_g506;
+			#endif
+			#ifdef _LIGHTVOLUMES_ON
+				float3 staticSwitch20_g506 = staticSwitch122_g506;
+			#else
+				float3 staticSwitch20_g506 = temp_output_12_0_g506;
 			#endif
 			float3 L1b24_g506 = staticSwitch20_g506;
-			float3 L1b2_g509 = L1b24_g506;
-			float3 localLightVolumeEvaluate2_g509 = LightVolumeEvaluate( worldNormal2_g509 , L02_g509 , L1r2_g509 , L1g2_g509 , L1b2_g509 );
+			float3 L1b2_g511 = L1b24_g506;
+			float3 localLightVolumeEvaluate2_g511 = LightVolumeEvaluate( worldNormal2_g511 , L02_g511 , L1r2_g511 , L1g2_g511 , L1b2_g511 );
 			float3 Albedo33_g506 = Albedo63;
-			float3 temp_output_82_0_g506 = ( localLightVolumeEvaluate2_g509 * Albedo33_g506 );
+			float3 temp_output_82_0_g506 = ( localLightVolumeEvaluate2_g511 * Albedo33_g506 );
 			float3 Specular83 = _SpecColor.rgb;
 			float3 SpecularMap34_g506 = Specular83;
-			float3 temp_output_138_0_g511 = SpecularMap34_g506;
-			float3 f0157_g511 = temp_output_138_0_g511;
+			float3 temp_output_138_0_g510 = SpecularMap34_g506;
+			float3 f0157_g510 = temp_output_138_0_g510;
 			float ResultSmoothness286 = _Glossiness;
 			float Smoothness35_g506 = ResultSmoothness286;
-			float temp_output_3_0_g511 = Smoothness35_g506;
-			float smoothness157_g511 = temp_output_3_0_g511;
-			float3 temp_output_2_0_g511 = World_Normal53_g506;
-			float3 worldNormal157_g511 = temp_output_2_0_g511;
+			float temp_output_3_0_g510 = Smoothness35_g506;
+			float smoothness157_g510 = temp_output_3_0_g510;
+			float3 temp_output_2_0_g510 = World_Normal53_g506;
+			float3 worldNormal157_g510 = temp_output_2_0_g510;
 			float3 ase_viewVectorWS = ( _WorldSpaceCameraPos.xyz - ase_positionWS );
 			float3 ase_viewDirSafeWS = Unity_SafeNormalize( ase_viewVectorWS );
-			float3 temp_output_9_0_g511 = ase_viewDirSafeWS;
-			float3 viewDir157_g511 = temp_output_9_0_g511;
-			float3 temp_output_65_0_g511 = L025_g506;
-			float3 L0157_g511 = temp_output_65_0_g511;
-			float3 temp_output_1_0_g511 = L1r22_g506;
-			float3 L1r157_g511 = temp_output_1_0_g511;
-			float3 temp_output_36_0_g511 = L1g23_g506;
-			float3 L1g157_g511 = temp_output_36_0_g511;
-			float3 temp_output_37_0_g511 = L1b24_g506;
-			float3 L1b157_g511 = temp_output_37_0_g511;
-			float3 localLightVolumeSpecular157_g511 = LightVolumeSpecular( f0157_g511 , smoothness157_g511 , worldNormal157_g511 , viewDir157_g511 , L0157_g511 , L1r157_g511 , L1g157_g511 , L1b157_g511 );
-			float3 temp_output_138_0_g510 = SpecularMap34_g506;
-			float3 f0158_g510 = temp_output_138_0_g510;
-			float temp_output_3_0_g510 = Smoothness35_g506;
-			float smoothness158_g510 = temp_output_3_0_g510;
-			float3 temp_output_2_0_g510 = World_Normal53_g506;
-			float3 worldNormal158_g510 = temp_output_2_0_g510;
 			float3 temp_output_9_0_g510 = ase_viewDirSafeWS;
-			float3 viewDir158_g510 = temp_output_9_0_g510;
+			float3 viewDir157_g510 = temp_output_9_0_g510;
 			float3 temp_output_65_0_g510 = L025_g506;
-			float3 L0158_g510 = temp_output_65_0_g510;
+			float3 L0157_g510 = temp_output_65_0_g510;
 			float3 temp_output_1_0_g510 = L1r22_g506;
-			float3 L1r158_g510 = temp_output_1_0_g510;
+			float3 L1r157_g510 = temp_output_1_0_g510;
 			float3 temp_output_36_0_g510 = L1g23_g506;
-			float3 L1g158_g510 = temp_output_36_0_g510;
+			float3 L1g157_g510 = temp_output_36_0_g510;
 			float3 temp_output_37_0_g510 = L1b24_g506;
-			float3 L1b158_g510 = temp_output_37_0_g510;
-			float3 localLightVolumeSpecularDominant158_g510 = LightVolumeSpecularDominant( f0158_g510 , smoothness158_g510 , worldNormal158_g510 , viewDir158_g510 , L0158_g510 , L1r158_g510 , L1g158_g510 , L1b158_g510 );
+			float3 L1b157_g510 = temp_output_37_0_g510;
+			float3 localLightVolumeSpecular157_g510 = LightVolumeSpecular( f0157_g510 , smoothness157_g510 , worldNormal157_g510 , viewDir157_g510 , L0157_g510 , L1r157_g510 , L1g157_g510 , L1b157_g510 );
+			float3 temp_output_138_0_g509 = SpecularMap34_g506;
+			float3 f0158_g509 = temp_output_138_0_g509;
+			float temp_output_3_0_g509 = Smoothness35_g506;
+			float smoothness158_g509 = temp_output_3_0_g509;
+			float3 temp_output_2_0_g509 = World_Normal53_g506;
+			float3 worldNormal158_g509 = temp_output_2_0_g509;
+			float3 temp_output_9_0_g509 = ase_viewDirSafeWS;
+			float3 viewDir158_g509 = temp_output_9_0_g509;
+			float3 temp_output_65_0_g509 = L025_g506;
+			float3 L0158_g509 = temp_output_65_0_g509;
+			float3 temp_output_1_0_g509 = L1r22_g506;
+			float3 L1r158_g509 = temp_output_1_0_g509;
+			float3 temp_output_36_0_g509 = L1g23_g506;
+			float3 L1g158_g509 = temp_output_36_0_g509;
+			float3 temp_output_37_0_g509 = L1b24_g506;
+			float3 L1b158_g509 = temp_output_37_0_g509;
+			float3 localLightVolumeSpecularDominant158_g509 = LightVolumeSpecularDominant( f0158_g509 , smoothness158_g509 , worldNormal158_g509 , viewDir158_g509 , L0158_g509 , L1r158_g509 , L1g158_g509 , L1b158_g509 );
 			#ifdef _DOMINANTDIRSPECULARS_ON
-				float3 staticSwitch38_g506 = localLightVolumeSpecularDominant158_g510;
+				float3 staticSwitch38_g506 = localLightVolumeSpecularDominant158_g509;
 			#else
-				float3 staticSwitch38_g506 = localLightVolumeSpecular157_g511;
+				float3 staticSwitch38_g506 = localLightVolumeSpecular157_g510;
 			#endif
 			float AO56_g506 = 1.0;
 			float3 Speculars40_g506 = ( staticSwitch38_g506 * AO56_g506 );
@@ -305,9 +330,9 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 /*ASEBEGIN
 Version=19901
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;204;-2638.565,158;Inherit;False;2446.399;944.335;Base Textures;10;63;83;283;11;206;195;205;284;286;287;;1,1,1,1;0;0
-Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;284;-912,464;Inherit;False;Property;_Glossiness;Smoothness;10;0;Create;False;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;283;-928,576;Inherit;False;Property;_SpecColor;SpecColor;9;0;Fetch;False;0;0;0;False;0;False;0.2980392,0.2980392,0.2980392,1;1,1,1,1;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
-Node;AmplifyShaderEditor.ColorNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;11;-928,224;Inherit;False;Property;_Color;Color;8;0;Create;False;0;0;0;False;0;False;1,1,1,0;0,0,0,0.07843138;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
+Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;284;-912,464;Inherit;False;Property;_Glossiness;Smoothness;11;0;Create;False;0;0;0;False;0;False;1;1;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;283;-928,576;Inherit;False;Property;_SpecColor;SpecColor;10;0;Fetch;False;0;0;0;False;0;False;0.2980392,0.2980392,0.2980392,1;1,1,1,1;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
+Node;AmplifyShaderEditor.ColorNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;11;-928,224;Inherit;False;Property;_Color;Color;9;0;Create;False;0;0;0;False;0;False;1,1,1,0;0,0,0,0.07843138;True;True;0;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
 Node;AmplifyShaderEditor.RegisterLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;83;-624,592;Inherit;False;Specular;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;63;-608,224;Inherit;False;Albedo;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;286;-560,448;Inherit;False;ResultSmoothness;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
@@ -316,13 +341,13 @@ Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, 
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;270;640,1440;Inherit;False;286;ResultSmoothness;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.NormalVertexDataNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;289;688,1568;Inherit;False;0;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;282;928,1296;Inherit;False;LightVolumesSpecularConnector;1;;506;e7830579c7edaa2489fdbf704cb14f73;0;5;32;FLOAT3;0,0,0;False;30;FLOAT3;0,0,0;False;31;FLOAT;0;False;1;FLOAT3;0,0,0;False;90;FLOAT;1;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.StaticSwitch, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;273;1248,1280;Inherit;False;Property;_Q_LightVolumes;Q_LightVolumes;14;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.StaticSwitch, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;273;1248,1280;Inherit;False;Property;_Q_LightVolumes;Q_LightVolumes;15;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;213;494,158;Inherit;False;1917;900;Output;7;0;74;81;75;280;288;290;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;179;1568,1280;Inherit;False;Emission;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;287;-608,336;Inherit;False;Alpha;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;205;-2192,336;Inherit;False;Property;_ShowRendering;ShowRendering;13;0;Create;True;0;0;0;True;0;False;0;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;195;-2192,240;Inherit;False;Property;_ShowMain;ShowMain;12;0;Create;True;0;0;0;True;0;False;0;1;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;206;-2384,320;Inherit;False;Property;_Culling;Culling;11;1;[Enum];Create;False;0;1;Option1;0;1;UnityEngine.Rendering.CullMode;True;0;False;2;2;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;205;-2192,336;Inherit;False;Property;_ShowRendering;ShowRendering;14;0;Create;True;0;0;0;True;0;False;0;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;195;-2192,240;Inherit;False;Property;_ShowMain;ShowMain;13;0;Create;True;0;0;0;True;0;False;0;1;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;206;-2384,320;Inherit;False;Property;_Culling;Culling;12;1;[Enum];Create;False;0;1;Option1;0;1;UnityEngine.Rendering.CullMode;True;0;False;2;2;0;0;0;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;75;960,400;Inherit;False;83;Specular;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;280;928,496;Inherit;False;286;ResultSmoothness;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;74;960,240;Inherit;False;63;Albedo;1;0;OBJECT;;False;1;FLOAT3;0
@@ -346,4 +371,4 @@ WireConnection;0;3;75;0
 WireConnection;0;4;280;0
 WireConnection;0;9;288;0
 ASEEND*/
-//CHKSM=261C57ADDD614F8874FC6D37F75F4CBB250CA3BF
+//CHKSM=A08C89D949BD2D4FD7E3A52D887E1A75214DAD1D
