@@ -679,6 +679,11 @@ namespace Saphi.QuantumShader
                 editor.EnableInstancingField();
                 editor.DoubleSidedGIField();
                 editor.LightmapEmissionProperty();
+                if (target.shader == shaderSpecularTransparentSimple)
+                {
+                    editor.ShaderProperty(getProperty("_SpecularHighlights"), "Specular Highlights", 0);
+                    editor.ShaderProperty(getProperty("_GlossyReflections"), "Reflections", 0);
+                }   
                 EditorGUI.indentLevel -= 2;
             }
             else
