@@ -24,6 +24,7 @@ namespace Saphi.QuantumShader
         Shader shaderSpecular = Shader.Find("Saphi/QuantumShaderSpecular");
         Shader shaderSpecularCutout = Shader.Find("Saphi/QuantumShaderSpecularCutout");
         Shader shaderSpecularTransparent = Shader.Find("Saphi/QuantumShaderSpecularTransparent");
+        Shader shaderSpecularTransparentSimple = Shader.Find("Saphi/QuantumShaderSpecularTransparentSimple");
         Shader shaderMetallic = Shader.Find("Saphi/QuantumShaderMetallic");
         Shader shaderMetallicCutout = Shader.Find("Saphi/QuantumShaderMetallicCutout");
         Shader shaderMetallicTransparent = Shader.Find("Saphi/QuantumShaderMetallicTransparent");
@@ -64,11 +65,19 @@ namespace Saphi.QuantumShader
             setlogo();
 
             GUILayout.Space(10);
+            if (target.shader == shaderSpecularTransparentSimple)
+            {
+                MainSpecularTransparentSimple();
+                LightVolumes();
+            }
+            else
+            {
+                MainProps();
+                QuantumGlow();
+                LightVolumes();
+                Parallax();
+            }
 
-            MainProps();
-            QuantumGlow();
-            LightVolumes();
-            Parallax();
             Rendering();
         }
 
@@ -166,6 +175,37 @@ namespace Saphi.QuantumShader
             }
         }
 
+        void MainSpecularTransparentSimple()
+        {
+            bool showMain;
+            string toggle = "_ShowMain";
+
+            if (target.GetFloat(toggle) == 1)
+            {
+                showMain = true;
+            }
+            else
+            {
+                showMain = false;
+            }
+
+            showMain = EditorGUILayout.Foldout(showMain, "Main", true, EditorStyles.foldoutHeader);
+            if (showMain)
+            {
+                target.SetFloat(toggle, 1);
+
+                GUILayout.BeginVertical("box");
+                editor.ShaderProperty(getProperty("_Color"), "Color", 0);
+                editor.ShaderProperty(getProperty("_SpecColor"), "Color", 0);
+                editor.ShaderProperty(getProperty("_Glossiness"), "Smoothness", 0);
+                GUILayout.EndVertical();
+            }
+            else
+            {
+                target.SetFloat(toggle, 0);
+            }
+        }
+
         void MainProps()
         {
             bool showMain;
@@ -247,7 +287,10 @@ namespace Saphi.QuantumShader
 
         void shaderMode()
         {
-
+            if (target.shader == shaderSpecularTransparentSimple)
+            {
+                return;
+            }
             if(target.shader == shaderMetallic){
                 target.SetFloat("_ShaderType", (float)ShaderType.Standard);
                 target.SetFloat("_RenderType", (float)RenderType.Opaque);
@@ -587,6 +630,7 @@ namespace Saphi.QuantumShader
                 EditorGUI.indentLevel += 2;
 
                 editor.ShaderProperty(getProperty("_Q_LightVolumes"), "Enable Light Volumes");
+                editor.ShaderProperty(getProperty("_LightVolumesMultiplier"), "Multiplier");
                 editor.ShaderProperty(getProperty("_LightVolumes"), "Use Light Volumes");
                 editor.ShaderProperty(getProperty("_Speculars"), "Speculars");
                 editor.ShaderProperty(getProperty("_DominantDirSpeculars"), "Dominant Dir Speculars");
