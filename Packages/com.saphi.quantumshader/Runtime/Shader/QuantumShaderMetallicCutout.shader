@@ -840,6 +840,7 @@ Shader "Saphi/QuantumShaderMetallicCutout"
 				ifLocalVar112_g368 = temp_output_53_0_g368;
 			float localIfAudioLinkv2Exists1_g367 = IfAudioLinkv2Exists1_g367();
 			float4 lerpResult55_g366 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g366 * ( ifLocalVar107_g384 + ifLocalVar108_g384 + ifLocalVar112_g384 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g366 * ( ifLocalVar107_g392 + ifLocalVar108_g392 + ifLocalVar112_g392 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g366 * ( ifLocalVar107_g376 + ifLocalVar108_g376 + ifLocalVar112_g376 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g366 * ( ifLocalVar107_g368 + ifLocalVar108_g368 + ifLocalVar112_g368 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g367);
+			float localLightVolumesEnabled2_g430 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g424 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g424 = normalizeResult3_g424;
 			float3 worldNormal2_g429 = World_Normal53_g424;
@@ -998,8 +999,11 @@ Shader "Saphi/QuantumShaderMetallicCutout"
 				float3 staticSwitch84_g424 = temp_output_82_0_g424;
 			#endif
 			float3 IndirectAndSpeculars86_g424 = ( staticSwitch84_g424 * AO56_g424 );
+			float3 ifLocalVar125_g424 = 0;
+			if( localLightVolumesEnabled2_g430 > 0.0 )
+				ifLocalVar125_g424 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g424 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch264 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g424 );
+				float3 staticSwitch264 = ifLocalVar125_g424;
 			#else
 				float3 staticSwitch264 = float3( 0,0,0 );
 			#endif
@@ -1010,17 +1014,17 @@ Shader "Saphi/QuantumShaderMetallicCutout"
 			o.Alpha = 1;
 			float2 uv_AlphaMap = i.uv_texcoord * _AlphaMap_ST.xy + _AlphaMap_ST.zw;
 			float2 uv2_AlphaMap = i.uv2_texcoord2 * _AlphaMap_ST.xy + _AlphaMap_ST.zw;
-			int temp_output_18_0_g430 = _AlphaUVIndex;
-			float2 lerpResult22_g430 = lerp( uv_AlphaMap , uv2_AlphaMap , (float)saturate( temp_output_18_0_g430 ));
+			int temp_output_18_0_g431 = _AlphaUVIndex;
+			float2 lerpResult22_g431 = lerp( uv_AlphaMap , uv2_AlphaMap , (float)saturate( temp_output_18_0_g431 ));
 			float2 uv3_AlphaMap = i.uv3_texcoord3 * _AlphaMap_ST.xy + _AlphaMap_ST.zw;
-			int temp_output_26_0_g430 = ( temp_output_18_0_g430 - 1 );
-			float2 lerpResult25_g430 = lerp( lerpResult22_g430 , uv3_AlphaMap , (float)saturate( temp_output_26_0_g430 ));
+			int temp_output_26_0_g431 = ( temp_output_18_0_g431 - 1 );
+			float2 lerpResult25_g431 = lerp( lerpResult22_g431 , uv3_AlphaMap , (float)saturate( temp_output_26_0_g431 ));
 			float2 uv4_AlphaMap = i.uv4_texcoord4 * _AlphaMap_ST.xy + _AlphaMap_ST.zw;
-			int temp_output_31_0_g430 = ( temp_output_26_0_g430 - 1 );
-			float2 lerpResult29_g430 = lerp( lerpResult25_g430 , uv4_AlphaMap , (float)saturate( temp_output_31_0_g430 ));
+			int temp_output_31_0_g431 = ( temp_output_26_0_g431 - 1 );
+			float2 lerpResult29_g431 = lerp( lerpResult25_g431 , uv4_AlphaMap , (float)saturate( temp_output_31_0_g431 ));
 			float2 uv5_AlphaMap = i.ase_texcoord5 * _AlphaMap_ST.xy + _AlphaMap_ST.zw;
-			float2 lerpResult35_g430 = lerp( lerpResult29_g430 , uv5_AlphaMap.xy , (float)saturate( ( temp_output_31_0_g430 - 1 ) ));
-			float AlphaMap212 = tex2D( _AlphaMap, lerpResult35_g430 ).r;
+			float2 lerpResult35_g431 = lerp( lerpResult29_g431 , uv5_AlphaMap.xy , (float)saturate( ( temp_output_31_0_g431 - 1 ) ));
+			float AlphaMap212 = tex2D( _AlphaMap, lerpResult35_g431 ).r;
 			clip( AlphaMap212 - _Cutoff );
 		}
 
@@ -1194,7 +1198,7 @@ Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Cul
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;89;448,2032;Inherit;False;88;MainEmission;1;0;OBJECT;;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;267;560,2304;Inherit;False;LightVolumesMetallicConnector;0;;424;4103f3421d11ef3498c02a836aaf4678;0;5;32;FLOAT3;0,0,0;False;30;FLOAT;0;False;31;FLOAT;0;False;1;FLOAT3;0,0,0;False;90;FLOAT;1;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SimpleAddOpNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;176;704,2032;Inherit;True;3;3;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;252;-1616,2688;Inherit;False;UVSelect;-1;;430;be9f0a2bbb8e0f340a2211011430e00a;0;2;3;SAMPLER2D;_Sampler3252;False;18;INT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;252;-1616,2688;Inherit;False;UVSelect;-1;;431;be9f0a2bbb8e0f340a2211011430e00a;0;2;3;SAMPLER2D;_Sampler3252;False;18;INT;0;False;1;FLOAT2;0
 Node;AmplifyShaderEditor.StaticSwitch, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;264;880,2288;Inherit;False;Property;_Q_LightVolumes;Q_LightVolumes;121;0;Create;True;0;0;0;False;0;False;0;0;0;True;;Toggle;2;Key0;Key1;Create;True;True;All;9;1;FLOAT3;0,0,0;False;0;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT3;0,0,0;False;4;FLOAT3;0,0,0;False;5;FLOAT3;0,0,0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT3;0,0,0;False;1;FLOAT3;0
 Node;AmplifyShaderEditor.SamplerNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;213;-1248,2496;Inherit;True;Property;_TextureSample9;Texture Sample 2;5;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;6;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4;FLOAT3;5
 Node;AmplifyShaderEditor.SimpleAddOpNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;270;1136,2032;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT3;0,0,0;False;1;COLOR;0
@@ -1287,4 +1291,4 @@ WireConnection;0;3;75;0
 WireConnection;0;4;263;0
 WireConnection;0;10;215;0
 ASEEND*/
-//CHKSM=0E8AE9C435BA8BD55097105A80940B44B539970E
+//CHKSM=42298578B21B8A7EA53545C07AFAECE52DE09F1C

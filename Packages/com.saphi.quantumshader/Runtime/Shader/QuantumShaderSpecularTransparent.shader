@@ -845,6 +845,7 @@ Shader "Saphi/QuantumShaderSpecularTransparent"
 				ifLocalVar112_g472 = temp_output_53_0_g472;
 			float localIfAudioLinkv2Exists1_g471 = IfAudioLinkv2Exists1_g471();
 			float4 lerpResult55_g470 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g470 * ( ifLocalVar107_g488 + ifLocalVar108_g488 + ifLocalVar112_g488 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g470 * ( ifLocalVar107_g496 + ifLocalVar108_g496 + ifLocalVar112_g496 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g470 * ( ifLocalVar107_g480 + ifLocalVar108_g480 + ifLocalVar112_g480 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g470 * ( ifLocalVar107_g472 + ifLocalVar108_g472 + ifLocalVar112_g472 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g471);
+			float localLightVolumesEnabled2_g512 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g506 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g506 = normalizeResult3_g506;
 			float3 worldNormal2_g511 = World_Normal53_g506;
@@ -996,8 +997,11 @@ Shader "Saphi/QuantumShaderSpecularTransparent"
 				float3 staticSwitch84_g506 = temp_output_82_0_g506;
 			#endif
 			float3 IndirectAndSpeculars86_g506 = ( staticSwitch84_g506 * AO56_g506 );
+			float3 ifLocalVar132_g506 = 0;
+			if( localLightVolumesEnabled2_g512 > 0.0 )
+				ifLocalVar132_g506 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g506 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch273 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g506 );
+				float3 staticSwitch273 = ifLocalVar132_g506;
 			#else
 				float3 staticSwitch273 = float3( 0,0,0 );
 			#endif
@@ -1294,4 +1298,4 @@ WireConnection;0;4;280;0
 WireConnection;0;9;217;0
 WireConnection;0;10;233;0
 ASEEND*/
-//CHKSM=5B0D24540A79BF77D482539BBF38ABD8937A60A9
+//CHKSM=CF6AEE375FE9FD4F0D47310AAE2D88D130EE9FE3

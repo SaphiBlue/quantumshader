@@ -828,6 +828,7 @@ Shader "Saphi/QuantumShaderSpecular"
 				ifLocalVar112_g426 = temp_output_53_0_g426;
 			float localIfAudioLinkv2Exists1_g425 = IfAudioLinkv2Exists1_g425();
 			float4 lerpResult55_g424 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g424 * ( ifLocalVar107_g442 + ifLocalVar108_g442 + ifLocalVar112_g442 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g424 * ( ifLocalVar107_g450 + ifLocalVar108_g450 + ifLocalVar112_g450 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g424 * ( ifLocalVar107_g434 + ifLocalVar108_g434 + ifLocalVar112_g434 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g424 * ( ifLocalVar107_g426 + ifLocalVar108_g426 + ifLocalVar112_g426 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g425);
+			float localLightVolumesEnabled2_g472 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g466 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g466 = normalizeResult3_g466;
 			float3 worldNormal2_g471 = World_Normal53_g466;
@@ -980,8 +981,11 @@ Shader "Saphi/QuantumShaderSpecular"
 				float3 staticSwitch84_g466 = temp_output_82_0_g466;
 			#endif
 			float3 IndirectAndSpeculars86_g466 = ( staticSwitch84_g466 * AO56_g466 );
+			float3 ifLocalVar132_g466 = 0;
+			if( localLightVolumesEnabled2_g472 > 0.0 )
+				ifLocalVar132_g466 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g466 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch247 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g466 );
+				float3 staticSwitch247 = ifLocalVar132_g466;
 			#else
 				float3 staticSwitch247 = float3( 0,0,0 );
 			#endif
@@ -1231,4 +1235,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;75;0
 WireConnection;0;4;253;0
 ASEEND*/
-//CHKSM=0B68AA9D68BC8699C2E1BA845CFA1360375F29F3
+//CHKSM=5D87BC5CECE8361813F0AF344C65DD4E88B14654

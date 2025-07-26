@@ -839,6 +839,7 @@ Shader "Saphi/QuantumShaderPackedPBR"
 				ifLocalVar112_g377 = temp_output_53_0_g377;
 			float localIfAudioLinkv2Exists1_g376 = IfAudioLinkv2Exists1_g376();
 			float4 lerpResult55_g375 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g375 * ( ifLocalVar107_g393 + ifLocalVar108_g393 + ifLocalVar112_g393 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g375 * ( ifLocalVar107_g401 + ifLocalVar108_g401 + ifLocalVar112_g401 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g375 * ( ifLocalVar107_g385 + ifLocalVar108_g385 + ifLocalVar112_g385 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g375 * ( ifLocalVar107_g377 + ifLocalVar108_g377 + ifLocalVar112_g377 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g376);
+			float localLightVolumesEnabled2_g417 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g411 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g411 = normalizeResult3_g411;
 			float3 worldNormal2_g416 = World_Normal53_g411;
@@ -995,8 +996,11 @@ Shader "Saphi/QuantumShaderPackedPBR"
 				float3 staticSwitch84_g411 = temp_output_82_0_g411;
 			#endif
 			float3 IndirectAndSpeculars86_g411 = ( staticSwitch84_g411 * AO56_g411 );
+			float3 ifLocalVar132_g411 = 0;
+			if( localLightVolumesEnabled2_g417 > 0.0 )
+				ifLocalVar132_g411 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g411 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch247 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g411 );
+				float3 staticSwitch247 = ifLocalVar132_g411;
 			#else
 				float3 staticSwitch247 = float3( 0,0,0 );
 			#endif
@@ -1290,4 +1294,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 ASEEND*/
-//CHKSM=2D45A4D8BEB8C2DD6CF7C1682D38B1D0EE7CFB21
+//CHKSM=0EE78F48BA44123D1CDCF74013EF3B769D7B6225

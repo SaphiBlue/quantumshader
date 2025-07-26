@@ -851,6 +851,7 @@ Shader "Saphi/QuantumShaderMetallicTransparent"
 				ifLocalVar112_g337 = temp_output_53_0_g337;
 			float localIfAudioLinkv2Exists1_g336 = IfAudioLinkv2Exists1_g336();
 			float4 lerpResult55_g335 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g335 * ( ifLocalVar107_g353 + ifLocalVar108_g353 + ifLocalVar112_g353 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g335 * ( ifLocalVar107_g361 + ifLocalVar108_g361 + ifLocalVar112_g361 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g335 * ( ifLocalVar107_g345 + ifLocalVar108_g345 + ifLocalVar112_g345 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g335 * ( ifLocalVar107_g337 + ifLocalVar108_g337 + ifLocalVar112_g337 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g336);
+			float localLightVolumesEnabled2_g430 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g424 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g424 = normalizeResult3_g424;
 			float3 worldNormal2_g429 = World_Normal53_g424;
@@ -1006,8 +1007,11 @@ Shader "Saphi/QuantumShaderMetallicTransparent"
 				float3 staticSwitch84_g424 = temp_output_82_0_g424;
 			#endif
 			float3 IndirectAndSpeculars86_g424 = ( staticSwitch84_g424 * AO56_g424 );
+			float3 ifLocalVar125_g424 = 0;
+			if( localLightVolumesEnabled2_g430 > 0.0 )
+				ifLocalVar125_g424 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g424 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch264 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g424 );
+				float3 staticSwitch264 = ifLocalVar125_g424;
 			#else
 				float3 staticSwitch264 = float3( 0,0,0 );
 			#endif
@@ -1317,4 +1321,4 @@ WireConnection;0;4;279;0
 WireConnection;0;9;215;0
 WireConnection;0;10;230;0
 ASEEND*/
-//CHKSM=6EC707A1C97485D4B5FB83CED06797E8FDD22C83
+//CHKSM=D066B61D53F8117B021F4037BB9F3022543B79E6

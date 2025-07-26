@@ -74,6 +74,7 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 			o.Normal = float3(0,0,1);
 			float3 Albedo63 = _Color.rgb;
 			o.Albedo = Albedo63;
+			float localLightVolumesEnabled2_g512 = LightVolumesEnabled(  );
 			float3 ase_normalWS = WorldNormalVector( i, float3( 0, 0, 1 ) );
 			float3 ase_normalOS = mul( unity_WorldToObject, float4( ase_normalWS, 0 ) );
 			ase_normalOS = normalize( ase_normalOS );
@@ -230,8 +231,11 @@ Shader "Saphi/QuantumShaderSpecularTransparentSimple"
 				float3 staticSwitch84_g506 = temp_output_82_0_g506;
 			#endif
 			float3 IndirectAndSpeculars86_g506 = ( staticSwitch84_g506 * AO56_g506 );
+			float3 ifLocalVar132_g506 = 0;
+			if( localLightVolumesEnabled2_g512 > 0.0 )
+				ifLocalVar132_g506 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g506 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch273 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g506 );
+				float3 staticSwitch273 = ifLocalVar132_g506;
 			#else
 				float3 staticSwitch273 = float3( 0,0,0 );
 			#endif
@@ -371,4 +375,4 @@ WireConnection;0;3;75;0
 WireConnection;0;4;280;0
 WireConnection;0;9;288;0
 ASEEND*/
-//CHKSM=A08C89D949BD2D4FD7E3A52D887E1A75214DAD1D
+//CHKSM=A92155598D8CE8BDFBAB32ED34D3AE9EF4B7E987

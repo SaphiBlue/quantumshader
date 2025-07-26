@@ -833,6 +833,7 @@ Shader "Saphi/QuantumShaderMetallic"
 				ifLocalVar112_g365 = temp_output_53_0_g365;
 			float localIfAudioLinkv2Exists1_g364 = IfAudioLinkv2Exists1_g364();
 			float4 lerpResult55_g363 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g363 * ( ifLocalVar107_g381 + ifLocalVar108_g381 + ifLocalVar112_g381 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g363 * ( ifLocalVar107_g389 + ifLocalVar108_g389 + ifLocalVar112_g389 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g363 * ( ifLocalVar107_g373 + ifLocalVar108_g373 + ifLocalVar112_g373 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g363 * ( ifLocalVar107_g365 + ifLocalVar108_g365 + ifLocalVar112_g365 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g364);
+			float localLightVolumesEnabled2_g436 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g430 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g430 = normalizeResult3_g430;
 			float3 worldNormal2_g435 = World_Normal53_g430;
@@ -991,8 +992,11 @@ Shader "Saphi/QuantumShaderMetallic"
 				float3 staticSwitch84_g430 = temp_output_82_0_g430;
 			#endif
 			float3 IndirectAndSpeculars86_g430 = ( staticSwitch84_g430 * AO56_g430 );
+			float3 ifLocalVar125_g430 = 0;
+			if( localLightVolumesEnabled2_g436 > 0.0 )
+				ifLocalVar125_g430 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g430 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch256 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g430 );
+				float3 staticSwitch256 = ifLocalVar125_g430;
 			#else
 				float3 staticSwitch256 = float3( 0,0,0 );
 			#endif
@@ -1253,4 +1257,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;254;0
 WireConnection;0;4;255;0
 ASEEND*/
-//CHKSM=F973DE04427165042B76EA2BA4E99639FC4333AB
+//CHKSM=577C89A4D972CCE61EBF3FA5423071C4A81B5C0E

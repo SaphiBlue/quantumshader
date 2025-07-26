@@ -859,6 +859,7 @@ Shader "Saphi/QuantumShaderBasicPBRTransparent"
 				ifLocalVar112_g369 = temp_output_53_0_g369;
 			float localIfAudioLinkv2Exists1_g368 = IfAudioLinkv2Exists1_g368();
 			float4 lerpResult55_g367 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g367 * ( ifLocalVar107_g385 + ifLocalVar108_g385 + ifLocalVar112_g385 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g367 * ( ifLocalVar107_g393 + ifLocalVar108_g393 + ifLocalVar112_g393 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g367 * ( ifLocalVar107_g377 + ifLocalVar108_g377 + ifLocalVar112_g377 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g367 * ( ifLocalVar107_g369 + ifLocalVar108_g369 + ifLocalVar112_g369 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g368);
+			float localLightVolumesEnabled2_g409 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g403 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g403 = normalizeResult3_g403;
 			float3 worldNormal2_g408 = World_Normal53_g403;
@@ -1015,8 +1016,11 @@ Shader "Saphi/QuantumShaderBasicPBRTransparent"
 				float3 staticSwitch84_g403 = temp_output_82_0_g403;
 			#endif
 			float3 IndirectAndSpeculars86_g403 = ( staticSwitch84_g403 * AO56_g403 );
+			float3 ifLocalVar132_g403 = 0;
+			if( localLightVolumesEnabled2_g409 > 0.0 )
+				ifLocalVar132_g403 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g403 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch294 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g403 );
+				float3 staticSwitch294 = ifLocalVar132_g403;
 			#else
 				float3 staticSwitch294 = float3( 0,0,0 );
 			#endif
@@ -1365,4 +1369,4 @@ WireConnection;0;4;77;0
 WireConnection;0;9;246;0
 WireConnection;0;10;260;0
 ASEEND*/
-//CHKSM=86332E626634FE7C910DEE327BE87E2F6D45D2AD
+//CHKSM=45A3DC2BE8A41A2BC68073329882F5E9D2C97A57

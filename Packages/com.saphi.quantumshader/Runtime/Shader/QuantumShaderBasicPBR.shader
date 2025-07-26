@@ -842,6 +842,7 @@ Shader "Saphi/QuantumShaderBasicPBR"
 				ifLocalVar112_g365 = temp_output_53_0_g365;
 			float localIfAudioLinkv2Exists1_g364 = IfAudioLinkv2Exists1_g364();
 			float4 lerpResult55_g363 = lerp( float4( 0,0,0,0 ) , ( _QuantumGlowColor * ( (( _QBandEnable1 )?( ( _QGlowColorBand1 * ( GlowMap130_g363 * ( ifLocalVar107_g381 + ifLocalVar108_g381 + ifLocalVar112_g381 ) ) * _QuantumGlowMultiply1 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable2 )?( ( _QGlowColorBand2 * ( GlowMap232_g363 * ( ifLocalVar107_g389 + ifLocalVar108_g389 + ifLocalVar112_g389 ) ) * _QuantumGlowMultiply2 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable3 )?( ( _QGlowColorBand3 * ( GlowMap331_g363 * ( ifLocalVar107_g373 + ifLocalVar108_g373 + ifLocalVar112_g373 ) ) * _QuantumGlowMultiply3 ) ):( float4( 0,0,0,0 ) )) + (( _QBandEnable4 )?( ( _QGlowColorBand4 * ( GlowMap433_g363 * ( ifLocalVar107_g365 + ifLocalVar108_g365 + ifLocalVar112_g365 ) ) * _QuantumGlowMultiply4 ) ):( float4( 0,0,0,0 ) )) ) * _QuantumGlowMultiplyGlobal ) , localIfAudioLinkv2Exists1_g364);
+			float localLightVolumesEnabled2_g405 = LightVolumesEnabled(  );
 			float3 normalizeResult3_g399 = normalize( (WorldNormalVector( i , Normal64 )) );
 			float3 World_Normal53_g399 = normalizeResult3_g399;
 			float3 worldNormal2_g404 = World_Normal53_g399;
@@ -998,8 +999,11 @@ Shader "Saphi/QuantumShaderBasicPBR"
 				float3 staticSwitch84_g399 = temp_output_82_0_g399;
 			#endif
 			float3 IndirectAndSpeculars86_g399 = ( staticSwitch84_g399 * AO56_g399 );
+			float3 ifLocalVar132_g399 = 0;
+			if( localLightVolumesEnabled2_g405 > 0.0 )
+				ifLocalVar132_g399 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g399 );
 			#ifdef _Q_LIGHTVOLUMES_ON
-				float3 staticSwitch283 = ( _LightVolumesMultiplier * IndirectAndSpeculars86_g399 );
+				float3 staticSwitch283 = ifLocalVar132_g399;
 			#else
 				float3 staticSwitch283 = float3( 0,0,0 );
 			#endif
@@ -1304,4 +1308,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 ASEEND*/
-//CHKSM=9245F6648AF52873B17D8BCACBBE15DF2A5653D0
+//CHKSM=13CFCDA605F1FDD6413DE5BD81E07188B783BDBF
