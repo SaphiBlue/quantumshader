@@ -1,6 +1,11 @@
 # Quantum Shader
 
-A shader with basic PBR options and some custom audiolink options
+A shader pack with Unity like PBR options and custom audiolink
+
+## Supports Light Volumes
+
+All shaders in the package, do support [Light Volumes](https://github.com/REDSIM/VRCLightVolumes).
+Can be enabled in the Light Volumes section of the Shader UI
 
 ## Get the shader here
 
