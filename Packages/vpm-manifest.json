@@ -19,7 +19,7 @@
       "version": "3.9.4"
     },
     "red.sim.lightvolumes": {
-      "version": "2.0.0"
+      "version": "2.0.1"
     }
   },
   "locked": {
@@ -52,7 +52,7 @@
       }
     },
     "red.sim.lightvolumes": {
-      "version": "2.0.0",
+      "version": "2.0.1",
       "dependencies": {}
     }
   }
