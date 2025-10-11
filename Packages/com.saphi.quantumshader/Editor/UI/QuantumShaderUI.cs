@@ -676,9 +676,11 @@ namespace Saphi.QuantumShader
                 shaderMode();
                 GUILayout.Space(10);
                 editor.ShaderProperty(getProperty("_Culling"), "Culling", 0);
-                editor.ShaderProperty(getProperty("_BackfaceNormal"), "use Backface Normal settings", 0);
-                editor.ShaderProperty(getProperty("_BackFaceNormalMode"), "Backface Normal Mode", 0);
-                
+                if (target.shader != shaderSpecularTransparentSimple)
+                {
+                    editor.ShaderProperty(getProperty("_BackfaceNormal"), "use Backface Normal settings", 0);
+                    editor.ShaderProperty(getProperty("_BackFaceNormalMode"), "Backface Normal Mode", 0);
+                }
                 editor.RenderQueueField();
                 editor.EnableInstancingField();
                 editor.DoubleSidedGIField();
