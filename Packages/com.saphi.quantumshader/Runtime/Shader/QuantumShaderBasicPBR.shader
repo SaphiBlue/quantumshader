@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.3
+// Made with Amplify Shader Editor v1.9.9.4
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderBasicPBR"
 {
@@ -142,7 +142,7 @@ Shader "Saphi/QuantumShaderBasicPBR"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19903
+		#define ASE_VERSION 19904
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -177,7 +177,7 @@ Shader "Saphi/QuantumShaderBasicPBR"
 			INTERNAL_DATA
 			float3 worldNormal;
 			float3 worldPos;
-			half ASEIsFrontFace : VFACE;
+			uint ASEIsFrontFace : SV_IsFrontFace;
 		};
 
 		uniform int _QGlowMapUVIndex;
@@ -1147,7 +1147,7 @@ Shader "Saphi/QuantumShaderBasicPBR"
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19903
+Version=19904
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;229;-4054.283,160;Inherit;False;3763.283;2715.426;Base Textures;61;270;255;256;195;231;235;272;64;241;14;238;261;252;88;236;15;237;63;12;249;228;84;10;248;227;31;9;11;273;32;265;245;247;56;226;83;82;5;251;250;53;52;28;18;267;266;264;263;246;55;29;16;259;269;260;258;4;274;276;275;284;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.TexturePropertyNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;29;-1840,1584;Inherit;True;Property;_SpecularMap;Specular Map;32;0;Create;False;0;0;0;False;0;False;None;95bc897e80af50446bc05c7e8d2649ae;False;white;Auto;Texture2D;False;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;264;-1552,1648;Inherit;False;259;MainUVFinal;1;0;OBJECT;;False;1;FLOAT2;0
@@ -1341,4 +1341,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 ASEEND*/
-//CHKSM=0E368C26990A033834291C6E1C80DC5BF72D0AA8
+//CHKSM=861609D42BD6E3AECB87B99E97A200090A59A6F4

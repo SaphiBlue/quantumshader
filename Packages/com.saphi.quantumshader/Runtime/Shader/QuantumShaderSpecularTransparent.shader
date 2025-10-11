@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.3
+// Made with Amplify Shader Editor v1.9.9.4
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderSpecularTransparent"
 {
@@ -146,7 +146,7 @@ Shader "Saphi/QuantumShaderSpecularTransparent"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19903
+		#define ASE_VERSION 19904
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -181,7 +181,7 @@ Shader "Saphi/QuantumShaderSpecularTransparent"
 			INTERNAL_DATA
 			float3 worldNormal;
 			float3 worldPos;
-			half ASEIsFrontFace : VFACE;
+			uint ASEIsFrontFace : SV_IsFrontFace;
 		};
 
 		uniform int _QGlowMapUVIndex;
@@ -1165,7 +1165,7 @@ Shader "Saphi/QuantumShaderSpecularTransparent"
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19903
+Version=19904
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;204;-2638.565,158;Inherit;False;2615.419;2703.054;Base Textures;69;260;259;256;239;238;229;228;230;206;234;195;205;232;214;64;63;237;210;10;236;209;83;14;9;11;243;235;215;226;207;15;208;28;12;88;5;250;216;225;29;203;4;224;202;223;222;201;56;221;220;53;52;252;251;219;55;242;255;241;244;263;264;265;266;267;257;258;279;283;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.IntNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;265;-1904,416;Inherit;False;Property;_MainUVIndex;MainUVIndex;123;1;[Enum];Create;True;0;5;UV0;0;UV1;1;UV2;2;UV3;3;UV4;4;0;False;0;False;0;0;False;0;1;INT;0
 Node;AmplifyShaderEditor.TexturePropertyNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;55;-1776,1552;Inherit;True;Property;_EmissionMap;Emission Map;23;0;Create;True;0;0;0;False;0;False;None;c48f49805bc6dcb448988519f2f10bcc;False;white;Auto;Texture2D;False;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
@@ -1331,4 +1331,4 @@ WireConnection;0;4;280;0
 WireConnection;0;9;217;0
 WireConnection;0;10;233;0
 ASEEND*/
-//CHKSM=E3E4CB8DE0A3265D4A293BAEE5E91BBFBACDA820
+//CHKSM=5F90DCCABB3128C444320A732F82C82D8B21480A
