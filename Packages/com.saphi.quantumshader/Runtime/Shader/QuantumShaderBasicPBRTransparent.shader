@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.4
+// Made with Amplify Shader Editor v1.9.9.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderBasicPBRTransparent"
 {
@@ -151,7 +151,7 @@ Shader "Saphi/QuantumShaderBasicPBRTransparent"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19904
+		#define ASE_VERSION 19905
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -1179,11 +1179,11 @@ Shader "Saphi/QuantumShaderBasicPBRTransparent"
 			ENDCG
 		}
 	}
-	Fallback "Diffuse"
+	Fallback Off
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19904
+Version=19905
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;229;-4396.325,160;Inherit;False;4100.775;3530.2;Base Textures;73;281;231;266;265;259;258;257;235;242;195;261;245;64;262;241;263;238;14;271;243;264;255;236;15;237;88;63;12;84;244;254;228;10;253;227;31;9;11;32;274;252;251;226;56;83;82;5;249;250;53;52;28;18;4;276;275;273;272;248;55;29;16;270;280;269;268;282;283;284;287;288;285;296;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.TexturePropertyNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;29;-2016,1584;Inherit;True;Property;_SpecularMap;Specular Map;35;0;Create;False;0;0;0;False;0;False;None;95bc897e80af50446bc05c7e8d2649ae;False;white;Auto;Texture2D;False;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
 Node;AmplifyShaderEditor.GetLocalVarNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;273;-1744,1632;Inherit;False;270;MainUVFinal;1;0;OBJECT;;False;1;FLOAT2;0
@@ -1402,4 +1402,4 @@ WireConnection;0;4;77;0
 WireConnection;0;9;246;0
 WireConnection;0;10;260;0
 ASEEND*/
-//CHKSM=8CC190C88285E7B6ACB02305F9F3785B3AAAB650
+//CHKSM=6400E0C7E2322204E23BFD0B5E0D33DCBF20271D

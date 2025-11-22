@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.4
+// Made with Amplify Shader Editor v1.9.9.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderMetallic"
 {
@@ -139,7 +139,7 @@ Shader "Saphi/QuantumShaderMetallic"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19904
+		#define ASE_VERSION 19905
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -1136,11 +1136,11 @@ Shader "Saphi/QuantumShaderMetallic"
 			ENDCG
 		}
 	}
-	Fallback "Diffuse"
+	Fallback Off
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19904
+Version=19905
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;203;-4241.33,158;Inherit;False;4399.451;2663.229;Base Textures;62;233;222;221;205;195;204;64;209;208;14;63;83;227;219;206;15;207;12;88;10;28;218;202;9;11;228;29;217;201;216;215;200;56;4;214;213;53;52;230;229;212;55;225;232;226;224;242;243;244;245;246;247;236;235;237;240;241;250;251;252;253;265;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.IntNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;243;-1840,480;Inherit;False;Property;_MainUVIndex;MainUVIndex;117;1;[Enum];Create;True;0;5;UV0;0;UV1;1;UV2;2;UV3;3;UV4;4;0;False;0;False;0;0;False;0;1;INT;0
 Node;AmplifyShaderEditor.TexturePropertyNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;55;-1776,1552;Inherit;True;Property;_EmissionMap;Emission Map;22;0;Create;True;0;0;0;False;0;False;None;c48f49805bc6dcb448988519f2f10bcc;False;white;Auto;Texture2D;False;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
@@ -1290,4 +1290,4 @@ WireConnection;0;2;81;0
 WireConnection;0;3;254;0
 WireConnection;0;4;255;0
 ASEEND*/
-//CHKSM=1666FC9680C7E6254CA7EAF4CF4372CA673FEE9A
+//CHKSM=F6B78A5ECFC4B093586D31A0E92BEE40E60966A1

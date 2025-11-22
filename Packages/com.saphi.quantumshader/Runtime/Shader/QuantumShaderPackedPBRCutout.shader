@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.4
+// Made with Amplify Shader Editor v1.9.9.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderPackedPBRCutout"
 {
@@ -143,7 +143,7 @@ Shader "Saphi/QuantumShaderPackedPBRCutout"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19904
+		#define ASE_VERSION 19905
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -1161,11 +1161,11 @@ Shader "Saphi/QuantumShaderPackedPBRCutout"
 			ENDCG
 		}
 	}
-	Fallback "Diffuse"
+	Fallback Off
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19904
+Version=19905
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;202;-4329.88,158;Inherit;False;4084.335;3031.936;Base Textures;61;237;225;224;209;204;195;203;210;64;211;208;212;207;14;230;222;15;205;206;12;88;63;84;221;201;10;220;200;9;11;219;218;82;83;199;56;5;217;216;18;53;52;4;233;232;231;215;16;55;228;236;229;227;238;239;241;242;243;244;245;253;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.IntNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;242;-2016,448;Inherit;False;Property;_MainUVIndex;MainUVIndex;119;1;[Enum];Create;True;0;5;UV0;0;UV1;1;UV2;2;UV3;3;UV4;4;0;False;0;False;0;0;False;0;1;INT;0
 Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;243;-1824,432;Inherit;False;UVSelect;-1;;369;be9f0a2bbb8e0f340a2211011430e00a;0;2;3;SAMPLER2D;_Sampler3243;False;18;INT;0;False;1;FLOAT2;0
@@ -1361,4 +1361,4 @@ WireConnection;0;3;75;0
 WireConnection;0;4;77;0
 WireConnection;0;10;213;0
 ASEEND*/
-//CHKSM=C7758704F1C27535F0491F64E36FBB2F6E7FBF1B
+//CHKSM=96439C5FB25ADE0617236918806D4E19DDFF7883

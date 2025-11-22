@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.4
+// Made with Amplify Shader Editor v1.9.9.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderMetallicCutout"
 {
@@ -142,7 +142,7 @@ Shader "Saphi/QuantumShaderMetallicCutout"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19904
+		#define ASE_VERSION 19905
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -1157,11 +1157,11 @@ Shader "Saphi/QuantumShaderMetallicCutout"
 			ENDCG
 		}
 	}
-	Fallback "Diffuse"
+	Fallback Off
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19904
+Version=19905
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;203;-2846.917,158;Inherit;False;2942.165;2977.157;Base Textures;68;262;261;260;259;258;257;253;254;256;83;255;239;227;226;210;205;195;204;212;64;213;209;208;14;252;206;231;63;224;15;12;88;250;251;214;10;28;223;202;207;249;9;11;233;29;222;201;248;221;220;200;56;219;218;53;52;235;234;217;55;230;238;232;229;247;4;246;271;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.IntNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;246;-1776,448;Inherit;False;Property;_MainUVIndex;MainUVIndex;118;1;[Enum];Create;True;0;5;UV0;0;UV1;1;UV2;2;UV3;3;UV4;4;0;False;0;False;0;0;False;0;1;INT;0
 Node;AmplifyShaderEditor.TexturePropertyNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;55;-1776,1552;Inherit;True;Property;_EmissionMap;Emission Map;23;0;Create;True;0;0;0;False;0;False;None;c48f49805bc6dcb448988519f2f10bcc;False;white;Auto;Texture2D;False;-1;0;2;SAMPLER2D;0;SAMPLERSTATE;1
@@ -1324,4 +1324,4 @@ WireConnection;0;3;75;0
 WireConnection;0;4;263;0
 WireConnection;0;10;215;0
 ASEEND*/
-//CHKSM=E05EDFCBEBFA75605ACE68F32652D2F18BF842E8
+//CHKSM=EBFC95C6ED8ED6D5DF00D5254A4D64C529EC28C1

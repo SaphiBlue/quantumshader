@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.9.4
+// Made with Amplify Shader Editor v1.9.9.5
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Saphi/QuantumShaderPackedPBRTransparent"
 {
@@ -149,7 +149,7 @@ Shader "Saphi/QuantumShaderPackedPBRTransparent"
 		#pragma shader_feature_local _LIGHTVOLUMES_ON
 		#pragma shader_feature_local _LIGHTVOLUMESSUBSTRACTLIGHTPROBES_ON
 		#pragma shader_feature_local _DOMINANTDIRSPECULARS_ON
-		#define ASE_VERSION 19904
+		#define ASE_VERSION 19905
 		#include "Packages/com.llealloo.audiolink/Runtime/Shaders/AudioLink.cginc"
 		#ifdef UNITY_PASS_SHADOWCASTER
 			#undef INTERNAL_DATA
@@ -1176,11 +1176,11 @@ Shader "Saphi/QuantumShaderPackedPBRTransparent"
 			ENDCG
 		}
 	}
-	Fallback "Diffuse"
+	Fallback Off
 	CustomEditor "Saphi.QuantumShader.QuantumShaderUI"
 }
 /*ASEBEGIN
-Version=19904
+Version=19905
 Node;AmplifyShaderEditor.CommentaryNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;202;-3225.572,158;Inherit;False;2980.027;2960.326;Base Textures;68;250;249;236;238;246;248;247;237;245;233;232;231;230;229;204;209;195;203;224;210;64;225;208;226;207;14;227;211;222;15;205;206;12;88;63;212;221;201;84;10;220;200;9;11;219;218;82;83;199;56;5;217;216;18;53;52;4;241;240;239;215;16;55;244;235;252;253;261;;1,1,1,1;0;0
 Node;AmplifyShaderEditor.IntNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;248;-2016,416;Inherit;False;Property;_MainUVIndex;MainUVIndex;122;1;[Enum];Create;True;0;5;UV0;0;UV1;1;UV2;2;UV3;3;UV4;4;0;False;0;False;0;0;False;0;1;INT;0
 Node;AmplifyShaderEditor.FunctionNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;247;-1824,400;Inherit;False;UVSelect;-1;;369;be9f0a2bbb8e0f340a2211011430e00a;0;2;3;SAMPLER2D;_Sampler3247;False;18;INT;0;False;1;FLOAT2;0
@@ -1389,4 +1389,4 @@ WireConnection;0;4;77;0
 WireConnection;0;9;213;0
 WireConnection;0;10;228;0
 ASEEND*/
-//CHKSM=666F85629B438DAC15ED4FE257BC78F3AB4B9CA9
+//CHKSM=900AAA59B564FBC86733F36027DDF46095CCE69F
