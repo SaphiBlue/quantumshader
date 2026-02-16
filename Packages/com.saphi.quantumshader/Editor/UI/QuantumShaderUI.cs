@@ -75,6 +75,7 @@ namespace Saphi.QuantumShader
                 MainProps();
                 QuantumGlow();
                 LightVolumes();
+                UVTileDiscard();
                 Parallax();
             }
 
@@ -594,6 +595,52 @@ namespace Saphi.QuantumShader
                 editor.ShaderProperty(getProperty("_ParallaxMaxSamples"), "Max Samples");
                 editor.ShaderProperty(getProperty("_ParallaxSideWallSteps"), "Side Wall Steps");
                 editor.ShaderProperty(getProperty("_ParallaxRefPlane"), "Reference Plane");
+                
+                
+                EditorGUI.indentLevel -= 2;
+                GUILayout.EndVertical();
+            }
+            else
+            {
+                target.SetFloat(toggle, 0);
+            }
+        }
+
+        void UVTileDiscard()
+        {
+            bool showUVTileDiscard;
+            string toggle = "_ShowUVTileDiscard";
+
+            if (target.GetFloat(toggle) == 1)
+            {
+                showUVTileDiscard = true;
+            }
+            else
+            {
+                showUVTileDiscard = false;
+            }
+
+            showUVTileDiscard = EditorGUILayout.Foldout(showUVTileDiscard, "UV Tile discard", true, EditorStyles.foldoutHeader);
+            if (showUVTileDiscard)
+            {
+                target.SetFloat(toggle, 1);
+
+                GUILayout.BeginVertical("box");
+                EditorGUI.indentLevel += 2;
+                editor.ShaderProperty(getProperty("_UVDiscardIndex"), "UV Map for discard", 2);
+
+                for (int v = 3; v >= 0; v--)
+                {
+                    Rect rect = EditorGUILayout.GetControlRect();
+                    EditorGUI.PrefixLabel(rect, new GUIContent("v:" + v));
+                    rect.x += EditorGUIUtility.labelWidth;
+                    rect.width = EditorGUIUtility.fieldWidth;
+                    for (int u = 0; u <= 3; u++)
+                    {
+                        editor.ShaderProperty(rect, getProperty("_uvTileDiscard_" + u + "_" + v), "");
+                        rect.x += EditorGUIUtility.fieldWidth;
+                    }
+                }
                 
                 
                 EditorGUI.indentLevel -= 2;
